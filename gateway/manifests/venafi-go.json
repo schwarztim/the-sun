@@ -1,0 +1,11 @@
+{
+  "manifest": "isaac-router-manifest/v1",
+  "backend": "venafi-go",
+  "capabilities": [
+    { "tool": "venafi_list_certificates", "safety_class": "READ", "locality": "remote", "tags": ["venafi", "certificate", "read", "list"] },
+    { "tool": "venafi_get_certificate", "safety_class": "READ", "locality": "remote", "tags": ["venafi", "certificate", "read", "get"] },
+    { "tool": "venafi_get_certificate_previous_versions", "safety_class": "READ", "locality": "remote", "tags": ["venafi", "certificate", "history", "read", "get"] },
+    { "tool": "venafi_get_certificate_validation", "safety_class": "READ", "locality": "remote", "tags": ["venafi", "certificate", "validation", "read", "get"] },
+    { "tool": "venafi-mcp_help", "safety_class": "READ", "locality": "local", "tags": ["venafi", "help"] }
+  ]
+}

@@ -1,0 +1,21 @@
+export {
+  HermesClient,
+  credentialFromBundle,
+  credentialHeaders,
+  classifyAuthResponse,
+  type HermesClientOptions,
+  type TokenBundle,
+  type ClientFetch,
+  type AuthFailureReport,
+  type AuthFailureGuidance,
+  type AuthFailureReportResult,
+  type CredentialHeaderOptions,
+  type HermesCredential,
+  type AuthResponseLike,
+  type ClassifyAuthResponseOptions,
+  type AuthResponseClassification,
+  type HermesAuthRetryContext,
+  type HermesAuthenticatedOperation,
+  type WithHermesAuthRetryOptions,
+} from './client.js';
+export { HermesClientError, HermesClientErrorCode } from './errors.js';

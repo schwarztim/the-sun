@@ -1,0 +1,33 @@
+{
+  "manifest": "isaac-router-manifest/v1",
+  "backend": "figma-go",
+  "capabilities": [
+    {
+      "tool": "figma_get_me",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "figma",
+        "get"
+      ]
+    },
+    {
+      "tool": "figma_get_file",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "figma",
+        "get"
+      ]
+    },
+    {
+      "tool": "figma-mcp_help",
+      "safety_class": "READ",
+      "locality": "local",
+      "tags": [
+        "figma",
+        "help"
+      ]
+    }
+  ]
+}

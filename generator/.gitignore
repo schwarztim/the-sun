@@ -1,0 +1,58 @@
+# Dependencies
+node_modules/
+.pnp/
+.pnp.js
+
+# Build output
+dist/
+build/
+*.tsbuildinfo
+
+# Test coverage (vitest report at repo root only — do not ignore src/coverage/)
+/coverage/
+
+# Environment
+.env
+.env.local
+.env.*.local
+*.local.md
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Runtime
+*.pid
+*.seed
+*.pid.lock
+
+# Temp
+tmp/
+temp/
+.tmp/
+
+# Python (generated-server templates, golden fixtures, spike env)
+__pycache__/
+*.pyc
+.venv/
+*.egg-info/
+
+# thesun specific
+/builds/
+/output/
+*.sqlite
+*.db
+.thesun/
+.worktrees/

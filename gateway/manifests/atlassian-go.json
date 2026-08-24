@@ -1,0 +1,240 @@
+{
+  "manifest": "isaac-router-manifest/v1",
+  "backend": "atlassian-go",
+  "capabilities": [
+    {
+      "tool": "atlassian_search_jira_issues",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "atlassian",
+        "search"
+      ]
+    },
+    {
+      "tool": "atlassian_get_issue",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "atlassian",
+        "get"
+      ]
+    },
+    {
+      "tool": "atlassian_create_issue",
+      "safety_class": "WRITE",
+      "locality": "remote",
+      "tags": [
+        "atlassian",
+        "post"
+      ]
+    },
+    {
+      "tool": "atlassian_update_issue",
+      "safety_class": "WRITE",
+      "locality": "remote",
+      "tags": [
+        "atlassian",
+        "put"
+      ]
+    },
+    {
+      "tool": "atlassian_add_jira_comment",
+      "safety_class": "WRITE",
+      "locality": "remote",
+      "tags": [
+        "atlassian",
+        "post"
+      ]
+    },
+    {
+      "tool": "atlassian_get_transitions",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "atlassian",
+        "get"
+      ]
+    },
+    {
+      "tool": "atlassian_transition_issue",
+      "safety_class": "WRITE",
+      "locality": "remote",
+      "tags": [
+        "atlassian",
+        "post"
+      ]
+    },
+    {
+      "tool": "atlassian_get_projects",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "atlassian",
+        "get"
+      ]
+    },
+    {
+      "tool": "atlassian_get_project",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "atlassian",
+        "get"
+      ]
+    },
+    {
+      "tool": "atlassian_get_current_user",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "atlassian",
+        "get"
+      ]
+    },
+    {
+      "tool": "atlassian_get_my_issues",
+      "safety_class": "WRITE",
+      "locality": "remote",
+      "tags": [
+        "atlassian",
+        "post"
+      ]
+    },
+    {
+      "tool": "atlassian_get_in_progress_issues",
+      "safety_class": "WRITE",
+      "locality": "remote",
+      "tags": [
+        "atlassian",
+        "post"
+      ]
+    },
+    {
+      "tool": "atlassian_get_recent_issues",
+      "safety_class": "WRITE",
+      "locality": "remote",
+      "tags": [
+        "atlassian",
+        "post"
+      ]
+    },
+    {
+      "tool": "atlassian_assign_issue",
+      "safety_class": "WRITE",
+      "locality": "remote",
+      "tags": [
+        "atlassian",
+        "put"
+      ]
+    },
+    {
+      "tool": "atlassian_search_users",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "atlassian",
+        "get"
+      ]
+    },
+    {
+      "tool": "atlassian_search_confluence",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "atlassian",
+        "get"
+      ]
+    },
+    {
+      "tool": "atlassian_get_confluence_page",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "atlassian",
+        "get"
+      ]
+    },
+    {
+      "tool": "atlassian_get_confluence_page_by_title",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "atlassian",
+        "get"
+      ]
+    },
+    {
+      "tool": "atlassian_create_confluence_page",
+      "safety_class": "WRITE",
+      "locality": "remote",
+      "tags": [
+        "atlassian",
+        "post"
+      ]
+    },
+    {
+      "tool": "atlassian_update_confluence_page",
+      "safety_class": "WRITE",
+      "locality": "remote",
+      "tags": [
+        "atlassian",
+        "put"
+      ]
+    },
+    {
+      "tool": "atlassian_get_confluence_spaces",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "atlassian",
+        "get"
+      ]
+    },
+    {
+      "tool": "atlassian_get_confluence_space",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "atlassian",
+        "get"
+      ]
+    },
+    {
+      "tool": "atlassian_add_confluence_comment",
+      "safety_class": "WRITE",
+      "locality": "remote",
+      "tags": [
+        "atlassian",
+        "post"
+      ]
+    },
+    {
+      "tool": "atlassian_search_confluence_by_text",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "atlassian",
+        "get"
+      ]
+    },
+    {
+      "tool": "atlassian_get_confluence_page_v2",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "atlassian",
+        "get"
+      ]
+    },
+    {
+      "tool": "atlassian-mcp_help",
+      "safety_class": "READ",
+      "locality": "local",
+      "tags": [
+        "atlassian",
+        "help"
+      ]
+    }
+  ]
+}

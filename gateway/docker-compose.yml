@@ -1,0 +1,16 @@
+version: "3.9"
+
+services:
+  mcp-gateway:
+    build: .
+    ports:
+      - "3100:3100"
+    volumes:
+      - ./config.yaml:/app/config.yaml:ro
+    environment:
+      - LOG_LEVEL=info
+      # Pass through backend env vars. Replace the value below with YOUR OWN
+      # ServiceNow instance URL; there is no usable default.
+      # - SERVICENOW_INSTANCE_URL=https://your-instance.service-now.com
+      # - GITHUB_TOKEN=${GITHUB_TOKEN}
+    restart: unless-stopped

@@ -1,0 +1,24 @@
+{
+  "manifest": "isaac-router-manifest/v1",
+  "backend": "tufin-go",
+  "capabilities": [
+    { "tool": "tufin_list_devices", "safety_class": "READ", "locality": "remote", "tags": ["tufin", "securetrack", "device", "read", "list"] },
+    { "tool": "tufin_get_device", "safety_class": "READ", "locality": "remote", "tags": ["tufin", "securetrack", "device", "read", "get"] },
+    { "tool": "tufin_get_device_rules", "safety_class": "READ", "locality": "remote", "tags": ["tufin", "securetrack", "rule", "policy", "read", "list"] },
+    { "tool": "tufin_get_device_policies", "safety_class": "READ", "locality": "remote", "tags": ["tufin", "securetrack", "policy", "read", "list"] },
+    { "tool": "tufin_get_device_interfaces", "safety_class": "READ", "locality": "remote", "tags": ["tufin", "securetrack", "interface", "read", "list"] },
+    { "tool": "tufin_search_device_rules", "safety_class": "READ", "locality": "remote", "tags": ["tufin", "securetrack", "rule", "search", "read"] },
+    { "tool": "tufin_search_rules", "safety_class": "READ", "locality": "remote", "tags": ["tufin", "securetrack", "rule", "search", "read"] },
+    { "tool": "tufin_get_rule_documentation", "safety_class": "READ", "locality": "remote", "tags": ["tufin", "securetrack", "rule", "documentation", "read", "get"] },
+    { "tool": "tufin_list_zones", "safety_class": "READ", "locality": "remote", "tags": ["tufin", "securetrack", "zone", "read", "list"] },
+    { "tool": "tufin_get_zone_entries", "safety_class": "READ", "locality": "remote", "tags": ["tufin", "securetrack", "zone", "read", "get"] },
+    { "tool": "tufin_search_network_objects", "safety_class": "READ", "locality": "remote", "tags": ["tufin", "securetrack", "network-object", "search", "read"] },
+    { "tool": "tufin_analyze_traffic", "safety_class": "READ", "locality": "remote", "tags": ["tufin", "securetrack", "policy-analysis", "read"] },
+    { "tool": "tufin_list_security_policies", "safety_class": "READ", "locality": "remote", "tags": ["tufin", "securetrack", "usp", "policy", "read", "list"] },
+    { "tool": "tufin_get_security_policy", "safety_class": "READ", "locality": "remote", "tags": ["tufin", "securetrack", "usp", "policy", "read", "get"] },
+    { "tool": "tufin_list_policy_exceptions", "safety_class": "READ", "locality": "remote", "tags": ["tufin", "securetrack", "usp", "exception", "read", "list"] },
+    { "tool": "tufin_get_topology_interfaces", "safety_class": "READ", "locality": "remote", "tags": ["tufin", "securetrack", "topology", "interface", "read"] },
+    { "tool": "tufin_get_cleanup_issues", "safety_class": "READ", "locality": "remote", "tags": ["tufin", "securetrack", "cleanup", "read", "list"] },
+    { "tool": "tufin-mcp_help", "safety_class": "READ", "locality": "local", "tags": ["tufin", "help"] }
+  ]
+}

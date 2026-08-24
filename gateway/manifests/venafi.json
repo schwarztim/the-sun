@@ -1,0 +1,42 @@
+{
+  "manifest": "isaac-router-manifest/v1",
+  "backend": "venafi",
+  "capabilities": [
+    {
+      "tool": "issue_certificate",
+      "safety_class": "PRODUCTION",
+      "locality": "remote",
+      "tags": ["venafi", "certificate", "issue", "production"]
+    },
+    {
+      "tool": "revoke_certificate",
+      "safety_class": "PRODUCTION",
+      "locality": "remote",
+      "tags": ["venafi", "certificate", "revoke", "production"]
+    },
+    {
+      "tool": "renew_certificate",
+      "safety_class": "PRODUCTION",
+      "locality": "remote",
+      "tags": ["venafi", "certificate", "renew", "production"]
+    },
+    {
+      "tool": "get_certificate",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": ["venafi", "certificate", "read"]
+    },
+    {
+      "tool": "search_certificates",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": ["venafi", "certificate", "search", "read"]
+    },
+    {
+      "tool": "list_certificates",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": ["venafi", "certificate", "list", "read"]
+    }
+  ]
+}

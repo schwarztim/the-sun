@@ -1,0 +1,103 @@
+{
+  "name": "venafi",
+  "version": "dev",
+  "baseUrl": "https://venafi.example.com",
+  "authScheme": "hermes-token",
+  "hermesTokenService": "venafi",
+  "hermesTokenScheme": "session",
+  "defaultPort": "42020",
+  "endpoints": [
+    {
+      "method": "GET",
+      "path": "/vedsdk/certificates/",
+      "operationId": "list_certificates",
+      "description": "List certificates from the Venafi TPP WebSDK certificate inventory. Use Limit and Offset to page; CN/Issuer/ValidTo filters narrow the set. Read-only.",
+      "parameters": [
+        {
+          "name": "Limit",
+          "in": "query",
+          "required": false,
+          "description": "max certificates to return (1-10000, default 100)"
+        },
+        {
+          "name": "Offset",
+          "in": "query",
+          "required": false,
+          "description": "pagination offset (0-based)"
+        },
+        {
+          "name": "CN",
+          "in": "query",
+          "required": false,
+          "description": "filter by Common Name (substring match)"
+        },
+        {
+          "name": "Issuer",
+          "in": "query",
+          "required": false,
+          "description": "filter by issuer DN"
+        },
+        {
+          "name": "ValidToGreater",
+          "in": "query",
+          "required": false,
+          "description": "only certs expiring after this ISO-8601 date"
+        },
+        {
+          "name": "ValidToLess",
+          "in": "query",
+          "required": false,
+          "description": "only certs expiring before this ISO-8601 date (find soon-to-expire certs)"
+        },
+        {
+          "name": "OptionalFields",
+          "in": "query",
+          "required": false,
+          "description": "comma-separated extra fields to include, e.g. 'Thumbprint,ValidTo,Issuer'"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/vedsdk/certificates/{guid}",
+      "operationId": "get_certificate",
+      "description": "Get a single certificate's details by its GUID. Requires a guid — call venafi_list_certificates first to obtain one from a result row. Read-only.",
+      "parameters": [
+        {
+          "name": "guid",
+          "in": "path",
+          "required": true,
+          "description": "the certificate GUID (braced, e.g. {xxxxxxxx-...}) — call venafi_list_certificates first to obtain one"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/vedsdk/certificates/{guid}/PreviousVersions",
+      "operationId": "get_certificate_previous_versions",
+      "description": "List prior issued versions of a certificate (renewal history). Requires a guid — call venafi_list_certificates first to obtain one. Read-only.",
+      "parameters": [
+        {
+          "name": "guid",
+          "in": "path",
+          "required": true,
+          "description": "the certificate GUID — call venafi_list_certificates first to obtain one"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/vedsdk/certificates/{guid}/ValidationResults",
+      "operationId": "get_certificate_validation",
+      "description": "Get network validation results (chain, expiry, SSL/TLS health) for a certificate. Requires a guid — call venafi_list_certificates first to obtain one. Read-only.",
+      "parameters": [
+        {
+          "name": "guid",
+          "in": "path",
+          "required": true,
+          "description": "the certificate GUID — call venafi_list_certificates first to obtain one"
+        }
+      ]
+    }
+  ]
+}

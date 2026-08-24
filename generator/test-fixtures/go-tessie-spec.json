@@ -1,0 +1,277 @@
+{
+  "name": "tessie",
+  "baseUrl": "https://api.tessie.com",
+  "authScheme": "bearer",
+  "defaultPort": "42017",
+  "endpoints": [
+    {
+      "method": "GET",
+      "path": "/vehicles",
+      "operationId": "get_active_context",
+      "summary": "List the vehicles on the Tessie account (VIN, name, and current context). In the TS server this tool also merges locally-configured allowlist/owner context; the Go server returns the raw /vehicles listing.",
+      "parameters": [
+        { "name": "only_active", "in": "query", "required": false, "description": "true to return only currently-active vehicles" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/{vin}/state",
+      "operationId": "fetch_vehicle_state",
+      "summary": "Get the full current state snapshot for a vehicle (drive/charge/climate/vehicle sub-states).",
+      "parameters": [
+        { "name": "vin", "in": "path", "required": true, "description": "the vehicle VIN" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/{vin}/battery",
+      "operationId": "fetch_vehicle_battery",
+      "summary": "Get the current battery/charge state for a vehicle (level, range, charging status).",
+      "parameters": [
+        { "name": "vin", "in": "path", "required": true, "description": "the vehicle VIN" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/{vin}/drives",
+      "operationId": "search_drives",
+      "summary": "List a vehicle's drives. Time filters use from/to as Unix seconds (newest-first).",
+      "parameters": [
+        { "name": "vin", "in": "path", "required": true, "description": "the vehicle VIN" },
+        { "name": "from", "in": "query", "required": false, "description": "start of range, Unix seconds" },
+        { "name": "to", "in": "query", "required": false, "description": "end of range, Unix seconds" },
+        { "name": "limit", "in": "query", "required": false, "description": "maximum number of drives to return" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/{vin}/path",
+      "operationId": "get_driving_path",
+      "summary": "Get the GPS path points for a vehicle over a time window.",
+      "parameters": [
+        { "name": "vin", "in": "path", "required": true, "description": "the vehicle VIN" },
+        { "name": "start", "in": "query", "required": false, "description": "start of range (ISO 8601 or Unix)" },
+        { "name": "end", "in": "query", "required": false, "description": "end of range (ISO 8601 or Unix)" }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/{vin}/command/{command}",
+      "operationId": "manage_vehicle_command",
+      "summary": "Send a vehicle command (wake, lock, unlock, start_charging, set_charge_limit, etc.). Tessie reads command arguments from the query string. UNCERTAIN: command-specific args are not individually typed here; pass generic args as query params. retry_duration and wait_for_completion apply to all commands.",
+      "parameters": [
+        { "name": "vin", "in": "path", "required": true, "description": "the vehicle VIN" },
+        { "name": "command", "in": "path", "required": true, "description": "the command endpoint name, e.g. wake | lock | unlock | start_charging | stop_charging | set_charge_limit | set_charging_amps | flash | honk" },
+        { "name": "retry_duration", "in": "query", "required": false, "description": "how long (seconds) Tessie retries the command until it succeeds" },
+        { "name": "wait_for_completion", "in": "query", "required": false, "description": "true to block until the command completes" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/{vin}/location",
+      "operationId": "fetch_vehicle_location",
+      "summary": "Get a vehicle's current location (latitude, longitude, and reverse-geocoded address).",
+      "parameters": [
+        { "name": "vin", "in": "path", "required": true, "description": "the vehicle VIN" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/{vin}/status",
+      "operationId": "fetch_vehicle_status",
+      "summary": "Get a vehicle's connectivity/awake status (asleep | awake | waiting_for_sleep).",
+      "parameters": [
+        { "name": "vin", "in": "path", "required": true, "description": "the vehicle VIN" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/battery_health",
+      "operationId": "fetch_battery_health",
+      "summary": "Get account-wide battery health (one row per vehicle).",
+      "parameters": [
+        { "name": "distance_format", "in": "query", "required": false, "description": "mi | km" },
+        { "name": "from", "in": "query", "required": false, "description": "start of range, Unix seconds" },
+        { "name": "to", "in": "query", "required": false, "description": "end of range, Unix seconds" },
+        { "name": "only_active", "in": "query", "required": false, "description": "true to include only active vehicles" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/{vin}/battery_health",
+      "operationId": "fetch_battery_health_history",
+      "summary": "Get a single vehicle's battery-health measurements over time.",
+      "parameters": [
+        { "name": "vin", "in": "path", "required": true, "description": "the vehicle VIN" },
+        { "name": "distance_format", "in": "query", "required": false, "description": "mi | km" },
+        { "name": "from", "in": "query", "required": false, "description": "start of range, Unix seconds" },
+        { "name": "to", "in": "query", "required": false, "description": "end of range, Unix seconds" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/{vin}/charges",
+      "operationId": "search_charges",
+      "summary": "List a vehicle's charging sessions with rich filtering.",
+      "parameters": [
+        { "name": "vin", "in": "path", "required": true, "description": "the vehicle VIN" },
+        { "name": "distance_format", "in": "query", "required": false, "description": "mi | km" },
+        { "name": "format", "in": "query", "required": false, "description": "response format" },
+        { "name": "from", "in": "query", "required": false, "description": "start of range, Unix seconds" },
+        { "name": "to", "in": "query", "required": false, "description": "end of range, Unix seconds" },
+        { "name": "limit", "in": "query", "required": false, "description": "maximum number of charges to return" },
+        { "name": "superchargers_only", "in": "query", "required": false, "description": "true to return only Supercharger sessions" },
+        { "name": "minimum_energy_added", "in": "query", "required": false, "description": "minimum kWh added to include a session" },
+        { "name": "exclude_origin", "in": "query", "required": false, "description": "true to exclude sessions at the origin location" },
+        { "name": "origin_latitude", "in": "query", "required": false, "description": "origin latitude for exclude_origin filtering" },
+        { "name": "origin_longitude", "in": "query", "required": false, "description": "origin longitude for exclude_origin filtering" },
+        { "name": "origin_radius", "in": "query", "required": false, "description": "origin radius for exclude_origin filtering" },
+        { "name": "timezone", "in": "query", "required": false, "description": "IANA timezone for returned timestamps" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/{vin}/consumption_since_charge",
+      "operationId": "fetch_consumption",
+      "summary": "Get a vehicle's energy consumption since the last charge.",
+      "parameters": [
+        { "name": "vin", "in": "path", "required": true, "description": "the vehicle VIN" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/charging_invoices",
+      "operationId": "fetch_charging_invoices",
+      "summary": "Get account-wide charging invoices (fleet accounts). Optional VIN filter.",
+      "parameters": [
+        { "name": "vin", "in": "query", "required": false, "description": "optional VIN to filter invoices" },
+        { "name": "format", "in": "query", "required": false, "description": "response format" },
+        { "name": "from", "in": "query", "required": false, "description": "start of range, Unix seconds" },
+        { "name": "to", "in": "query", "required": false, "description": "end of range, Unix seconds" },
+        { "name": "timezone", "in": "query", "required": false, "description": "IANA timezone for returned timestamps" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/{vin}/tire_pressure",
+      "operationId": "fetch_tire_pressure",
+      "summary": "Get a vehicle's most recent tire-pressure readings.",
+      "parameters": [
+        { "name": "vin", "in": "path", "required": true, "description": "the vehicle VIN" },
+        { "name": "from", "in": "query", "required": false, "description": "start of range, Unix seconds" },
+        { "name": "to", "in": "query", "required": false, "description": "end of range, Unix seconds" },
+        { "name": "pressure-format", "in": "query", "required": false, "description": "bar | psi | kpa" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/{vin}/weather",
+      "operationId": "fetch_weather",
+      "summary": "Get the current weather at a vehicle's location.",
+      "parameters": [
+        { "name": "vin", "in": "path", "required": true, "description": "the vehicle VIN" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/{vin}/firmware_alerts",
+      "operationId": "fetch_firmware_alerts",
+      "summary": "Get a vehicle's active firmware alerts.",
+      "parameters": [
+        { "name": "vin", "in": "path", "required": true, "description": "the vehicle VIN" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/{vin}/idles",
+      "operationId": "search_idles",
+      "summary": "List a vehicle's idle periods with filtering.",
+      "parameters": [
+        { "name": "vin", "in": "path", "required": true, "description": "the vehicle VIN" },
+        { "name": "from", "in": "query", "required": false, "description": "start of range, Unix seconds" },
+        { "name": "to", "in": "query", "required": false, "description": "end of range, Unix seconds" },
+        { "name": "limit", "in": "query", "required": false, "description": "maximum number of idles to return" },
+        { "name": "format", "in": "query", "required": false, "description": "response format" },
+        { "name": "distance-format", "in": "query", "required": false, "description": "mi | km" },
+        { "name": "timezone", "in": "query", "required": false, "description": "IANA timezone for returned timestamps" },
+        { "name": "exclude-origin", "in": "query", "required": false, "description": "true to exclude idles at the origin location" },
+        { "name": "origin-latitude", "in": "query", "required": false, "description": "origin latitude for exclude-origin filtering" },
+        { "name": "origin-longitude", "in": "query", "required": false, "description": "origin longitude for exclude-origin filtering" },
+        { "name": "origin-radius", "in": "query", "required": false, "description": "origin radius for exclude-origin filtering" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/{vin}/last_idle_state",
+      "operationId": "fetch_last_idle_state",
+      "summary": "Get a vehicle's last-known idle state snapshot.",
+      "parameters": [
+        { "name": "vin", "in": "path", "required": true, "description": "the vehicle VIN" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/{vin}/plate",
+      "operationId": "fetch_license_plate",
+      "summary": "Get a vehicle's configured license plate.",
+      "parameters": [
+        { "name": "vin", "in": "path", "required": true, "description": "the vehicle VIN" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/{vin}/map",
+      "operationId": "fetch_map",
+      "summary": "Get a static map image of a vehicle's location. Tessie requires image dimensions (defaults applied by callers).",
+      "parameters": [
+        { "name": "vin", "in": "path", "required": true, "description": "the vehicle VIN" },
+        { "name": "width", "in": "query", "required": false, "description": "image width in pixels" },
+        { "name": "height", "in": "query", "required": false, "description": "image height in pixels" },
+        { "name": "zoom", "in": "query", "required": false, "description": "map zoom level" },
+        { "name": "style", "in": "query", "required": false, "description": "map style" },
+        { "name": "marker-size", "in": "query", "required": false, "description": "vehicle marker size" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/{vin}/states",
+      "operationId": "get_historical_states",
+      "summary": "Get a vehicle's historical state timeline. from/to are Unix seconds; condense controls columnar vs row-wise output.",
+      "parameters": [
+        { "name": "vin", "in": "path", "required": true, "description": "the vehicle VIN" },
+        { "name": "from", "in": "query", "required": false, "description": "start of range, Unix seconds" },
+        { "name": "to", "in": "query", "required": false, "description": "end of range, Unix seconds" },
+        { "name": "condense", "in": "query", "required": false, "description": "false for row-wise state objects, true for columnar" },
+        { "name": "interval", "in": "query", "required": false, "description": "sampling interval" }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/{vin}/drives/set_tag",
+      "operationId": "set_drive_tag",
+      "summary": "Tag a set of drives. Send a JSON body with `drives` (comma-separated drive IDs) and optional `tag`.",
+      "parameters": [
+        { "name": "vin", "in": "path", "required": true, "description": "the vehicle VIN" }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/{vin}/charges/{id}/set_cost",
+      "operationId": "set_charge_cost",
+      "summary": "Set (or clear) the cost of a specific charge. Requires a charge `id` first obtained from the tessie_search_charges tool. Send a JSON body with `cost` (null to clear).",
+      "parameters": [
+        { "name": "vin", "in": "path", "required": true, "description": "the vehicle VIN" },
+        { "name": "id", "in": "path", "required": true, "description": "the charge ID" }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/{vin}/plate",
+      "operationId": "set_license_plate",
+      "summary": "Set (or clear) a vehicle's license plate. Send a JSON body with `plate` (null to clear).",
+      "parameters": [
+        { "name": "vin", "in": "path", "required": true, "description": "the vehicle VIN" }
+      ]
+    }
+  ]
+}

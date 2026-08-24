@@ -1,0 +1,9 @@
+{
+  "transport": "streamable-http",
+  "command": "./bin/akamai-mcp",
+  "args": [],
+  "portEnvVar": "MCP_PORT",
+  "hostEnvVar": "MCP_HOST",
+  "mcpPath": "/mcp",
+  "targetName": "akamai-mcp"
+}

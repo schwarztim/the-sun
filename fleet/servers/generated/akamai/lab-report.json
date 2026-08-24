@@ -1,0 +1,182 @@
+{
+  "target": "akamai-mcp",
+  "serverDir": "fleet/servers/generated/akamai",
+  "startedAt": "2026-07-28T18:29:55.740Z",
+  "finishedAt": "2026-07-28T18:29:57.511Z",
+  "passed": true,
+  "transport": "streamable-http",
+  "toolCount": 5,
+  "gates": [
+    {
+      "gate": "protocol",
+      "passed": true,
+      "message": "connect -> initialize -> listTools() succeeded (5 tool(s))"
+    },
+    {
+      "gate": "instrumentation",
+      "passed": true,
+      "message": "all 5 tool(s) carry valid descriptions and annotations, and a help tool exists",
+      "detail": {
+        "subResults": [
+          {
+            "tool": "akamai-mcp_help",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "akamai-mcp_help",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "akamai_account_overview",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "akamai_account_overview",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "akamai_list_operations",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "akamai_list_operations",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "akamai_raw_request",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "akamai_raw_request",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "akamai_registry_stats",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "akamai_registry_stats",
+            "check": "annotations",
+            "passed": true
+          }
+        ],
+        "helpToolPassed": true
+      }
+    },
+    {
+      "gate": "transport",
+      "passed": true,
+      "message": "server is reachable over streamable-http"
+    },
+    {
+      "gate": "wire-fingerprint",
+      "passed": true,
+      "verified": false,
+      "message": "NOT VERIFIED (informational-pass): the target does not declare requiresBrowserTLS/antiBot, so no browser-realistic TLS fingerprint was measured. This flag comes from the server's own lab.launch.json, so its absence is a declaration, not evidence."
+    },
+    {
+      "gate": "credential-scan",
+      "passed": true,
+      "message": "scanned 7 file(s), no hardcoded credentials found",
+      "detail": []
+    },
+    {
+      "gate": "callability",
+      "passed": true,
+      "message": "all 4 invokable tool(s) returned a well-formed JSON-RPC result or auth-error",
+      "detail": [
+        {
+          "tool": "akamai_account_overview",
+          "wellFormed": true,
+          "isError": false,
+          "note": "returned a well-formed result"
+        },
+        {
+          "tool": "akamai_list_operations",
+          "wellFormed": true,
+          "isError": false,
+          "note": "returned a well-formed result"
+        },
+        {
+          "tool": "akamai_raw_request",
+          "wellFormed": true,
+          "isError": true,
+          "note": "returned isError:true (acceptable — credential-free/auth-error path)"
+        },
+        {
+          "tool": "akamai_registry_stats",
+          "wellFormed": true,
+          "isError": false,
+          "note": "returned a well-formed result"
+        }
+      ]
+    },
+    {
+      "gate": "precision",
+      "passed": true,
+      "message": "all invoked tools resolved to a known op — no 404s",
+      "detail": []
+    },
+    {
+      "gate": "coverage",
+      "passed": true,
+      "message": "coverage manifest valid (100% coverage, basis=observed, 4 op(s))",
+      "detail": {
+        "basis": "observed",
+        "coverage_pct": 100,
+        "ops": [
+          {
+            "path": "/*",
+            "method": "ANY",
+            "tool": "akamai_raw_request",
+            "justification": "Universal executor. Dispatches any of the 1145 catalogued Akamai operations in the embedded registry by tool name, so a single MCP tool covers the whole surface rather than one tool per operation."
+          },
+          {
+            "path": "/registry/operations",
+            "method": "GET",
+            "tool": "akamai_list_operations",
+            "justification": "Local registry query. Discovers operation tool names for akamai_raw_request; served from the embedded registry, no outbound call."
+          },
+          {
+            "path": "/registry/stats",
+            "method": "GET",
+            "tool": "akamai_registry_stats",
+            "justification": "Local registry query. Coverage statistics from the embedded registry, no outbound call."
+          },
+          {
+            "path": "/identity-management/v3/user-admin/groups",
+            "method": "GET",
+            "tool": "akamai_account_overview",
+            "justification": "Bounded convenience composite. Fetches user profile, contracts, and groups in one call."
+          }
+        ]
+      }
+    },
+    {
+      "gate": "rate-limiter",
+      "passed": true,
+      "verified": false,
+      "message": "NOT VERIFIED (presence check only): \"akamai-mcp\" is known-rate-limited and a limiter marker was found in the generated server, but this gate greps for the import; it does not prove the limiter is wired into the request path or correctly budgeted."
+    }
+  ],
+  "residualUnverifiedSurface": [
+    "semantic correctness of tool behavior (the Lab checks shape/protocol, not business logic)",
+    "write-path safety beyond destructiveHint/idempotentHint annotation presence",
+    "live WAF/anti-bot acceptance at the real target — the wire-fingerprint gate is necessary, not sufficient, for real-target acceptance",
+    "auth scopes / permission boundaries granted by the operator's captured session"
+  ],
+  "unverifiedGates": [
+    "wire-fingerprint",
+    "rate-limiter"
+  ],
+  "live_acceptance_last_verified": null
+}

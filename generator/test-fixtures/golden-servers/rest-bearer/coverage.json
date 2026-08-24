@@ -1,0 +1,9 @@
+{
+  "basis": "spec",
+  "coverage_pct": 100,
+  "ops": [
+    { "path": "/items", "method": "GET", "tool": "listItems" },
+    { "path": "/items", "method": "POST", "tool": "createItem" },
+    { "path": "/items/{itemId}", "method": "GET", "tool": "getItem" }
+  ]
+}

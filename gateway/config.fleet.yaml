@@ -1,0 +1,285 @@
+# MCP Gateway — ToolHive fleet configuration.
+# All THV containers are auto-ingested from ~/.config/mcpu/config.generated.json
+# which is populated with current ports from `thv list`.
+# No hardcoded ports — they change on container restart.
+
+gateway:
+  port: 3100
+  host: "127.0.0.1"
+  name: "mcp-gateway"
+  log_level: "warn"  # capped from "info" 2026-06-24: prevents health-check reconnect spam from ballooning the log (INC: 1GB gateway.out.log)
+  tool_prefix: ""
+  tool_exposure: "mux"  # schema default is now mux — matches pre-hardening effective value; no behavior change.
+  streamable_http_stateless: true
+  streamable_http_json_response: true
+  # Disabled 2026-07-28 as incident mitigation. A cold-cache semantic search embeds the
+  # whole fleet tool set (~490 tools); even chunked, that blocks the event loop well past
+  # fleetd's ~6s health tolerance, so the supervisor kills the gateway mid-embed. Every
+  # respawn starts cold, so the next search repeats it: a self-sustaining restart loop
+  # (45 kills in 10 minutes). Keyword ranking still serves search. Re-enable once the
+  # embed yields to the event loop between batches, or once fleetd's health tolerance ships.
+  search_semantic: false
+
+fleet:
+  enabled: true
+  toolhive:
+    docker_ps: true
+    endpoint_probe: true
+    probe_timeout_ms: 750
+    auto_ingest: true
+    ingest_static_mcpu_config: true
+    ingest_namespace_prefix: ""
+    # Skip non-MCP and non-functional entries
+    ingest_skip:
+      - mcpu
+      - inspector
+      - hermes
+      - atlassian
+      - ms365
+      - az-teams
+      # Migrated to Go (Docker twins removed via `thv rm`). Skip so a future
+      # re-run container can't re-ingest under the name the Go backend now owns.
+      - shodan
+      - github
+      - stash
+      - atlassian-api-key
+      - servicenow
+      - tufin
+      # Added 2026-07-28. The retired akamai-mcp twin was still being ingested and
+      # retried on every sweep. It also has 3 WRITE tools classified Tier-A (model
+      # self-confirmable), whereas everything the Go server reaches is Tier-B, so a
+      # twin restart would silently reopen the looser path to the same account.
+      - akamai
+
+backends:
+  # IMPORTANT for a fresh install: every `url:` below is a LOOPBACK address to a
+  # binary that fleetd supervises on this machine, never the vendor's own site.
+  # It never needs to change. The thing you DO need to supply, per backend, is
+  # that binary's OWN tenant/instance URL and credential, which it reads from
+  # its environment (or from Hermes) at process start, not from this file. A
+  # backend with no credential configured simply fails its own health/auth
+  # check and every one of its tools falls through to the fail-closed
+  # UNCLASSIFIED gate; it does not expose a working default. See each block's
+  # comment for what to set and where.
+
+  # Unified M365 MCP — 137 tools (Teams, Mail, Calendar, Planner, To-Do, OneDrive, Flow, Contacts).
+  # Requires your own Microsoft 365 tenant: an Entra ID (Azure AD) app registration
+  # and its tenant ID plus client credentials, configured on this server's own
+  # process, not here. Replace 8365 only if you rebind the server to another port.
+  az-teams:
+    transport: http
+    url: "http://127.0.0.1:8365/mcp"
+    namespace: "az_teams"
+    enabled: true
+    restart_policy: "on-failure"
+    max_restarts: 3
+    connect_timeout_ms: 30000
+
+  # Shodan Go pilot (Phase 0, Docker-to-Go migration). Static Go binary
+  # mcp-fleet/servers/cmd/shodan-mcp, supervised by fleetd on static port 42011,
+  # served over streamable-http. Suffixed name avoids colliding with the ToolHive
+  # "shodan" backend during A/B soak. Read-only; see manifests/shodan-go.json.
+  # Shodan has one fixed public endpoint (no per-user subdomain): supply your own
+  # SHODAN_API_KEY to this server's process.
+  shodan-go:
+    transport: http
+    url: "http://127.0.0.1:42011/mcp"
+    namespace: "shodan"
+    enabled: true
+    restart_policy: "on-failure"
+    max_restarts: 3
+    connect_timeout_ms: 30000
+
+  # GitHub has one fixed public endpoint (github.com), not a per-tenant subdomain.
+  # Supply your own GITHUB_TOKEN (a personal access token or GitHub App token) to
+  # this server's process; only override its base URL if you point it at a
+  # GitHub Enterprise Server instance instead of github.com.
+  github-go:
+    transport: http
+    url: "http://127.0.0.1:42012/mcp"
+    namespace: "github"
+    enabled: true
+    restart_policy: "on-failure"
+    max_restarts: 3
+    connect_timeout_ms: 30000
+
+  # Figma has one fixed public endpoint (api.figma.com), not a per-tenant
+  # subdomain. Supply your own Figma personal access token to this server's
+  # process.
+  figma-go:
+    transport: http
+    url: "http://127.0.0.1:42013/mcp"
+    namespace: "figma_go"
+    enabled: true
+    restart_policy: "on-failure"
+    max_restarts: 3
+    connect_timeout_ms: 30000
+
+  # Stash (Bitbucket Server), a self-hosted product: point this server's process
+  # at YOUR OWN Bitbucket Server base URL plus a personal access token. There is
+  # no usable default; every Stash/Bitbucket Server install has its own hostname.
+  stash-go:
+    transport: http
+    url: "http://127.0.0.1:42014/mcp"
+    namespace: "stash"
+    enabled: true
+    restart_policy: "on-failure"
+    max_restarts: 3
+    connect_timeout_ms: 30000
+
+  # Atlassian Cloud (Jira/Confluence): point this server's process at YOUR OWN
+  # site via ATLASSIAN_BASE_URL (e.g. https://your-domain.atlassian.net) plus
+  # ATLASSIAN_API_KEY/ATLASSIAN_TOKEN (or HERMES_URL + HERMES_CLIENT_TOKEN to
+  # resolve the credential from a Hermes broker instead). There is no usable
+  # default; every Atlassian Cloud site has its own subdomain.
+  atlassian-go:
+    transport: http
+    url: "http://127.0.0.1:42015/mcp"
+    namespace: "atlassian"
+    enabled: true
+    restart_policy: "on-failure"
+    max_restarts: 3
+    connect_timeout_ms: 30000
+
+  # Netskope, a tenant-specific SaaS console (each tenant has its own console
+  # hostname): point this server's process at YOUR OWN tenant base URL plus your
+  # own API token. There is no usable default.
+  netskope-go:
+    transport: http
+    url: "http://127.0.0.1:42016/mcp"
+    namespace: "netskope_go"
+    enabled: true
+    restart_policy: "on-failure"
+    max_restarts: 3
+    connect_timeout_ms: 30000
+
+  # Copilot Studio — DISABLED 2026-05-28 per operator directive: NEVER stdio.
+  # stdio backends deadlock under gateway management (the pipe handshake hangs),
+  # fail on every connect, and waste tokens each time a client retries. The only
+  # supported transport in this fleet is streamable-http. Re-enable ONLY after
+  # this server is re-fronted behind http — wrap dist/index.js in a streamable
+  # -http transport and point `url:` at it, matching the az-teams pattern above.
+  #
+  # copilot-studio:
+  #   transport: stdio          <-- PROHIBITED: stdio deadlocks under gateway management
+  #   command: "node"
+  #   args: ["/home/user/Scripts/mcp-servers/copilot-studio-mcp/dist/index.js"]
+  #   namespace: "copilot-studio"
+  #   enabled: false
+  #   restart_policy: "on-failure"
+  #   max_restarts: 3
+
+  # ServiceNow, a per-customer instance (each customer has its own instance
+  # hostname): point this server's process at YOUR OWN instance via
+  # SERVICENOW_INSTANCE_URL (e.g. https://your-instance.service-now.com) plus
+  # SERVICENOW_BASIC_AUTH (or SERVICENOW_USERNAME + SERVICENOW_PASSWORD) for
+  # basic auth, or SERVICENOW_CLIENT_ID + SERVICENOW_CLIENT_SECRET for OAuth2,
+  # or HERMES_URL + HERMES_CLIENT_TOKEN for a Hermes-brokered session. There is
+  # no usable default; every ServiceNow instance has its own hostname.
+  servicenow-go:
+    transport: http
+    url: "http://127.0.0.1:42018/mcp"
+    namespace: "servicenow"
+    enabled: true
+    restart_policy: "on-failure"
+    max_restarts: 3
+    connect_timeout_ms: 30000
+
+  # Tufin SecureTrack/SecureChange, typically self-hosted: point this server's
+  # process at YOUR OWN instance base URL plus your own credential. There is no
+  # usable default.
+  tufin-go:
+    transport: http
+    url: "http://127.0.0.1:42019/mcp"
+    namespace: "tufin"
+    enabled: true
+    restart_policy: "on-failure"
+    max_restarts: 3
+    connect_timeout_ms: 30000
+
+  # Venafi (TLS Protect Cloud or self-hosted TPP): point this server's process
+  # at YOUR OWN tenant/instance base URL plus your own API key. There is no
+  # usable default.
+  venafi-go:
+    transport: http
+    url: "http://127.0.0.1:42020/mcp"
+    namespace: "venafi_go"
+    enabled: true
+    restart_policy: "on-failure"
+    max_restarts: 3
+    connect_timeout_ms: 30000
+
+  # Akamai as a native Go server under thesun (port 42021), replacing the retired
+  # ToolHive/Docker akamai-mcp on 20664. Signs every request itself with EdgeGrid
+  # EG1-HMAC-SHA256 resolved from ~/.edgerc; no credential lives in this config.
+  # Requires YOUR OWN Akamai account: set AKAMAI_HOST + AKAMAI_CLIENT_TOKEN +
+  # AKAMAI_CLIENT_SECRET + AKAMAI_ACCESS_TOKEN on this server's process (or a
+  # ~/.edgerc file, or HERMES_URL + HERMES_CLIENT_TOKEN with the four fields
+  # enrolled as one Hermes account). There is no usable default.
+  # 7 tools front a 1145-operation embedded registry (622 GET, 244 POST, 184 PUT,
+  # 84 DELETE, 8 PATCH, 3 HEAD), so akamai_raw_request is the universal executor.
+  # manifests/akamai-go.json pins it to safety_class PRODUCTION, which is Tier-B:
+  # every call needs out-of-band human approval via `thesun approve` and a model
+  # cannot self-confirm it. Do NOT weaken that to a writeGuard or a destructive
+  # annotation; those are Tier-A and this tool reaches WAF-rule rewrites and
+  # security-config activation. Never grant it a standing (--always) approval
+  # either: grants are scoped per tool, so one would authorize all 1145 operations.
+  #
+  # Two READ tools were added 2026-08-19 so a read-only caller never needs the
+  # executor at all. A chat bot whose tool gate denies PRODUCTION had found every
+  # route to Akamai data bolted shut, and answered by inventing a tool name that
+  # does not exist:
+  #   akamai_read_request     dispatches the same catalogue, refusing any
+  #                           operation whose catalogued method is not GET, plus
+  #                           a two-entry named allowlist for the Edge
+  #                           Diagnostics error translator.
+  #   akamai_translate_error  drives that translator's submit-then-poll
+  #                           handshake, on paths fixed at compile time.
+  # manifests/akamai-go.json classifies both READ. That is a narrowing of what a
+  # caller can reach, not a loosening: akamai_raw_request stays PRODUCTION, with
+  # no exceptions and no argument-conditional carve-outs.
+  akamai-go:
+    transport: http
+    url: "http://127.0.0.1:42021/mcp"
+    namespace: "akamai_go"
+    enabled: true
+    restart_policy: "on-failure"
+    max_restarts: 3
+    connect_timeout_ms: 30000
+
+safety:
+  # Flipped 2026-06-10 (G0.3): unconfirmed gated calls are denied. Expect
+  # confirmed:true friction on WRITE-class and UNCLASSIFIED tools — that is
+  # the point. Stage individual backends through the allowlist below ONLY
+  # while their manifests are being written.
+  enforce: "blocking"
+  # Where per-backend safety manifests live. Resolved against the gateway's
+  # working directory (the bundle root under fleetd), so this repo-relative path
+  # points at <bundle>/gateway/manifests. Without it the registry defaulted to
+  # <cwd>/manifests, which under fleetd is <bundle>/manifests (nonexistent), so
+  # NO manifest loaded and every tool fell through to the fail-closed UNCLASSIFIED
+  # gate. Setting it explicitly loads the manifests for every backend.
+  manifest_dir: "gateway/manifests"
+  decision_log:
+    enabled: true
+    path: "~/.mcp-gateway/decisions.jsonl"
+  # Manifest burn-down staging: backends listed here keep the legacy fail-open
+  # default (unmanifested verb-less tool → READ). Empty = fully fail-closed.
+  # Priority backends to manifest FIRST (never allowlist these): any backend that
+  # reaches production infrastructure, an edge/CDN control plane, or a secret store.
+  unmanifested_read_allowlist: []
+  escalation:
+    # Backends whose tools are promoted to Tier-B regardless of their manifest
+    # class. akamai-go added 2026-07-28: it fronts live CDN and security-edge
+    # config, and akamai_raw_request alone reaches 520 mutating operations
+    # (184 PUT, 84 DELETE, 244 POST) including WAF-rule rewrites and security
+    # -config activation. Its manifest already pins that tool to PRODUCTION, so
+    # this changes nothing today; it is the net for a tool added later, which
+    # would otherwise land UNCLASSIFIED and therefore Tier-A (self-confirmable).
+    production_backends:
+      - akamai-go
+
+auth:
+  # Personal-fleet loopback mode. Any FQDN-reachable instance MUST run
+  # mode: "entra" with tenant_id + audience set (2026-06-10 decision).
+  mode: "none"

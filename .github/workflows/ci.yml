@@ -1,0 +1,107 @@
+name: ci
+
+# Build and test the thesun subsystems across Linux, macOS, and Windows.
+#   - gateway (Node): the MCP mux / security policy enforcement point (PEP). OS-sensitive
+#     because it exercises the approvals.json / grants.json store under %AppData%\thesun on Windows.
+#   - fleet/fleetd (Go): the process supervisor. OS-sensitive because it exercises the Windows
+#     TCP-loopback + token control channel.
+#   - generator (Node): the REST-to-MCP generator. OS-agnostic, so it runs on Linux only.
+# hermes is intentionally excluded here: it is a separate pnpm workspace owned by another
+# workstream. The gateway is npm/package-lock managed (npm ci), NOT pnpm.
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  gateway:
+    name: gateway (Node)
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        working-directory: gateway
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: gateway/package-lock.json
+
+      - name: install
+        run: npm ci
+
+      - name: build
+        run: npm run build
+
+      # Runs the full vitest suite, including test/e2e/escalation.test.ts
+      # (the earlier Windows-only exclusion is gone; the test passes clean).
+      - name: test
+        run: npm test
+
+  fleetd:
+    name: fleetd (Go)
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        working-directory: fleet/fleetd
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: stable
+          cache-dependency-path: fleet/fleetd/go.sum
+
+      - name: vet
+        run: go vet ./...
+
+      - name: build
+        run: go build ./...
+
+      - name: test
+        run: go test ./...
+
+  generator:
+    name: generator (Node, ubuntu-latest)
+    runs-on: ubuntu-latest
+    # continue-on-error: the generator job is informational until the external
+    # node-vault-mcp dependency below is resolved. generator/package.json depends
+    # on node-vault-mcp via a local "file:../../../Projects/node-vault-mcp" path
+    # that lives OUTSIDE this repo, and generator/src/security/*.ts imports it
+    # (VaultStore). Until that dependency is vendored, published to a registry, or
+    # removed (Hermes-vault migration), `npm ci` cannot resolve it in a clean CI
+    # checkout, so this job would go red. Marking it non-blocking keeps the rest of
+    # CI honest without faking a green run. Tracked as CI-2b in docs/ACTION-ITEMS.md.
+    continue-on-error: true
+    defaults:
+      run:
+        working-directory: generator
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: generator/package-lock.json
+
+      - name: install
+        run: npm ci
+
+      - name: build
+        run: npm run build
+
+      - name: test
+        run: npm test

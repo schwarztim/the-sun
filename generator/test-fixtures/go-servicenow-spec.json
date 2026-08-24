@@ -1,0 +1,1620 @@
+{
+  "name": "servicenow",
+  "version": "dev",
+  "baseUrl": "https://example.service-now.com",
+  "authScheme": "cookie-session",
+  "hermesTokenService": "servicenow",
+  "hermesTokenScheme": "session",
+  "defaultPort": "42018",
+  "endpoints": [
+    {
+      "method": "GET",
+      "path": "/api/now/table/incident",
+      "operationId": "list_incident",
+      "description": "List incident records from the ServiceNow Table API. Use sysparm_query to filter (encoded query, e.g. 'active=true^priority=1') and sysparm_limit to bound the result set. Read-only.",
+      "parameters": [
+        {
+          "name": "sysparm_limit",
+          "in": "query",
+          "required": false,
+          "description": "max records to return (default 10)"
+        },
+        {
+          "name": "sysparm_query",
+          "in": "query",
+          "required": false,
+          "description": "encoded query filter, e.g. 'active=true^ORDERBYDESCsys_created_on'"
+        },
+        {
+          "name": "sysparm_fields",
+          "in": "query",
+          "required": false,
+          "description": "comma-separated field list to return"
+        },
+        {
+          "name": "sysparm_display_value",
+          "in": "query",
+          "required": false,
+          "description": "true|false|all \u2014 return display values for reference fields"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/now/table/incident/{sysId}",
+      "operationId": "get_incident",
+      "description": "Get a single incident record by its sys_id. Requires a sysId \u2014 call servicenow_list_incident first to obtain one from a result row. Read-only.",
+      "parameters": [
+        {
+          "name": "sysId",
+          "in": "path",
+          "required": true,
+          "description": "the record sys_id \u2014 call the corresponding list tool first to obtain one"
+        },
+        {
+          "name": "sysparm_fields",
+          "in": "query",
+          "required": false,
+          "description": "comma-separated field list"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/now/table/change_request",
+      "operationId": "list_change_request",
+      "description": "List change_request records from the ServiceNow Table API. Use sysparm_query to filter and sysparm_limit to bound results. Read-only.",
+      "parameters": [
+        {
+          "name": "sysparm_limit",
+          "in": "query",
+          "required": false,
+          "description": "max records to return"
+        },
+        {
+          "name": "sysparm_query",
+          "in": "query",
+          "required": false,
+          "description": "encoded query filter"
+        },
+        {
+          "name": "sysparm_fields",
+          "in": "query",
+          "required": false,
+          "description": "comma-separated field list"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/now/table/change_request/{sysId}",
+      "operationId": "get_change_request",
+      "description": "Get a single change_request record by its sys_id. Requires a sysId \u2014 call servicenow_list_change_request first. Read-only.",
+      "parameters": [
+        {
+          "name": "sysId",
+          "in": "path",
+          "required": true,
+          "description": "the record sys_id \u2014 call the corresponding list tool first to obtain one"
+        },
+        {
+          "name": "sysparm_fields",
+          "in": "query",
+          "required": false,
+          "description": "comma-separated field list"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/now/table/change_task",
+      "operationId": "list_change_task",
+      "description": "List change_task records (tasks under change requests) from the Table API. Filter by parent change with sysparm_query='change_request=<sysId>'. Read-only.",
+      "parameters": [
+        {
+          "name": "sysparm_limit",
+          "in": "query",
+          "required": false,
+          "description": "max records to return"
+        },
+        {
+          "name": "sysparm_query",
+          "in": "query",
+          "required": false,
+          "description": "encoded query filter"
+        },
+        {
+          "name": "sysparm_fields",
+          "in": "query",
+          "required": false,
+          "description": "comma-separated field list"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/now/table/problem",
+      "operationId": "list_problem",
+      "description": "List problem records from the ServiceNow Table API. Use sysparm_query to filter and sysparm_limit to bound results. Read-only.",
+      "parameters": [
+        {
+          "name": "sysparm_limit",
+          "in": "query",
+          "required": false,
+          "description": "max records to return"
+        },
+        {
+          "name": "sysparm_query",
+          "in": "query",
+          "required": false,
+          "description": "encoded query filter"
+        },
+        {
+          "name": "sysparm_fields",
+          "in": "query",
+          "required": false,
+          "description": "comma-separated field list"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/now/table/problem/{sysId}",
+      "operationId": "get_problem",
+      "description": "Get a single problem record by its sys_id. Requires a sysId \u2014 call servicenow_list_problem first. Read-only.",
+      "parameters": [
+        {
+          "name": "sysId",
+          "in": "path",
+          "required": true,
+          "description": "the record sys_id \u2014 call the corresponding list tool first to obtain one"
+        },
+        {
+          "name": "sysparm_fields",
+          "in": "query",
+          "required": false,
+          "description": "comma-separated field list"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/now/table/sc_request",
+      "operationId": "list_request",
+      "description": "List sc_request (service catalog request / REQ) records from the Table API. Read-only.",
+      "parameters": [
+        {
+          "name": "sysparm_limit",
+          "in": "query",
+          "required": false,
+          "description": "max records to return"
+        },
+        {
+          "name": "sysparm_query",
+          "in": "query",
+          "required": false,
+          "description": "encoded query filter"
+        },
+        {
+          "name": "sysparm_fields",
+          "in": "query",
+          "required": false,
+          "description": "comma-separated field list"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/now/table/sc_req_item",
+      "operationId": "list_requested_item",
+      "description": "List sc_req_item (requested item / RITM) records from the Table API. Filter by parent request with sysparm_query='request=<sysId>'. Read-only.",
+      "parameters": [
+        {
+          "name": "sysparm_limit",
+          "in": "query",
+          "required": false,
+          "description": "max records to return"
+        },
+        {
+          "name": "sysparm_query",
+          "in": "query",
+          "required": false,
+          "description": "encoded query filter"
+        },
+        {
+          "name": "sysparm_fields",
+          "in": "query",
+          "required": false,
+          "description": "comma-separated field list"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/now/table/kb_knowledge",
+      "operationId": "list_knowledge",
+      "description": "List kb_knowledge (knowledge base article) records from the Table API. Use sysparm_query to filter by workflow_state or text. Read-only.",
+      "parameters": [
+        {
+          "name": "sysparm_limit",
+          "in": "query",
+          "required": false,
+          "description": "max records to return"
+        },
+        {
+          "name": "sysparm_query",
+          "in": "query",
+          "required": false,
+          "description": "encoded query filter"
+        },
+        {
+          "name": "sysparm_fields",
+          "in": "query",
+          "required": false,
+          "description": "comma-separated field list"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/now/table/kb_knowledge/{sysId}",
+      "operationId": "get_knowledge",
+      "description": "Get a single kb_knowledge article by its sys_id. Requires a sysId \u2014 call servicenow_list_knowledge first. Read-only.",
+      "parameters": [
+        {
+          "name": "sysId",
+          "in": "path",
+          "required": true,
+          "description": "the record sys_id \u2014 call the corresponding list tool first to obtain one"
+        },
+        {
+          "name": "sysparm_fields",
+          "in": "query",
+          "required": false,
+          "description": "comma-separated field list"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/now/table/sys_user",
+      "operationId": "list_sys_user",
+      "description": "List sys_user records from the ServiceNow Table API. Use sysparm_query to filter by name, email, or department. Read-only.",
+      "parameters": [
+        {
+          "name": "sysparm_limit",
+          "in": "query",
+          "required": false,
+          "description": "max records to return"
+        },
+        {
+          "name": "sysparm_query",
+          "in": "query",
+          "required": false,
+          "description": "encoded query filter, e.g. 'email=user@example.com'"
+        },
+        {
+          "name": "sysparm_fields",
+          "in": "query",
+          "required": false,
+          "description": "comma-separated field list"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/now/table/sys_user/{sysId}",
+      "operationId": "get_sys_user",
+      "description": "Get a single sys_user record by its sys_id. Requires a sysId \u2014 call servicenow_list_sys_user first. Read-only.",
+      "parameters": [
+        {
+          "name": "sysId",
+          "in": "path",
+          "required": true,
+          "description": "the record sys_id \u2014 call the corresponding list tool first to obtain one"
+        },
+        {
+          "name": "sysparm_fields",
+          "in": "query",
+          "required": false,
+          "description": "comma-separated field list"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/now/table/sys_user_group",
+      "operationId": "list_group",
+      "description": "List sys_user_group (assignment group) records from the Table API. Use sysparm_query to filter by name. Read-only.",
+      "parameters": [
+        {
+          "name": "sysparm_limit",
+          "in": "query",
+          "required": false,
+          "description": "max records to return"
+        },
+        {
+          "name": "sysparm_query",
+          "in": "query",
+          "required": false,
+          "description": "encoded query filter"
+        },
+        {
+          "name": "sysparm_fields",
+          "in": "query",
+          "required": false,
+          "description": "comma-separated field list"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/now/table/{table}",
+      "operationId": "query_table",
+      "description": "Generic Table API read \u2014 list records from ANY ServiceNow table. Requires a table name. Powerful catch-all covering tables without a dedicated tool (e.g. cmdb_ci, sc_task, incident_task, sys_journal_field). Read-only.",
+      "parameters": [
+        {
+          "name": "table",
+          "in": "path",
+          "required": true,
+          "description": "the ServiceNow table name, e.g. 'incident', 'change_request', 'cmdb_ci', 'sc_task'"
+        },
+        {
+          "name": "sysparm_limit",
+          "in": "query",
+          "required": false,
+          "description": "max records to return (default 10)"
+        },
+        {
+          "name": "sysparm_query",
+          "in": "query",
+          "required": false,
+          "description": "encoded query filter, e.g. 'active=true^ORDERBYDESCsys_created_on'"
+        },
+        {
+          "name": "sysparm_fields",
+          "in": "query",
+          "required": false,
+          "description": "comma-separated field list to return"
+        },
+        {
+          "name": "sysparm_display_value",
+          "in": "query",
+          "required": false,
+          "description": "true|false|all \u2014 return display values for reference fields"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/now/table/{table}/{sysId}",
+      "operationId": "get_record",
+      "description": "Generic Table API read \u2014 get a single record by sys_id from ANY table. Requires a table name and a sysId. Call servicenow_query_table first to obtain a sysId. Read-only.",
+      "parameters": [
+        {
+          "name": "table",
+          "in": "path",
+          "required": true,
+          "description": "the ServiceNow table name"
+        },
+        {
+          "name": "sysId",
+          "in": "path",
+          "required": true,
+          "description": "the record sys_id (from query_table)"
+        },
+        {
+          "name": "sysparm_fields",
+          "in": "query",
+          "required": false,
+          "description": "comma-separated field list"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/now/table/incident",
+      "operationId": "create_incident",
+      "description": "Create a new incident record. WRITE operation \u2014 provide the new incident fields (short_description, description, urgency, impact, caller_id, etc.) as a JSON object in the request body.",
+      "parameters": []
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/now/table/incident/{sysId}",
+      "operationId": "update_incident",
+      "description": "Update an existing incident record. WRITE operation. Requires a sysId \u2014 call servicenow_list_incident first. Provide the fields to change (state, work_notes, comments, assigned_to, resolution_code, resolution_notes, etc.) as a JSON object in the request body. Also covers add-comment and resolve by setting the relevant fields.",
+      "parameters": [
+        {
+          "name": "sysId",
+          "in": "path",
+          "required": true,
+          "description": "the incident sys_id to update (from list_incident)"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/now/table/change_request",
+      "operationId": "create_change_request",
+      "description": "Create a new change_request record. WRITE operation \u2014 provide fields (short_description, type, category, assignment_group, start_date, end_date, justification, implementation_plan, backout_plan, test_plan, etc.) as a JSON object in the request body.",
+      "parameters": []
+    },
+    {
+      "method": "POST",
+      "path": "/api/now/table/problem",
+      "operationId": "create_problem",
+      "description": "Create a new problem record. WRITE operation \u2014 provide fields (short_description, description, category, assignment_group, cmdb_ci, etc.) as a JSON object in the request body.",
+      "parameters": []
+    },
+    {
+      "method": "POST",
+      "path": "/api/now/table/{table}",
+      "operationId": "create_record",
+      "description": "Create a new record in ANY ServiceNow table. WRITE operation. Requires a table name. Provide the new record fields as a JSON object in the request body.",
+      "parameters": [
+        {
+          "name": "table",
+          "in": "path",
+          "required": true,
+          "description": "the ServiceNow table name"
+        }
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/now/table/{table}/{sysId}",
+      "operationId": "update_record",
+      "description": "Update an existing record in ANY ServiceNow table. WRITE operation. Requires a table name and a sysId \u2014 call servicenow_query_table first. Provide the fields to change as a JSON object in the request body.",
+      "parameters": [
+        {
+          "name": "table",
+          "in": "path",
+          "required": true,
+          "description": "the ServiceNow table name"
+        },
+        {
+          "name": "sysId",
+          "in": "path",
+          "required": true,
+          "description": "the record sys_id to update (from query_table)"
+        }
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/now/table/{table}/{sysId}",
+      "operationId": "delete_record",
+      "description": "Delete a record from ANY ServiceNow table by sys_id. WRITE operation. Requires a table name and a sysId \u2014 call servicenow_query_table first to obtain the sys_id.",
+      "parameters": [
+        {
+          "name": "table",
+          "in": "path",
+          "required": true,
+          "description": "the ServiceNow table name"
+        },
+        {
+          "name": "sysId",
+          "in": "path",
+          "required": true,
+          "description": "the record sys_id to delete (from query_table)"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/now/table/sc_cat_item",
+      "operationId": "list_catalog_item",
+      "description": "List sc_cat_item (service catalog item) records from the Table API. Use sysparm_query to filter by category or name. Read-only.",
+      "parameters": [
+        {
+          "name": "sysparm_limit",
+          "in": "query",
+          "required": false,
+          "description": "max records to return"
+        },
+        {
+          "name": "sysparm_query",
+          "in": "query",
+          "required": false,
+          "description": "encoded query filter"
+        },
+        {
+          "name": "sysparm_fields",
+          "in": "query",
+          "required": false,
+          "description": "comma-separated field list"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/now/table/sc_cat_item/{sysId}",
+      "operationId": "get_catalog_item",
+      "description": "Get a single sc_cat_item (catalog item) by its sys_id. Requires a sysId \u2014 call servicenow_list_catalog_item first. Read-only.",
+      "parameters": [
+        {
+          "name": "sysId",
+          "in": "path",
+          "required": true,
+          "description": "the record sys_id \u2014 call the corresponding list tool first to obtain one"
+        },
+        {
+          "name": "sysparm_fields",
+          "in": "query",
+          "required": false,
+          "description": "comma-separated field list"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/now/table/sc_category",
+      "operationId": "list_catalog_category",
+      "description": "List sc_category (service catalog category) records from the Table API. Read-only.",
+      "parameters": [
+        {
+          "name": "sysparm_limit",
+          "in": "query",
+          "required": false,
+          "description": "max records to return"
+        },
+        {
+          "name": "sysparm_query",
+          "in": "query",
+          "required": false,
+          "description": "encoded query filter"
+        },
+        {
+          "name": "sysparm_fields",
+          "in": "query",
+          "required": false,
+          "description": "comma-separated field list"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/now/table/item_option_new",
+      "operationId": "list_catalog_item_variable",
+      "description": "List item_option_new (catalog item variables/questions) records. Filter by parent item with sysparm_query='cat_item=<sysId>' to obtain the required fields for a request. Read-only.",
+      "parameters": [
+        {
+          "name": "sysparm_limit",
+          "in": "query",
+          "required": false,
+          "description": "max records to return"
+        },
+        {
+          "name": "sysparm_query",
+          "in": "query",
+          "required": false,
+          "description": "encoded query filter"
+        },
+        {
+          "name": "sysparm_fields",
+          "in": "query",
+          "required": false,
+          "description": "comma-separated field list"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/now/table/cmdb_ci",
+      "operationId": "list_cmdb_ci",
+      "description": "List cmdb_ci (configuration item) records from the Table API. Use sysparm_query to filter by name or class. Read-only.",
+      "parameters": [
+        {
+          "name": "sysparm_limit",
+          "in": "query",
+          "required": false,
+          "description": "max records to return"
+        },
+        {
+          "name": "sysparm_query",
+          "in": "query",
+          "required": false,
+          "description": "encoded query filter"
+        },
+        {
+          "name": "sysparm_fields",
+          "in": "query",
+          "required": false,
+          "description": "comma-separated field list"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/now/table/cmdb_rel_ci",
+      "operationId": "list_cmdb_relationship",
+      "description": "List cmdb_rel_ci (CI relationship) records. Filter by CI with sysparm_query='parent=<sysId>' or 'child=<sysId>'. Read-only.",
+      "parameters": [
+        {
+          "name": "sysparm_limit",
+          "in": "query",
+          "required": false,
+          "description": "max records to return"
+        },
+        {
+          "name": "sysparm_query",
+          "in": "query",
+          "required": false,
+          "description": "encoded query filter"
+        },
+        {
+          "name": "sysparm_fields",
+          "in": "query",
+          "required": false,
+          "description": "comma-separated field list"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/now/cmdb/instance/{className}",
+      "operationId": "list_cmdb_instance",
+      "description": "List CMDB instances of a class via the CMDB Instance API (/api/now/cmdb/instance). Requires a className (e.g. 'cmdb_ci_server'). Read-only.",
+      "parameters": [
+        {
+          "name": "className",
+          "in": "path",
+          "required": true,
+          "description": "the CMDB class name, e.g. 'cmdb_ci_server'"
+        },
+        {
+          "name": "sysparm_limit",
+          "in": "query",
+          "required": false,
+          "description": "max records to return"
+        },
+        {
+          "name": "sysparm_query",
+          "in": "query",
+          "required": false,
+          "description": "encoded query filter"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/now/table/cmdb_class_info",
+      "operationId": "list_cmdb_class",
+      "description": "List CMDB CI classes. Read-only. (Backed by sys_db_object-derived class metadata; use query_table on sys_db_object for the authoritative class list.)",
+      "parameters": [
+        {
+          "name": "sysparm_limit",
+          "in": "query",
+          "required": false,
+          "description": "max records to return"
+        },
+        {
+          "name": "sysparm_query",
+          "in": "query",
+          "required": false,
+          "description": "encoded query filter"
+        },
+        {
+          "name": "sysparm_fields",
+          "in": "query",
+          "required": false,
+          "description": "comma-separated field list"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/now/table/sys_user_grmember",
+      "operationId": "list_group_member",
+      "description": "List sys_user_grmember (group membership) records. Filter by group with sysparm_query='group=<sysId>' or by user with 'user=<sysId>'. Read-only.",
+      "parameters": [
+        {
+          "name": "sysparm_limit",
+          "in": "query",
+          "required": false,
+          "description": "max records to return"
+        },
+        {
+          "name": "sysparm_query",
+          "in": "query",
+          "required": false,
+          "description": "encoded query filter"
+        },
+        {
+          "name": "sysparm_fields",
+          "in": "query",
+          "required": false,
+          "description": "comma-separated field list"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/now/table/sys_user_has_role",
+      "operationId": "list_user_role",
+      "description": "List sys_user_has_role (user role grant) records. Filter by user with sysparm_query='user=<sysId>'. Read-only.",
+      "parameters": [
+        {
+          "name": "sysparm_limit",
+          "in": "query",
+          "required": false,
+          "description": "max records to return"
+        },
+        {
+          "name": "sysparm_query",
+          "in": "query",
+          "required": false,
+          "description": "encoded query filter"
+        },
+        {
+          "name": "sysparm_fields",
+          "in": "query",
+          "required": false,
+          "description": "comma-separated field list"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/now/table/sys_user_role",
+      "operationId": "list_role",
+      "description": "List sys_user_role (role definition) records from the Table API. Read-only.",
+      "parameters": [
+        {
+          "name": "sysparm_limit",
+          "in": "query",
+          "required": false,
+          "description": "max records to return"
+        },
+        {
+          "name": "sysparm_query",
+          "in": "query",
+          "required": false,
+          "description": "encoded query filter"
+        },
+        {
+          "name": "sysparm_fields",
+          "in": "query",
+          "required": false,
+          "description": "comma-separated field list"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/now/table/sys_security_acl",
+      "operationId": "list_acl",
+      "description": "List sys_security_acl (access control rule) records. Filter by table/operation via sysparm_query. Read-only.",
+      "parameters": [
+        {
+          "name": "sysparm_limit",
+          "in": "query",
+          "required": false,
+          "description": "max records to return"
+        },
+        {
+          "name": "sysparm_query",
+          "in": "query",
+          "required": false,
+          "description": "encoded query filter"
+        },
+        {
+          "name": "sysparm_fields",
+          "in": "query",
+          "required": false,
+          "description": "comma-separated field list"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/now/table/sysapproval_approver",
+      "operationId": "list_approval",
+      "description": "List sysapproval_approver (approval) records. Filter pending with sysparm_query='state=requested' and by approver with 'approver=<sysId>'. Read-only. (Approve/reject is a WRITE PATCH via update_record setting state=approved|rejected.)",
+      "parameters": [
+        {
+          "name": "sysparm_limit",
+          "in": "query",
+          "required": false,
+          "description": "max records to return"
+        },
+        {
+          "name": "sysparm_query",
+          "in": "query",
+          "required": false,
+          "description": "encoded query filter"
+        },
+        {
+          "name": "sysparm_fields",
+          "in": "query",
+          "required": false,
+          "description": "comma-separated field list"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/now/table/task",
+      "operationId": "list_task",
+      "description": "List task records (base task table \u2014 incidents, changes, RITMs, etc.) from the Table API. Filter assigned work with sysparm_query='assigned_to=<sysId>^active=true'. Read-only.",
+      "parameters": [
+        {
+          "name": "sysparm_limit",
+          "in": "query",
+          "required": false,
+          "description": "max records to return"
+        },
+        {
+          "name": "sysparm_query",
+          "in": "query",
+          "required": false,
+          "description": "encoded query filter"
+        },
+        {
+          "name": "sysparm_fields",
+          "in": "query",
+          "required": false,
+          "description": "comma-separated field list"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/now/table/contract_sla",
+      "operationId": "list_sla",
+      "description": "List contract_sla (SLA definition) records from the Table API. Read-only.",
+      "parameters": [
+        {
+          "name": "sysparm_limit",
+          "in": "query",
+          "required": false,
+          "description": "max records to return"
+        },
+        {
+          "name": "sysparm_query",
+          "in": "query",
+          "required": false,
+          "description": "encoded query filter"
+        },
+        {
+          "name": "sysparm_fields",
+          "in": "query",
+          "required": false,
+          "description": "comma-separated field list"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/now/table/task_sla",
+      "operationId": "list_task_sla",
+      "description": "List task_sla (SLA records attached to tasks) from the Table API. Filter by task with sysparm_query='task=<sysId>'. Read-only.",
+      "parameters": [
+        {
+          "name": "sysparm_limit",
+          "in": "query",
+          "required": false,
+          "description": "max records to return"
+        },
+        {
+          "name": "sysparm_query",
+          "in": "query",
+          "required": false,
+          "description": "encoded query filter"
+        },
+        {
+          "name": "sysparm_fields",
+          "in": "query",
+          "required": false,
+          "description": "comma-separated field list"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/now/table/wf_workflow",
+      "operationId": "list_workflow",
+      "description": "List wf_workflow (workflow definition) records from the Table API. Read-only.",
+      "parameters": [
+        {
+          "name": "sysparm_limit",
+          "in": "query",
+          "required": false,
+          "description": "max records to return"
+        },
+        {
+          "name": "sysparm_query",
+          "in": "query",
+          "required": false,
+          "description": "encoded query filter"
+        },
+        {
+          "name": "sysparm_fields",
+          "in": "query",
+          "required": false,
+          "description": "comma-separated field list"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/now/table/wf_context",
+      "operationId": "list_workflow_context",
+      "description": "List wf_context (running workflow instance) records from the Table API. Read-only.",
+      "parameters": [
+        {
+          "name": "sysparm_limit",
+          "in": "query",
+          "required": false,
+          "description": "max records to return"
+        },
+        {
+          "name": "sysparm_query",
+          "in": "query",
+          "required": false,
+          "description": "encoded query filter"
+        },
+        {
+          "name": "sysparm_fields",
+          "in": "query",
+          "required": false,
+          "description": "comma-separated field list"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/now/table/sys_email",
+      "operationId": "list_email",
+      "description": "List sys_email (outbound/inbound email) records from the Table API. Read-only.",
+      "parameters": [
+        {
+          "name": "sysparm_limit",
+          "in": "query",
+          "required": false,
+          "description": "max records to return"
+        },
+        {
+          "name": "sysparm_query",
+          "in": "query",
+          "required": false,
+          "description": "encoded query filter"
+        },
+        {
+          "name": "sysparm_fields",
+          "in": "query",
+          "required": false,
+          "description": "comma-separated field list"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/now/table/sysevent_email_action",
+      "operationId": "list_notification",
+      "description": "List sysevent_email_action (email notification rule) records from the Table API. Read-only.",
+      "parameters": [
+        {
+          "name": "sysparm_limit",
+          "in": "query",
+          "required": false,
+          "description": "max records to return"
+        },
+        {
+          "name": "sysparm_query",
+          "in": "query",
+          "required": false,
+          "description": "encoded query filter"
+        },
+        {
+          "name": "sysparm_fields",
+          "in": "query",
+          "required": false,
+          "description": "comma-separated field list"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/now/table/sysevent",
+      "operationId": "list_event",
+      "description": "List sysevent (system event) records from the Table API. Read-only.",
+      "parameters": [
+        {
+          "name": "sysparm_limit",
+          "in": "query",
+          "required": false,
+          "description": "max records to return"
+        },
+        {
+          "name": "sysparm_query",
+          "in": "query",
+          "required": false,
+          "description": "encoded query filter"
+        },
+        {
+          "name": "sysparm_fields",
+          "in": "query",
+          "required": false,
+          "description": "comma-separated field list"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/now/table/sysevent",
+      "operationId": "create_event",
+      "description": "Create/fire a system event by inserting a sysevent record. WRITE operation \u2014 provide fields (name, instance, parm1, parm2, table) as a JSON object in the request body.",
+      "parameters": []
+    },
+    {
+      "method": "GET",
+      "path": "/api/now/table/sys_journal_field",
+      "operationId": "list_journal",
+      "description": "List sys_journal_field (work notes / comments) entries for a record. Filter with sysparm_query='element_id=<record sysId>'. Read-only.",
+      "parameters": [
+        {
+          "name": "sysparm_limit",
+          "in": "query",
+          "required": false,
+          "description": "max records to return"
+        },
+        {
+          "name": "sysparm_query",
+          "in": "query",
+          "required": false,
+          "description": "encoded query filter"
+        },
+        {
+          "name": "sysparm_fields",
+          "in": "query",
+          "required": false,
+          "description": "comma-separated field list"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/now/table/sys_audit",
+      "operationId": "list_audit",
+      "description": "List sys_audit (field-level change history) entries for a record. Filter with sysparm_query='tablename=<table>^documentkey=<record sysId>'. Read-only.",
+      "parameters": [
+        {
+          "name": "sysparm_limit",
+          "in": "query",
+          "required": false,
+          "description": "max records to return"
+        },
+        {
+          "name": "sysparm_query",
+          "in": "query",
+          "required": false,
+          "description": "encoded query filter"
+        },
+        {
+          "name": "sysparm_fields",
+          "in": "query",
+          "required": false,
+          "description": "comma-separated field list"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/now/table/sysauto_script",
+      "operationId": "list_scheduled_job",
+      "description": "List sysauto_script (scheduled script job) records from the Table API. Read-only.",
+      "parameters": [
+        {
+          "name": "sysparm_limit",
+          "in": "query",
+          "required": false,
+          "description": "max records to return"
+        },
+        {
+          "name": "sysparm_query",
+          "in": "query",
+          "required": false,
+          "description": "encoded query filter"
+        },
+        {
+          "name": "sysparm_fields",
+          "in": "query",
+          "required": false,
+          "description": "comma-separated field list"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/now/table/sys_update_set",
+      "operationId": "list_update_set",
+      "description": "List sys_update_set (update set) records from the Table API. Read-only.",
+      "parameters": [
+        {
+          "name": "sysparm_limit",
+          "in": "query",
+          "required": false,
+          "description": "max records to return"
+        },
+        {
+          "name": "sysparm_query",
+          "in": "query",
+          "required": false,
+          "description": "encoded query filter"
+        },
+        {
+          "name": "sysparm_fields",
+          "in": "query",
+          "required": false,
+          "description": "comma-separated field list"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/now/table/alm_asset",
+      "operationId": "list_asset",
+      "description": "List alm_asset (asset) records from the Table API. Filter by asset_tag/state via sysparm_query. Read-only.",
+      "parameters": [
+        {
+          "name": "sysparm_limit",
+          "in": "query",
+          "required": false,
+          "description": "max records to return"
+        },
+        {
+          "name": "sysparm_query",
+          "in": "query",
+          "required": false,
+          "description": "encoded query filter"
+        },
+        {
+          "name": "sysparm_fields",
+          "in": "query",
+          "required": false,
+          "description": "comma-separated field list"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/now/table/alm_asset/{sysId}",
+      "operationId": "get_asset",
+      "description": "Get a single alm_asset (asset) by its sys_id. Requires a sysId \u2014 call servicenow_list_asset first. Read-only.",
+      "parameters": [
+        {
+          "name": "sysId",
+          "in": "path",
+          "required": true,
+          "description": "the record sys_id \u2014 call the corresponding list tool first to obtain one"
+        },
+        {
+          "name": "sysparm_fields",
+          "in": "query",
+          "required": false,
+          "description": "comma-separated field list"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/now/table/alm_license",
+      "operationId": "list_license",
+      "description": "List alm_license (software license) records from the Table API. Read-only.",
+      "parameters": [
+        {
+          "name": "sysparm_limit",
+          "in": "query",
+          "required": false,
+          "description": "max records to return"
+        },
+        {
+          "name": "sysparm_query",
+          "in": "query",
+          "required": false,
+          "description": "encoded query filter"
+        },
+        {
+          "name": "sysparm_fields",
+          "in": "query",
+          "required": false,
+          "description": "comma-separated field list"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/now/table/alm_entitlement",
+      "operationId": "list_license_entitlement",
+      "description": "List alm_entitlement (license entitlement/allocation) records. Filter by license with sysparm_query='license=<sysId>'. Read-only.",
+      "parameters": [
+        {
+          "name": "sysparm_limit",
+          "in": "query",
+          "required": false,
+          "description": "max records to return"
+        },
+        {
+          "name": "sysparm_query",
+          "in": "query",
+          "required": false,
+          "description": "encoded query filter"
+        },
+        {
+          "name": "sysparm_fields",
+          "in": "query",
+          "required": false,
+          "description": "comma-separated field list"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/now/table/cmdb_sam_sw_install",
+      "operationId": "list_software",
+      "description": "List cmdb_sam_sw_install (software installation) records from the Table API. Read-only.",
+      "parameters": [
+        {
+          "name": "sysparm_limit",
+          "in": "query",
+          "required": false,
+          "description": "max records to return"
+        },
+        {
+          "name": "sysparm_query",
+          "in": "query",
+          "required": false,
+          "description": "encoded query filter"
+        },
+        {
+          "name": "sysparm_fields",
+          "in": "query",
+          "required": false,
+          "description": "comma-separated field list"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/now/table/ast_contract",
+      "operationId": "list_contract",
+      "description": "List ast_contract (contract) records from the Table API. Read-only.",
+      "parameters": [
+        {
+          "name": "sysparm_limit",
+          "in": "query",
+          "required": false,
+          "description": "max records to return"
+        },
+        {
+          "name": "sysparm_query",
+          "in": "query",
+          "required": false,
+          "description": "encoded query filter"
+        },
+        {
+          "name": "sysparm_fields",
+          "in": "query",
+          "required": false,
+          "description": "comma-separated field list"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/now/table/cmn_location",
+      "operationId": "list_location",
+      "description": "List cmn_location (location) records from the Table API. Read-only.",
+      "parameters": [
+        {
+          "name": "sysparm_limit",
+          "in": "query",
+          "required": false,
+          "description": "max records to return"
+        },
+        {
+          "name": "sysparm_query",
+          "in": "query",
+          "required": false,
+          "description": "encoded query filter"
+        },
+        {
+          "name": "sysparm_fields",
+          "in": "query",
+          "required": false,
+          "description": "comma-separated field list"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/now/table/cmn_department",
+      "operationId": "list_department",
+      "description": "List cmn_department (department) records from the Table API. Read-only.",
+      "parameters": [
+        {
+          "name": "sysparm_limit",
+          "in": "query",
+          "required": false,
+          "description": "max records to return"
+        },
+        {
+          "name": "sysparm_query",
+          "in": "query",
+          "required": false,
+          "description": "encoded query filter"
+        },
+        {
+          "name": "sysparm_fields",
+          "in": "query",
+          "required": false,
+          "description": "comma-separated field list"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/now/table/cmn_cost_center",
+      "operationId": "list_cost_center",
+      "description": "List cmn_cost_center (cost center) records from the Table API. Read-only.",
+      "parameters": [
+        {
+          "name": "sysparm_limit",
+          "in": "query",
+          "required": false,
+          "description": "max records to return"
+        },
+        {
+          "name": "sysparm_query",
+          "in": "query",
+          "required": false,
+          "description": "encoded query filter"
+        },
+        {
+          "name": "sysparm_fields",
+          "in": "query",
+          "required": false,
+          "description": "comma-separated field list"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/now/table/discovery_status",
+      "operationId": "list_discovery_status",
+      "description": "List discovery_status records from the Table API. Read-only.",
+      "parameters": [
+        {
+          "name": "sysparm_limit",
+          "in": "query",
+          "required": false,
+          "description": "max records to return"
+        },
+        {
+          "name": "sysparm_query",
+          "in": "query",
+          "required": false,
+          "description": "encoded query filter"
+        },
+        {
+          "name": "sysparm_fields",
+          "in": "query",
+          "required": false,
+          "description": "comma-separated field list"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/now/table/discovery_schedule",
+      "operationId": "list_discovery_schedule",
+      "description": "List discovery_schedule records from the Table API. Read-only.",
+      "parameters": [
+        {
+          "name": "sysparm_limit",
+          "in": "query",
+          "required": false,
+          "description": "max records to return"
+        },
+        {
+          "name": "sysparm_query",
+          "in": "query",
+          "required": false,
+          "description": "encoded query filter"
+        },
+        {
+          "name": "sysparm_fields",
+          "in": "query",
+          "required": false,
+          "description": "comma-separated field list"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/now/table/sys_dictionary",
+      "operationId": "table_schema",
+      "description": "Get table schema/dictionary information. Filter with sysparm_query='name=<table>' to list a table's columns (field name, type, label). Read-only.",
+      "parameters": [
+        {
+          "name": "sysparm_limit",
+          "in": "query",
+          "required": false,
+          "description": "max records to return"
+        },
+        {
+          "name": "sysparm_query",
+          "in": "query",
+          "required": false,
+          "description": "encoded query filter"
+        },
+        {
+          "name": "sysparm_fields",
+          "in": "query",
+          "required": false,
+          "description": "comma-separated field list"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/now/table/sys_choice",
+      "operationId": "list_choice",
+      "description": "Get choice list values for a field. Filter with sysparm_query='name=<table>^element=<field>'. Read-only.",
+      "parameters": [
+        {
+          "name": "sysparm_limit",
+          "in": "query",
+          "required": false,
+          "description": "max records to return"
+        },
+        {
+          "name": "sysparm_query",
+          "in": "query",
+          "required": false,
+          "description": "encoded query filter"
+        },
+        {
+          "name": "sysparm_fields",
+          "in": "query",
+          "required": false,
+          "description": "comma-separated field list"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/now/attachment",
+      "operationId": "list_attachment",
+      "description": "List attachment metadata for a record via the Attachment API. Filter with sysparm_query='table_name=<table>^table_sys_id=<record sysId>'. Read-only.",
+      "parameters": [
+        {
+          "name": "sysparm_query",
+          "in": "query",
+          "required": false,
+          "description": "encoded query, e.g. 'table_name=incident^table_sys_id=<sysId>'"
+        },
+        {
+          "name": "sysparm_limit",
+          "in": "query",
+          "required": false,
+          "description": "max records to return"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/now/attachment/{sysId}",
+      "operationId": "get_attachment",
+      "description": "Get attachment metadata by its sys_id via the Attachment API. Requires a sysId \u2014 call servicenow_list_attachment first. Read-only.",
+      "parameters": [
+        {
+          "name": "sysId",
+          "in": "path",
+          "required": true,
+          "description": "the attachment sys_id (from list_attachment)"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/now/attachment/{sysId}/file",
+      "operationId": "download_attachment",
+      "description": "Download attachment binary content via the Attachment API. Requires a sysId \u2014 call servicenow_list_attachment first. Returns the raw file bytes (binary/base64 for non-text). Read-only.",
+      "parameters": [
+        {
+          "name": "sysId",
+          "in": "path",
+          "required": true,
+          "description": "the attachment sys_id (from list_attachment)"
+        }
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/now/attachment/{sysId}",
+      "operationId": "delete_attachment",
+      "description": "Delete an attachment by its sys_id via the Attachment API. WRITE operation. Requires a sysId \u2014 call servicenow_list_attachment first.",
+      "parameters": [
+        {
+          "name": "sysId",
+          "in": "path",
+          "required": true,
+          "description": "the attachment sys_id to delete (from list_attachment)"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/now/stats/{table}",
+      "operationId": "aggregate",
+      "description": "Run aggregate queries (count, sum, avg, min, max) over a table via the Aggregate API. Requires a table name. Use sysparm_count=true for counts, sysparm_sum_fields/sysparm_avg_fields for math, sysparm_group_by to group. Read-only.",
+      "parameters": [
+        {
+          "name": "table",
+          "in": "path",
+          "required": true,
+          "description": "the ServiceNow table name to aggregate over"
+        },
+        {
+          "name": "sysparm_query",
+          "in": "query",
+          "required": false,
+          "description": "encoded query filter"
+        },
+        {
+          "name": "sysparm_count",
+          "in": "query",
+          "required": false,
+          "description": "true to return a record count"
+        },
+        {
+          "name": "sysparm_group_by",
+          "in": "query",
+          "required": false,
+          "description": "comma-separated fields to group by"
+        },
+        {
+          "name": "sysparm_sum_fields",
+          "in": "query",
+          "required": false,
+          "description": "comma-separated numeric fields to sum"
+        },
+        {
+          "name": "sysparm_avg_fields",
+          "in": "query",
+          "required": false,
+          "description": "comma-separated numeric fields to average"
+        },
+        {
+          "name": "sysparm_having",
+          "in": "query",
+          "required": false,
+          "description": "having clause on aggregates"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/now/import/{table}",
+      "operationId": "import_set_load",
+      "description": "Load a record into an import set staging table via the Import Set API. WRITE operation. Requires a staging table name (e.g. 'u_imp_incident'). Provide the row fields as a JSON object in the request body; ServiceNow runs the transform map and returns the resulting target record(s).",
+      "parameters": [
+        {
+          "name": "table",
+          "in": "path",
+          "required": true,
+          "description": "the import set staging table name"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/now/v1/batch",
+      "operationId": "batch_request",
+      "description": "Execute multiple ServiceNow REST requests in a single call via the Batch API. WRITE-class (may contain writes). Provide {batch_request_id, rest_requests:[{id, method, url, headers, body}]} as a JSON object in the request body.",
+      "parameters": []
+    }
+  ]
+}

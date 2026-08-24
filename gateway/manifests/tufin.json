@@ -1,0 +1,48 @@
+{
+  "manifest": "isaac-router-manifest/v1",
+  "backend": "tufin",
+  "capabilities": [
+    {
+      "tool": "apply_policy",
+      "safety_class": "PRODUCTION",
+      "locality": "remote",
+      "tags": ["tufin", "firewall", "policy", "apply", "production"]
+    },
+    {
+      "tool": "submit_ticket",
+      "safety_class": "WRITE",
+      "locality": "remote",
+      "tags": ["tufin", "ticket", "write"]
+    },
+    {
+      "tool": "approve_request",
+      "safety_class": "PRODUCTION",
+      "locality": "remote",
+      "tags": ["tufin", "firewall", "approve", "production"]
+    },
+    {
+      "tool": "get_policy",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": ["tufin", "policy", "read"]
+    },
+    {
+      "tool": "search_objects",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": ["tufin", "search", "read"]
+    },
+    {
+      "tool": "get_topology_path",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": ["tufin", "topology", "read"]
+    },
+    {
+      "tool": "list_devices",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": ["tufin", "list", "read"]
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "manifest": "isaac-router-manifest/v1",
+  "backend": "fixture-dup-tool",
+  "capabilities": [
+    {
+      "tool": "get_status",
+      "safety_class": "READ",
+      "tags": []
+    },
+    {
+      "tool": "get_status",
+      "safety_class": "READ",
+      "tags": ["duplicate"]
+    }
+  ]
+}

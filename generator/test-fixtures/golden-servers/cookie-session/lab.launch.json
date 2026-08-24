@@ -1,0 +1,4 @@
+{
+  "targetName": "cookie_session",
+  "targetBaseUrlEnvVar": "MOCK_API_BASE_URL"
+}

@@ -1,0 +1,60 @@
+{
+  "manifest": "isaac-router-manifest/v1",
+  "backend": "akamai",
+  "capabilities": [
+    {
+      "tool": "activate_property",
+      "safety_class": "PRODUCTION",
+      "locality": "remote",
+      "tags": ["akamai", "cdn", "activate", "production"]
+    },
+    {
+      "tool": "activate_configuration",
+      "safety_class": "PRODUCTION",
+      "locality": "remote",
+      "tags": ["akamai", "cdn", "activate", "production"]
+    },
+    {
+      "tool": "create_property",
+      "safety_class": "WRITE",
+      "locality": "remote",
+      "tags": ["akamai", "property", "create", "write"]
+    },
+    {
+      "tool": "update_property",
+      "safety_class": "WRITE",
+      "locality": "remote",
+      "tags": ["akamai", "property", "update", "write"]
+    },
+    {
+      "tool": "delete_property",
+      "safety_class": "WRITE",
+      "locality": "remote",
+      "tags": ["akamai", "property", "delete", "write"]
+    },
+    {
+      "tool": "purge_cache",
+      "safety_class": "PRODUCTION",
+      "locality": "remote",
+      "tags": ["akamai", "cache", "purge", "production"]
+    },
+    {
+      "tool": "get_property",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": ["akamai", "property", "read"]
+    },
+    {
+      "tool": "list_properties",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": ["akamai", "property", "list", "read"]
+    },
+    {
+      "tool": "get_activation_status",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": ["akamai", "status", "read"]
+    }
+  ]
+}

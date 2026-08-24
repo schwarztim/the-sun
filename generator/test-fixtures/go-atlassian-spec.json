@@ -1,0 +1,350 @@
+{
+  "name": "atlassian",
+  "baseUrl": "https://example.atlassian.net",
+  "authScheme": "basic",
+  "defaultPort": "42015",
+  "endpoints": [
+    {
+      "method": "POST",
+      "path": "/rest/api/3/search/jql",
+      "operationId": "search_jira_issues",
+      "summary": "Search Jira issues using JQL. Pass the JQL query and options (jql, fields, maxResults) in the JSON body. Jira Cloud search is POST /rest/api/3/search/jql.",
+      "parameters": []
+    },
+    {
+      "method": "GET",
+      "path": "/rest/api/3/issue/{issueKey}",
+      "operationId": "get_issue",
+      "summary": "Get detailed information about a Jira issue by key. Requires an issueKey (e.g. PROJ-123) obtained from a prior search_jira_issues result.",
+      "parameters": [
+        {
+          "name": "issueKey",
+          "in": "path",
+          "required": true,
+          "description": "the issue key, e.g. PROJ-123 (from search_jira_issues)"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/rest/api/3/issue",
+      "operationId": "create_issue",
+      "summary": "Create a new Jira issue. Pass project, issueType, summary and optional fields in the JSON body.",
+      "parameters": []
+    },
+    {
+      "method": "PUT",
+      "path": "/rest/api/3/issue/{issueKey}",
+      "operationId": "update_issue",
+      "summary": "Update an existing Jira issue. Requires an issueKey — call search_jira_issues to obtain one. Editable fields go in the JSON body.",
+      "parameters": [
+        {
+          "name": "issueKey",
+          "in": "path",
+          "required": true,
+          "description": "the issue key to update (from search_jira_issues)"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/rest/api/3/issue/{issueKey}/comment",
+      "operationId": "add_jira_comment",
+      "summary": "Add a comment to a Jira issue. Requires an issueKey — call search_jira_issues or get_issue to obtain one. Comment text goes in the JSON body.",
+      "parameters": [
+        {
+          "name": "issueKey",
+          "in": "path",
+          "required": true,
+          "description": "the issue key, e.g. PROJ-123 (from search_jira_issues)"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/rest/api/3/issue/{issueKey}/transitions",
+      "operationId": "get_transitions",
+      "summary": "Get available workflow transitions for a Jira issue. Requires an issueKey — call search_jira_issues to obtain one.",
+      "parameters": [
+        {
+          "name": "issueKey",
+          "in": "path",
+          "required": true,
+          "description": "the issue key (from search_jira_issues)"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/rest/api/3/issue/{issueKey}/transitions",
+      "operationId": "transition_issue",
+      "summary": "Transition a Jira issue to a new status. Requires an issueKey and a transitionId — call get_transitions to obtain both. Payload goes in the JSON body.",
+      "parameters": [
+        {
+          "name": "issueKey",
+          "in": "path",
+          "required": true,
+          "description": "the issue key (from search_jira_issues)"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/rest/api/3/project/search",
+      "operationId": "get_projects",
+      "summary": "Get the list of all accessible Jira projects.",
+      "parameters": [
+        {
+          "name": "maxResults",
+          "in": "query",
+          "required": false,
+          "description": "maximum number of results (default 50)"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/rest/api/3/project/{projectKey}",
+      "operationId": "get_project",
+      "summary": "Get detailed information about a specific Jira project. Requires a projectKey (e.g. PROJ) — call get_projects to obtain one.",
+      "parameters": [
+        {
+          "name": "projectKey",
+          "in": "path",
+          "required": true,
+          "description": "the project key, e.g. PROJ (from get_projects)"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/rest/api/3/myself",
+      "operationId": "get_current_user",
+      "summary": "Get information about the currently authenticated Jira user.",
+      "parameters": []
+    },
+    {
+      "method": "POST",
+      "path": "/rest/api/3/search/jql",
+      "operationId": "get_my_issues",
+      "summary": "Get Jira issues assigned to the current user (excludes done/closed/cancelled by default). Options go in the JSON body.",
+      "parameters": []
+    },
+    {
+      "method": "POST",
+      "path": "/rest/api/3/search/jql",
+      "operationId": "get_in_progress_issues",
+      "summary": "Get Jira issues currently in progress assigned to the current user. Options go in the JSON body.",
+      "parameters": []
+    },
+    {
+      "method": "POST",
+      "path": "/rest/api/3/search/jql",
+      "operationId": "get_recent_issues",
+      "summary": "Get recently updated Jira issues assigned to the current user. Options (days, maxResults) go in the JSON body.",
+      "parameters": []
+    },
+    {
+      "method": "PUT",
+      "path": "/rest/api/3/issue/{issueKey}/assignee",
+      "operationId": "assign_issue",
+      "summary": "Assign a Jira issue to a user. Requires an issueKey — call search_jira_issues to obtain one. The accountId goes in the JSON body (use search_users to find it).",
+      "parameters": [
+        {
+          "name": "issueKey",
+          "in": "path",
+          "required": true,
+          "description": "the issue key (from search_jira_issues)"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/rest/api/3/user/search",
+      "operationId": "search_users",
+      "summary": "Search for Jira users by name or email to obtain their account IDs.",
+      "parameters": [
+        {
+          "name": "query",
+          "in": "query",
+          "required": true,
+          "description": "search query (display name or email)"
+        },
+        {
+          "name": "maxResults",
+          "in": "query",
+          "required": false,
+          "description": "maximum results (default 10)"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/wiki/rest/api/content/search",
+      "operationId": "search_confluence",
+      "summary": "Search Confluence content using CQL (Confluence Query Language).",
+      "parameters": [
+        {
+          "name": "cql",
+          "in": "query",
+          "required": true,
+          "description": "the CQL query string, e.g. 'space=DEV AND type=page'"
+        },
+        {
+          "name": "limit",
+          "in": "query",
+          "required": false,
+          "description": "maximum number of results (default 25)"
+        },
+        {
+          "name": "expand",
+          "in": "query",
+          "required": false,
+          "description": "fields to expand (default 'space,version')"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/wiki/rest/api/content/{pageId}",
+      "operationId": "get_confluence_page",
+      "summary": "Get a Confluence page by ID with full content. Requires a pageId — call search_confluence or search_confluence_by_text first to obtain it.",
+      "parameters": [
+        {
+          "name": "pageId",
+          "in": "path",
+          "required": true,
+          "description": "the page ID (from search_confluence)"
+        },
+        {
+          "name": "expand",
+          "in": "query",
+          "required": false,
+          "description": "fields to expand (default 'body.storage,version,space')"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/wiki/rest/api/content",
+      "operationId": "get_confluence_page_by_title",
+      "summary": "Get a Confluence page by title and space key. Requires a spaceKey — call get_confluence_spaces to obtain one.",
+      "parameters": [
+        {
+          "name": "spaceKey",
+          "in": "query",
+          "required": true,
+          "description": "the space key, e.g. DEV (from get_confluence_spaces)"
+        },
+        {
+          "name": "title",
+          "in": "query",
+          "required": true,
+          "description": "the page title"
+        },
+        {
+          "name": "expand",
+          "in": "query",
+          "required": false,
+          "description": "fields to expand (default 'body.storage,version')"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/wiki/rest/api/content",
+      "operationId": "create_confluence_page",
+      "summary": "Create a new Confluence page. Pass spaceKey, title, content and content_format in the JSON body.",
+      "parameters": []
+    },
+    {
+      "method": "PUT",
+      "path": "/wiki/rest/api/content/{pageId}",
+      "operationId": "update_confluence_page",
+      "summary": "Update an existing Confluence page. Requires a pageId and the current version number, obtained from a prior get_confluence_page result. New content goes in the JSON body.",
+      "parameters": [
+        {
+          "name": "pageId",
+          "in": "path",
+          "required": true,
+          "description": "the page ID to update (from search_confluence or get_confluence_page)"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/wiki/rest/api/space",
+      "operationId": "get_confluence_spaces",
+      "summary": "Get the list of all accessible Confluence spaces.",
+      "parameters": [
+        {
+          "name": "limit",
+          "in": "query",
+          "required": false,
+          "description": "maximum number of results (default 25)"
+        },
+        {
+          "name": "type",
+          "in": "query",
+          "required": false,
+          "description": "space type filter: 'global' or 'personal'"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/wiki/rest/api/space/{spaceKey}",
+      "operationId": "get_confluence_space",
+      "summary": "Get detailed information about a specific Confluence space. Requires a spaceKey — call get_confluence_spaces to obtain one.",
+      "parameters": [
+        {
+          "name": "spaceKey",
+          "in": "path",
+          "required": true,
+          "description": "the space key, e.g. DEV (from get_confluence_spaces)"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/wiki/rest/api/content",
+      "operationId": "add_confluence_comment",
+      "summary": "Add a comment to a Confluence page. Requires a pageId (call search_confluence to obtain it) and comment text, both passed in the JSON body.",
+      "parameters": []
+    },
+    {
+      "method": "GET",
+      "path": "/wiki/rest/api/content/search",
+      "operationId": "search_confluence_by_text",
+      "summary": "Simple text search across Confluence pages (no CQL required). Good for quick lookups.",
+      "parameters": [
+        {
+          "name": "cql",
+          "in": "query",
+          "required": true,
+          "description": "text search, submitted as a CQL text ~ query"
+        },
+        {
+          "name": "limit",
+          "in": "query",
+          "required": false,
+          "description": "maximum results (default 25)"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/wiki/api/v2/pages/{pageId}",
+      "operationId": "get_confluence_page_v2",
+      "summary": "Get a Confluence page via the v2 API with improved performance and optional public link. Requires a pageId obtained from a prior search_confluence result.",
+      "parameters": [
+        {
+          "name": "pageId",
+          "in": "path",
+          "required": true,
+          "description": "the page ID (from search_confluence)"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+# Compiled binaries / build artifacts (regenerable via `go build`)
+bin/
+*-mcp
+*-stub
+_template
+fleetd-stub
+
+# Go
+*.exe
+*.test
+*.out
+*.prof
+vendor/
+
+# Secrets / env (defensive — Hermes owns all secrets; none should live here)
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+*.token
+*.secret
+secrets.*
+!secrets.go
+*.credentials
+
+# Runtime state / backups (fleet.toml lives in ~/.mcp-fleet, not here)
+*.bak
+*.pid
+*.log
+
+# One-off migration / operational scripts (not part of the fleet product)
+migrate-*.sh
+
+# OS / editor
+.DS_Store
+*.swp
+*.swo
+.idea/
+.vscode/

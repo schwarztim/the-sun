@@ -1,0 +1,617 @@
+{
+  "target": "atlassian-mcp",
+  "serverDir": "~/thesun/fleet/servers/generated/atlassian",
+  "startedAt": "2026-07-04T15:42:40.793Z",
+  "finishedAt": "2026-07-04T15:42:52.758Z",
+  "passed": false,
+  "transport": "streamable-http",
+  "toolCount": 26,
+  "gates": [
+    {
+      "gate": "protocol",
+      "passed": true,
+      "message": "connect -> initialize -> listTools() succeeded (26 tool(s))"
+    },
+    {
+      "gate": "instrumentation",
+      "passed": true,
+      "message": "all 26 tool(s) carry valid descriptions and annotations, and a help tool exists",
+      "detail": {
+        "subResults": [
+          {
+            "tool": "atlassian-mcp_help",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "atlassian-mcp_help",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "atlassian_add_confluence_comment",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "atlassian_add_confluence_comment",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "atlassian_add_jira_comment",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "atlassian_add_jira_comment",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "atlassian_assign_issue",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "atlassian_assign_issue",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "atlassian_create_confluence_page",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "atlassian_create_confluence_page",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "atlassian_create_issue",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "atlassian_create_issue",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "atlassian_get_confluence_page",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "atlassian_get_confluence_page",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "atlassian_get_confluence_page_by_title",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "atlassian_get_confluence_page_by_title",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "atlassian_get_confluence_page_v2",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "atlassian_get_confluence_page_v2",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "atlassian_get_confluence_space",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "atlassian_get_confluence_space",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "atlassian_get_confluence_spaces",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "atlassian_get_confluence_spaces",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "atlassian_get_current_user",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "atlassian_get_current_user",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "atlassian_get_in_progress_issues",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "atlassian_get_in_progress_issues",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "atlassian_get_issue",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "atlassian_get_issue",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "atlassian_get_my_issues",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "atlassian_get_my_issues",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "atlassian_get_project",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "atlassian_get_project",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "atlassian_get_projects",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "atlassian_get_projects",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "atlassian_get_recent_issues",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "atlassian_get_recent_issues",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "atlassian_get_transitions",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "atlassian_get_transitions",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "atlassian_search_confluence",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "atlassian_search_confluence",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "atlassian_search_confluence_by_text",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "atlassian_search_confluence_by_text",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "atlassian_search_jira_issues",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "atlassian_search_jira_issues",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "atlassian_search_users",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "atlassian_search_users",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "atlassian_transition_issue",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "atlassian_transition_issue",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "atlassian_update_confluence_page",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "atlassian_update_confluence_page",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "atlassian_update_issue",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "atlassian_update_issue",
+            "check": "annotations",
+            "passed": true
+          }
+        ],
+        "helpToolPassed": true
+      }
+    },
+    {
+      "gate": "transport",
+      "passed": true,
+      "message": "server is reachable over streamable-http"
+    },
+    {
+      "gate": "wire-fingerprint",
+      "passed": false,
+      "message": "no TLS ClientHello observed from the generated server (no connection observed within 10000ms) — the server may not implement maybe_fingerprint_selftest(), the tool may not call out over HTTPS, or ATLASSIAN_MCP_BASE_URL isn't wired to the browser-fingerprinted http client",
+      "detail": {
+        "mechanism": "tool-invocation",
+        "ja4": null
+      }
+    },
+    {
+      "gate": "credential-scan",
+      "passed": true,
+      "message": "scanned 3 file(s), no hardcoded credentials found",
+      "detail": []
+    },
+    {
+      "gate": "callability",
+      "passed": true,
+      "message": "all 25 invokable tool(s) returned a well-formed JSON-RPC result or auth-error",
+      "detail": [
+        {
+          "tool": "atlassian_add_confluence_comment",
+          "wellFormed": true,
+          "isError": true,
+          "note": "returned isError:true (acceptable — credential-free/auth-error path)"
+        },
+        {
+          "tool": "atlassian_add_jira_comment",
+          "wellFormed": true,
+          "isError": true,
+          "note": "returned isError:true (acceptable — credential-free/auth-error path)"
+        },
+        {
+          "tool": "atlassian_assign_issue",
+          "wellFormed": true,
+          "isError": true,
+          "note": "returned isError:true (acceptable — credential-free/auth-error path)"
+        },
+        {
+          "tool": "atlassian_create_confluence_page",
+          "wellFormed": true,
+          "isError": true,
+          "note": "returned isError:true (acceptable — credential-free/auth-error path)"
+        },
+        {
+          "tool": "atlassian_create_issue",
+          "wellFormed": true,
+          "isError": true,
+          "note": "returned isError:true (acceptable — credential-free/auth-error path)"
+        },
+        {
+          "tool": "atlassian_get_confluence_page",
+          "wellFormed": true,
+          "isError": true,
+          "note": "returned isError:true (acceptable — credential-free/auth-error path)"
+        },
+        {
+          "tool": "atlassian_get_confluence_page_by_title",
+          "wellFormed": true,
+          "isError": true,
+          "note": "returned isError:true (acceptable — credential-free/auth-error path)"
+        },
+        {
+          "tool": "atlassian_get_confluence_page_v2",
+          "wellFormed": true,
+          "isError": true,
+          "note": "returned isError:true (acceptable — credential-free/auth-error path)"
+        },
+        {
+          "tool": "atlassian_get_confluence_space",
+          "wellFormed": true,
+          "isError": true,
+          "note": "returned isError:true (acceptable — credential-free/auth-error path)"
+        },
+        {
+          "tool": "atlassian_get_confluence_spaces",
+          "wellFormed": true,
+          "isError": true,
+          "note": "returned isError:true (acceptable — credential-free/auth-error path)"
+        },
+        {
+          "tool": "atlassian_get_current_user",
+          "wellFormed": true,
+          "isError": true,
+          "note": "returned isError:true (acceptable — credential-free/auth-error path)"
+        },
+        {
+          "tool": "atlassian_get_in_progress_issues",
+          "wellFormed": true,
+          "isError": true,
+          "note": "returned isError:true (acceptable — credential-free/auth-error path)"
+        },
+        {
+          "tool": "atlassian_get_issue",
+          "wellFormed": true,
+          "isError": true,
+          "note": "returned isError:true (acceptable — credential-free/auth-error path)"
+        },
+        {
+          "tool": "atlassian_get_my_issues",
+          "wellFormed": true,
+          "isError": true,
+          "note": "returned isError:true (acceptable — credential-free/auth-error path)"
+        },
+        {
+          "tool": "atlassian_get_project",
+          "wellFormed": true,
+          "isError": true,
+          "note": "returned isError:true (acceptable — credential-free/auth-error path)"
+        },
+        {
+          "tool": "atlassian_get_projects",
+          "wellFormed": true,
+          "isError": true,
+          "note": "returned isError:true (acceptable — credential-free/auth-error path)"
+        },
+        {
+          "tool": "atlassian_get_recent_issues",
+          "wellFormed": true,
+          "isError": true,
+          "note": "returned isError:true (acceptable — credential-free/auth-error path)"
+        },
+        {
+          "tool": "atlassian_get_transitions",
+          "wellFormed": true,
+          "isError": true,
+          "note": "returned isError:true (acceptable — credential-free/auth-error path)"
+        },
+        {
+          "tool": "atlassian_search_confluence",
+          "wellFormed": true,
+          "isError": true,
+          "note": "returned isError:true (acceptable — credential-free/auth-error path)"
+        },
+        {
+          "tool": "atlassian_search_confluence_by_text",
+          "wellFormed": true,
+          "isError": true,
+          "note": "returned isError:true (acceptable — credential-free/auth-error path)"
+        },
+        {
+          "tool": "atlassian_search_jira_issues",
+          "wellFormed": true,
+          "isError": true,
+          "note": "returned isError:true (acceptable — credential-free/auth-error path)"
+        },
+        {
+          "tool": "atlassian_search_users",
+          "wellFormed": true,
+          "isError": true,
+          "note": "returned isError:true (acceptable — credential-free/auth-error path)"
+        },
+        {
+          "tool": "atlassian_transition_issue",
+          "wellFormed": true,
+          "isError": true,
+          "note": "returned isError:true (acceptable — credential-free/auth-error path)"
+        },
+        {
+          "tool": "atlassian_update_confluence_page",
+          "wellFormed": true,
+          "isError": true,
+          "note": "returned isError:true (acceptable — credential-free/auth-error path)"
+        },
+        {
+          "tool": "atlassian_update_issue",
+          "wellFormed": true,
+          "isError": true,
+          "note": "returned isError:true (acceptable — credential-free/auth-error path)"
+        }
+      ]
+    },
+    {
+      "gate": "precision",
+      "passed": true,
+      "message": "all invoked tools resolved to a known op — no 404s",
+      "detail": []
+    },
+    {
+      "gate": "coverage",
+      "passed": true,
+      "message": "coverage manifest valid (100% coverage, basis=spec, 25 op(s))",
+      "detail": {
+        "basis": "spec",
+        "coverage_pct": 100,
+        "ops": [
+          {
+            "path": "/rest/api/3/search/jql",
+            "method": "POST",
+            "tool": "atlassian_search_jira_issues"
+          },
+          {
+            "path": "/rest/api/3/issue/{issueKey}",
+            "method": "GET",
+            "tool": "atlassian_get_issue"
+          },
+          {
+            "path": "/rest/api/3/issue",
+            "method": "POST",
+            "tool": "atlassian_create_issue"
+          },
+          {
+            "path": "/rest/api/3/issue/{issueKey}",
+            "method": "PUT",
+            "tool": "atlassian_update_issue"
+          },
+          {
+            "path": "/rest/api/3/issue/{issueKey}/comment",
+            "method": "POST",
+            "tool": "atlassian_add_jira_comment"
+          },
+          {
+            "path": "/rest/api/3/issue/{issueKey}/transitions",
+            "method": "GET",
+            "tool": "atlassian_get_transitions"
+          },
+          {
+            "path": "/rest/api/3/issue/{issueKey}/transitions",
+            "method": "POST",
+            "tool": "atlassian_transition_issue"
+          },
+          {
+            "path": "/rest/api/3/project/search",
+            "method": "GET",
+            "tool": "atlassian_get_projects"
+          },
+          {
+            "path": "/rest/api/3/project/{projectKey}",
+            "method": "GET",
+            "tool": "atlassian_get_project"
+          },
+          {
+            "path": "/rest/api/3/myself",
+            "method": "GET",
+            "tool": "atlassian_get_current_user"
+          },
+          {
+            "path": "/rest/api/3/search/jql",
+            "method": "POST",
+            "tool": "atlassian_get_my_issues"
+          },
+          {
+            "path": "/rest/api/3/search/jql",
+            "method": "POST",
+            "tool": "atlassian_get_in_progress_issues"
+          },
+          {
+            "path": "/rest/api/3/search/jql",
+            "method": "POST",
+            "tool": "atlassian_get_recent_issues"
+          },
+          {
+            "path": "/rest/api/3/issue/{issueKey}/assignee",
+            "method": "PUT",
+            "tool": "atlassian_assign_issue"
+          },
+          {
+            "path": "/rest/api/3/user/search",
+            "method": "GET",
+            "tool": "atlassian_search_users"
+          },
+          {
+            "path": "/wiki/rest/api/content/search",
+            "method": "GET",
+            "tool": "atlassian_search_confluence"
+          },
+          {
+            "path": "/wiki/rest/api/content/{pageId}",
+            "method": "GET",
+            "tool": "atlassian_get_confluence_page"
+          },
+          {
+            "path": "/wiki/rest/api/content",
+            "method": "GET",
+            "tool": "atlassian_get_confluence_page_by_title"
+          },
+          {
+            "path": "/wiki/rest/api/content",
+            "method": "POST",
+            "tool": "atlassian_create_confluence_page"
+          },
+          {
+            "path": "/wiki/rest/api/content/{pageId}",
+            "method": "PUT",
+            "tool": "atlassian_update_confluence_page"
+          },
+          {
+            "path": "/wiki/rest/api/space",
+            "method": "GET",
+            "tool": "atlassian_get_confluence_spaces"
+          },
+          {
+            "path": "/wiki/rest/api/space/{spaceKey}",
+            "method": "GET",
+            "tool": "atlassian_get_confluence_space"
+          },
+          {
+            "path": "/wiki/rest/api/content",
+            "method": "POST",
+            "tool": "atlassian_add_confluence_comment"
+          },
+          {
+            "path": "/wiki/rest/api/content/search",
+            "method": "GET",
+            "tool": "atlassian_search_confluence_by_text"
+          },
+          {
+            "path": "/wiki/api/v2/pages/{pageId}",
+            "method": "GET",
+            "tool": "atlassian_get_confluence_page_v2"
+          }
+        ]
+      }
+    },
+    {
+      "gate": "rate-limiter",
+      "passed": true,
+      "message": "\"atlassian-mcp\" is not a KNOWN_PATTERNS rate-limited target — gate is informational-pass"
+    }
+  ],
+  "residualUnverifiedSurface": [
+    "semantic correctness of tool behavior (the Lab checks shape/protocol, not business logic)",
+    "write-path safety beyond destructiveHint/idempotentHint annotation presence",
+    "live WAF/anti-bot acceptance at the real target — the wire-fingerprint gate is necessary, not sufficient, for real-target acceptance",
+    "auth scopes / permission boundaries granted by the operator's captured session"
+  ],
+  "live_acceptance_last_verified": null
+}

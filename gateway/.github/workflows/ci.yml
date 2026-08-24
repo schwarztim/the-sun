@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  ci:
+    name: Build, test, audit
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Unit tests
+        run: npm run test:unit
+
+      - name: Audit manifest contracts
+        run: npm run audit:contracts
+
+      # GW_E2E_FULL=1 is safe in CI: the harness boots a real Gateway instance
+      # and real MCP backends entirely in-process on OS-assigned loopback ports.
+      # No Docker, no external services, and no inter-machine networking are
+      # required.  All five FULL-gated tests (write-gate both paths, stdio
+      # quarantine via config, stdio quarantine via fleet ingestion, unclassified
+      # warn-and-proceed) are self-contained and run cleanly on ubuntu-latest.
+      - name: E2E invariant suite (full)
+        run: npm run test:e2e
+        env:
+          GW_E2E_FULL: "1"

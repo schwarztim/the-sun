@@ -1,0 +1,429 @@
+{
+  "manifest": "isaac-router-manifest/v1",
+  "backend": "github-go",
+  "capabilities": [
+    {
+      "tool": "github_get_authenticated_user",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "github",
+        "get"
+      ]
+    },
+    {
+      "tool": "github_list_user_repos",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "github",
+        "get"
+      ]
+    },
+    {
+      "tool": "github_list_authenticated_user_teams",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "github",
+        "get"
+      ]
+    },
+    {
+      "tool": "github_get_repo",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "github",
+        "get"
+      ]
+    },
+    {
+      "tool": "github_create_repository",
+      "safety_class": "WRITE",
+      "locality": "remote",
+      "tags": [
+        "github",
+        "post"
+      ]
+    },
+    {
+      "tool": "github_fork_repository",
+      "safety_class": "WRITE",
+      "locality": "remote",
+      "tags": [
+        "github",
+        "post"
+      ]
+    },
+    {
+      "tool": "github_list_repository_collaborators",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "github",
+        "get"
+      ]
+    },
+    {
+      "tool": "github_get_file_contents",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "github",
+        "get"
+      ]
+    },
+    {
+      "tool": "github_create_or_update_file",
+      "safety_class": "WRITE",
+      "locality": "remote",
+      "tags": [
+        "github",
+        "put"
+      ]
+    },
+    {
+      "tool": "github_delete_file",
+      "safety_class": "WRITE",
+      "locality": "remote",
+      "tags": [
+        "github",
+        "delete"
+      ]
+    },
+    {
+      "tool": "github_list_branches",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "github",
+        "get"
+      ]
+    },
+    {
+      "tool": "github_create_branch",
+      "safety_class": "WRITE",
+      "locality": "remote",
+      "tags": [
+        "github",
+        "post"
+      ]
+    },
+    {
+      "tool": "github_list_commits",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "github",
+        "get"
+      ]
+    },
+    {
+      "tool": "github_get_commit",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "github",
+        "get"
+      ]
+    },
+    {
+      "tool": "github_list_tags",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "github",
+        "get"
+      ]
+    },
+    {
+      "tool": "github_get_tag",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "github",
+        "get"
+      ]
+    },
+    {
+      "tool": "github_list_releases",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "github",
+        "get"
+      ]
+    },
+    {
+      "tool": "github_get_latest_release",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "github",
+        "get"
+      ]
+    },
+    {
+      "tool": "github_get_release_by_tag",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "github",
+        "get"
+      ]
+    },
+    {
+      "tool": "github_list_repo_issues",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "github",
+        "get"
+      ]
+    },
+    {
+      "tool": "github_get_issue",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "github",
+        "get"
+      ]
+    },
+    {
+      "tool": "github_create_issue",
+      "safety_class": "WRITE",
+      "locality": "remote",
+      "tags": [
+        "github",
+        "post"
+      ]
+    },
+    {
+      "tool": "github_update_issue",
+      "safety_class": "WRITE",
+      "locality": "remote",
+      "tags": [
+        "github",
+        "patch"
+      ]
+    },
+    {
+      "tool": "github_list_issue_comments",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "github",
+        "get"
+      ]
+    },
+    {
+      "tool": "github_add_issue_comment",
+      "safety_class": "WRITE",
+      "locality": "remote",
+      "tags": [
+        "github",
+        "post"
+      ]
+    },
+    {
+      "tool": "github_list_sub_issues",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "github",
+        "get"
+      ]
+    },
+    {
+      "tool": "github_add_sub_issue",
+      "safety_class": "WRITE",
+      "locality": "remote",
+      "tags": [
+        "github",
+        "post"
+      ]
+    },
+    {
+      "tool": "github_get_label",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "github",
+        "get"
+      ]
+    },
+    {
+      "tool": "github_list_issue_types",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "github",
+        "get"
+      ]
+    },
+    {
+      "tool": "github_list_pull_requests",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "github",
+        "get"
+      ]
+    },
+    {
+      "tool": "github_get_pull_request",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "github",
+        "get"
+      ]
+    },
+    {
+      "tool": "github_create_pull_request",
+      "safety_class": "WRITE",
+      "locality": "remote",
+      "tags": [
+        "github",
+        "post"
+      ]
+    },
+    {
+      "tool": "github_update_pull_request",
+      "safety_class": "WRITE",
+      "locality": "remote",
+      "tags": [
+        "github",
+        "patch"
+      ]
+    },
+    {
+      "tool": "github_merge_pull_request",
+      "safety_class": "WRITE",
+      "locality": "remote",
+      "tags": [
+        "github",
+        "put"
+      ]
+    },
+    {
+      "tool": "github_update_pull_request_branch",
+      "safety_class": "WRITE",
+      "locality": "remote",
+      "tags": [
+        "github",
+        "put"
+      ]
+    },
+    {
+      "tool": "github_create_pull_request_review",
+      "safety_class": "WRITE",
+      "locality": "remote",
+      "tags": [
+        "github",
+        "post"
+      ]
+    },
+    {
+      "tool": "github_add_pull_request_review_comment",
+      "safety_class": "WRITE",
+      "locality": "remote",
+      "tags": [
+        "github",
+        "post"
+      ]
+    },
+    {
+      "tool": "github_request_reviewers",
+      "safety_class": "WRITE",
+      "locality": "remote",
+      "tags": [
+        "github",
+        "post"
+      ]
+    },
+    {
+      "tool": "github_list_secret_scanning_alerts",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "github",
+        "get"
+      ]
+    },
+    {
+      "tool": "github_get_team_members",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "github",
+        "get"
+      ]
+    },
+    {
+      "tool": "github_search_repositories",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "github",
+        "get"
+      ]
+    },
+    {
+      "tool": "github_search_code",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "github",
+        "get"
+      ]
+    },
+    {
+      "tool": "github_search_commits",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "github",
+        "get"
+      ]
+    },
+    {
+      "tool": "github_search_issues",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "github",
+        "get"
+      ]
+    },
+    {
+      "tool": "github_search_pull_requests",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "github",
+        "get"
+      ]
+    },
+    {
+      "tool": "github_search_users",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "github",
+        "get"
+      ]
+    },
+    {
+      "tool": "github-mcp_help",
+      "safety_class": "READ",
+      "locality": "local",
+      "tags": [
+        "github",
+        "help"
+      ]
+    }
+  ]
+}

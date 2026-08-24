@@ -1,0 +1,335 @@
+{
+  "manifest": "isaac-router-manifest/v1",
+  "backend": "shodan-go",
+  "capabilities": [
+    {
+      "tool": "shodan_search",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "shodan",
+        "get"
+      ],
+      "http_method": "GET"
+    },
+    {
+      "tool": "shodan_host",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "shodan",
+        "get"
+      ],
+      "http_method": "GET"
+    },
+    {
+      "tool": "shodan_count",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "shodan",
+        "get"
+      ],
+      "http_method": "GET"
+    },
+    {
+      "tool": "shodan_dns_resolve",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "shodan",
+        "get"
+      ],
+      "http_method": "GET"
+    },
+    {
+      "tool": "shodan_dns_reverse",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "shodan",
+        "get"
+      ],
+      "http_method": "GET"
+    },
+    {
+      "tool": "shodan_dns_domain",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "shodan",
+        "get"
+      ],
+      "http_method": "GET"
+    },
+    {
+      "tool": "shodan_scan",
+      "safety_class": "WRITE",
+      "locality": "remote",
+      "tags": [
+        "shodan",
+        "post"
+      ],
+      "http_method": "POST"
+    },
+    {
+      "tool": "shodan_scan_status",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "shodan",
+        "get"
+      ],
+      "http_method": "GET"
+    },
+    {
+      "tool": "shodan_list_scans",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "shodan",
+        "get"
+      ],
+      "http_method": "GET"
+    },
+    {
+      "tool": "shodan_alert_create",
+      "safety_class": "WRITE",
+      "locality": "remote",
+      "tags": [
+        "shodan",
+        "post"
+      ],
+      "http_method": "POST"
+    },
+    {
+      "tool": "shodan_alert_list",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "shodan",
+        "get"
+      ],
+      "http_method": "GET"
+    },
+    {
+      "tool": "shodan_alert_get",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "shodan",
+        "get"
+      ],
+      "http_method": "GET"
+    },
+    {
+      "tool": "shodan_alert_delete",
+      "safety_class": "WRITE",
+      "locality": "remote",
+      "tags": [
+        "shodan",
+        "delete"
+      ],
+      "http_method": "DELETE"
+    },
+    {
+      "tool": "shodan_alert_triggers",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "shodan",
+        "get"
+      ],
+      "http_method": "GET"
+    },
+    {
+      "tool": "shodan_ports",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "shodan",
+        "get"
+      ],
+      "http_method": "GET"
+    },
+    {
+      "tool": "shodan_protocols",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "shodan",
+        "get"
+      ],
+      "http_method": "GET"
+    },
+    {
+      "tool": "shodan_filters",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "shodan",
+        "get"
+      ],
+      "http_method": "GET"
+    },
+    {
+      "tool": "shodan_facets",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "shodan",
+        "get"
+      ],
+      "http_method": "GET"
+    },
+    {
+      "tool": "shodan_api_info",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "shodan",
+        "get"
+      ],
+      "http_method": "GET"
+    },
+    {
+      "tool": "shodan_account_profile",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "shodan",
+        "get"
+      ],
+      "http_method": "GET"
+    },
+    {
+      "tool": "shodan_myip",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "shodan",
+        "get"
+      ],
+      "http_method": "GET"
+    },
+    {
+      "tool": "shodan_honeyscore",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "shodan",
+        "get"
+      ],
+      "http_method": "GET"
+    },
+    {
+      "tool": "shodan_saved_queries",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "shodan",
+        "get"
+      ],
+      "http_method": "GET"
+    },
+    {
+      "tool": "shodan_search_queries",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "shodan",
+        "get"
+      ],
+      "http_method": "GET"
+    },
+    {
+      "tool": "shodan_exploits_search",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "shodan",
+        "get"
+      ],
+      "http_method": "GET"
+    },
+    {
+      "tool": "shodan_exploits_count",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "shodan",
+        "get"
+      ],
+      "http_method": "GET"
+    },
+    {
+      "tool": "shodan_cve_lookup",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "shodan",
+        "get"
+      ],
+      "http_method": "GET"
+    },
+    {
+      "tool": "shodan_cve_search",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "shodan",
+        "get"
+      ],
+      "http_method": "GET"
+    },
+    {
+      "tool": "shodan_cpe_lookup",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "shodan",
+        "get"
+      ],
+      "http_method": "GET"
+    },
+    {
+      "tool": "shodan_cves_newest",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "shodan",
+        "get"
+      ],
+      "http_method": "GET"
+    },
+    {
+      "tool": "shodan_cves_kev",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "shodan",
+        "get"
+      ],
+      "http_method": "GET"
+    },
+    {
+      "tool": "shodan_cves_by_epss",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "shodan",
+        "get"
+      ],
+      "http_method": "GET"
+    },
+    {
+      "tool": "shodan-mcp_help",
+      "safety_class": "READ",
+      "locality": "local",
+      "tags": [
+        "shodan",
+        "help"
+      ]
+    }
+  ]
+}

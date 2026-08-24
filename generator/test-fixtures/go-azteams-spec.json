@@ -1,0 +1,13 @@
+{
+  "name": "az-teams",
+  "baseUrl": "https://graph.microsoft.com",
+  "authScheme": "hermes-token",
+  "hermesTokenService": "az-teams",
+  "hermesTokenScheme": "graph",
+  "defaultPort": "42020",
+  "endpoints": [
+    { "method": "GET", "path": "/v1.0/me", "operationId": "getMe", "summary": "Get the signed-in user's Microsoft 365 profile.", "parameters": [] },
+    { "method": "GET", "path": "/v1.0/me/joinedTeams", "operationId": "listJoinedTeams", "summary": "List the Microsoft Teams the signed-in user is a member of.", "parameters": [] },
+    { "method": "GET", "path": "/v1.0/me/chats", "operationId": "listChats", "summary": "List the signed-in user's Teams chats.", "parameters": [ {"name":"$top","in":"query","required":false,"description":"max results"} ] }
+  ]
+}

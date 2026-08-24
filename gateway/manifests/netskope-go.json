@@ -1,0 +1,141 @@
+{
+  "manifest": "isaac-router-manifest/v1",
+  "backend": "netskope-go",
+  "capabilities": [
+    {
+      "tool": "netskope_get_alerts",
+      "safety_class": "WRITE",
+      "locality": "remote",
+      "tags": [
+        "netskope",
+        "post"
+      ]
+    },
+    {
+      "tool": "netskope_get_events",
+      "safety_class": "WRITE",
+      "locality": "remote",
+      "tags": [
+        "netskope",
+        "post"
+      ]
+    },
+    {
+      "tool": "netskope_get_dlp_incidents",
+      "safety_class": "WRITE",
+      "locality": "remote",
+      "tags": [
+        "netskope",
+        "post"
+      ]
+    },
+    {
+      "tool": "netskope_list_clients",
+      "safety_class": "WRITE",
+      "locality": "remote",
+      "tags": [
+        "netskope",
+        "post"
+      ]
+    },
+    {
+      "tool": "netskope_get_users_by_host",
+      "safety_class": "WRITE",
+      "locality": "remote",
+      "tags": [
+        "netskope",
+        "post"
+      ]
+    },
+    {
+      "tool": "netskope_get_hosts_by_user",
+      "safety_class": "WRITE",
+      "locality": "remote",
+      "tags": [
+        "netskope",
+        "post"
+      ]
+    },
+    {
+      "tool": "netskope_list_quarantine_files",
+      "safety_class": "WRITE",
+      "locality": "remote",
+      "tags": [
+        "netskope",
+        "post"
+      ]
+    },
+    {
+      "tool": "netskope_quarantine_action",
+      "safety_class": "WRITE",
+      "locality": "remote",
+      "tags": [
+        "netskope",
+        "post"
+      ]
+    },
+    {
+      "tool": "netskope_update_url_list",
+      "safety_class": "WRITE",
+      "locality": "remote",
+      "tags": [
+        "netskope",
+        "post"
+      ]
+    },
+    {
+      "tool": "netskope_update_file_hash_list",
+      "safety_class": "WRITE",
+      "locality": "remote",
+      "tags": [
+        "netskope",
+        "post"
+      ]
+    },
+    {
+      "tool": "netskope_v2_get_events",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "netskope",
+        "get"
+      ]
+    },
+    {
+      "tool": "netskope_v2_search_data",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "netskope",
+        "get"
+      ]
+    },
+    {
+      "tool": "netskope_list_user_roles",
+      "safety_class": "WRITE",
+      "locality": "remote",
+      "tags": [
+        "netskope",
+        "post"
+      ]
+    },
+    {
+      "tool": "netskope_get_security_assessment",
+      "safety_class": "WRITE",
+      "locality": "remote",
+      "tags": [
+        "netskope",
+        "post"
+      ]
+    },
+    {
+      "tool": "netskope-mcp_help",
+      "safety_class": "READ",
+      "locality": "local",
+      "tags": [
+        "netskope",
+        "help"
+      ]
+    }
+  ]
+}

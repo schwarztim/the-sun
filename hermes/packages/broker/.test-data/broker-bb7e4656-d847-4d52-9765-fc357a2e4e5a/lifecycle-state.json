@@ -1,0 +1,99 @@
+{
+  "version": 1,
+  "states": [
+    {
+      "service": "ms365",
+      "scheme": "graph",
+      "lastRefreshAttemptAt": 1783093800378,
+      "lastAcquireSuccessAt": 1783093800694,
+      "proofStatus": "valid",
+      "proofTier": "fresh",
+      "proofState": "valid",
+      "lastProofAt": 1783093800936,
+      "proofEvents": [
+        {
+          "tier": "stored",
+          "status": "valid",
+          "at": 1783093800376,
+          "metadata": {
+            "service": "ms365",
+            "scheme": "graph",
+            "tokenType": "Bearer",
+            "expiresAt": 1783093799376,
+            "hasRefreshToken": false
+          }
+        },
+        {
+          "tier": "fresh",
+          "status": "failed",
+          "at": 1783093800376,
+          "message": "access token is expired or inside the freshness safety margin",
+          "metadata": {
+            "expiresAt": 1783093799376,
+            "msUntilExpiry": -1000,
+            "safetyMarginMs": 300000
+          }
+        },
+        {
+          "tier": "stored",
+          "status": "valid",
+          "at": 1783093800380,
+          "metadata": {
+            "service": "ms365",
+            "scheme": "graph",
+            "tokenType": "Bearer",
+            "expiresAt": 1783093799376,
+            "hasRefreshToken": false
+          }
+        },
+        {
+          "tier": "fresh",
+          "status": "failed",
+          "at": 1783093800380,
+          "message": "access token is expired or inside the freshness safety margin",
+          "metadata": {
+            "expiresAt": 1783093799376,
+            "msUntilExpiry": -1004,
+            "safetyMarginMs": 0
+          }
+        },
+        {
+          "tier": "provider_validated",
+          "status": "failed",
+          "at": 1783093800380,
+          "message": "refresh did not produce a provider-validated credential",
+          "error": "refresh token expired for ms365:graph (AADSTS70000)",
+          "metadata": {
+            "phase": "refresh"
+          }
+        },
+        {
+          "tier": "stored",
+          "status": "valid",
+          "at": 1783093800936,
+          "metadata": {
+            "service": "ms365",
+            "scheme": "graph",
+            "tokenType": "Bearer",
+            "expiresAt": 1783097400375,
+            "hasRefreshToken": false
+          }
+        },
+        {
+          "tier": "fresh",
+          "status": "valid",
+          "at": 1783093800936,
+          "metadata": {
+            "expiresAt": 1783097400375,
+            "msUntilExpiry": 3599439,
+            "safetyMarginMs": 300000
+          }
+        }
+      ],
+      "credentialStatus": "valid",
+      "adAcquireTimes": [
+        1783093800384
+      ]
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "name": "hermes-monorepo",
+  "private": true,
+  "version": "0.0.0",
+  "packageManager": "pnpm@9.0.0",
+  "scripts": {
+    "build": "pnpm --filter @hermes/auth-core build && pnpm --filter @hermes/broker build && pnpm --filter @hermes/client build && pnpm --filter @hermes/provider-ms365 build && pnpm --filter @hermes/provider-servicenow build && pnpm --filter @hermes/provider-cookie-session build && pnpm --filter @hermes/provider-akamai-wsa build && pnpm --filter @hermes/provider-oauth2 build && pnpm --filter @hermes/provider-az-teams build && pnpm --filter @hermes/provider-azure-keyvault build && pnpm --filter @hermes/provider-crowdstrike build && pnpm --filter @hermes/provider-dynatrace build",
+    "eval:reliability": "pnpm --filter @hermes/auth-core test -- tests/reliability-evals.test.ts && pnpm --filter @hermes/provider-cookie-session test -- tests/reliability-evals.test.ts && pnpm --filter @hermes/broker test -- tests/reliability-evals.test.ts",
+    "smoke:live": "pnpm --filter @hermes/broker smoke:live",
+    "test": "pnpm -r test",
+    "typecheck": "pnpm -r typecheck",
+    "check:vault": "node scripts/check-no-shared-vault.mjs"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.0",
+    "typescript": "^5.4.0",
+    "vitest": "^3.2.6"
+  },
+  "pnpm": {
+    "overrides": {
+      "hono": ">=4.12.25",
+      "fast-uri": ">=3.1.3",
+      "ip-address": ">=10.1.1",
+      "postcss": ">=8.5.10",
+      "vite": ">=8.0.16",
+      "esbuild": ">=0.28.1",
+      "vitest": "^3.2.6",
+      "qs": ">=6.15.2"
+    }
+  }
+}

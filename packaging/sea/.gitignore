@@ -1,0 +1,5 @@
+# Downloaded official Node runtime tarballs/zips, cached across build-sea.sh
+# runs (see THESUN_SEA_CACHE in build-all.sh/build-sea.sh). Multi-hundred-MB
+# per platform — never committed, always re-fetched from nodejs.org on a
+# clean checkout.
+.cache/

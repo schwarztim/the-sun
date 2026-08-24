@@ -1,0 +1,514 @@
+{
+  "name": "github",
+  "baseUrl": "https://api.github.com",
+  "authScheme": "bearer",
+  "defaultPort": "42012",
+  "endpoints": [
+    {
+      "method": "GET",
+      "path": "/user",
+      "operationId": "getAuthenticatedUser",
+      "summary": "Get the profile of the authenticated GitHub user.",
+      "parameters": []
+    },
+    {
+      "method": "GET",
+      "path": "/user/repos",
+      "operationId": "listUserRepos",
+      "summary": "List repositories for the authenticated user.",
+      "parameters": [
+        { "name": "type", "in": "query", "required": false, "description": "all | owner | public | private | member" },
+        { "name": "sort", "in": "query", "required": false, "description": "created | updated | pushed | full_name" },
+        { "name": "per_page", "in": "query", "required": false, "description": "results per page (max 100)" },
+        { "name": "page", "in": "query", "required": false, "description": "page number of the results" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/user/teams",
+      "operationId": "listAuthenticatedUserTeams",
+      "summary": "List the teams the authenticated user is a member of across all organizations.",
+      "parameters": [
+        { "name": "per_page", "in": "query", "required": false, "description": "results per page (max 100)" },
+        { "name": "page", "in": "query", "required": false, "description": "page number of the results" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/repos/{owner}/{repo}",
+      "operationId": "getRepo",
+      "summary": "Get a repository by owner and name.",
+      "parameters": [
+        { "name": "owner", "in": "path", "required": true, "description": "the repository owner (user or org login)" },
+        { "name": "repo", "in": "path", "required": true, "description": "the repository name" }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/user/repos",
+      "operationId": "createRepository",
+      "summary": "Create a new repository for the authenticated user. Repository fields (name, description, private) go in the JSON body.",
+      "parameters": []
+    },
+    {
+      "method": "POST",
+      "path": "/repos/{owner}/{repo}/forks",
+      "operationId": "forkRepository",
+      "summary": "Fork a repository into the authenticated user's account or a specified organization.",
+      "parameters": [
+        { "name": "owner", "in": "path", "required": true, "description": "the source repository owner" },
+        { "name": "repo", "in": "path", "required": true, "description": "the source repository name" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/repos/{owner}/{repo}/collaborators",
+      "operationId": "listRepositoryCollaborators",
+      "summary": "List the collaborators on a repository.",
+      "parameters": [
+        { "name": "owner", "in": "path", "required": true, "description": "the repository owner" },
+        { "name": "repo", "in": "path", "required": true, "description": "the repository name" },
+        { "name": "affiliation", "in": "query", "required": false, "description": "outside | direct | all" },
+        { "name": "per_page", "in": "query", "required": false, "description": "results per page (max 100)" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/repos/{owner}/{repo}/contents/{path}",
+      "operationId": "getFileContents",
+      "summary": "Get the contents of a file or directory from a repository.",
+      "parameters": [
+        { "name": "owner", "in": "path", "required": true, "description": "the repository owner" },
+        { "name": "repo", "in": "path", "required": true, "description": "the repository name" },
+        { "name": "path", "in": "path", "required": true, "description": "the file or directory path within the repository" },
+        { "name": "ref", "in": "query", "required": false, "description": "the name of the commit/branch/tag (defaults to the default branch)" }
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/repos/{owner}/{repo}/contents/{path}",
+      "operationId": "createOrUpdateFile",
+      "summary": "Create or update a single file in a repository. The JSON body carries message, content (base64), branch, and sha (when updating an existing file). This also covers pushing file changes.",
+      "parameters": [
+        { "name": "owner", "in": "path", "required": true, "description": "the repository owner" },
+        { "name": "repo", "in": "path", "required": true, "description": "the repository name" },
+        { "name": "path", "in": "path", "required": true, "description": "the target file path within the repository" }
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/repos/{owner}/{repo}/contents/{path}",
+      "operationId": "deleteFile",
+      "summary": "Delete a file from a repository. The JSON body must include message, sha of the file, and branch.",
+      "parameters": [
+        { "name": "owner", "in": "path", "required": true, "description": "the repository owner" },
+        { "name": "repo", "in": "path", "required": true, "description": "the repository name" },
+        { "name": "path", "in": "path", "required": true, "description": "the file path to delete" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/repos/{owner}/{repo}/branches",
+      "operationId": "listBranches",
+      "summary": "List the branches of a repository.",
+      "parameters": [
+        { "name": "owner", "in": "path", "required": true, "description": "the repository owner" },
+        { "name": "repo", "in": "path", "required": true, "description": "the repository name" },
+        { "name": "protected", "in": "query", "required": false, "description": "true to list only protected branches" },
+        { "name": "per_page", "in": "query", "required": false, "description": "results per page (max 100)" }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/repos/{owner}/{repo}/git/refs",
+      "operationId": "createBranch",
+      "summary": "Create a new branch by creating a git ref. The JSON body must include ref (e.g. refs/heads/new-branch) and sha of the commit to point at.",
+      "parameters": [
+        { "name": "owner", "in": "path", "required": true, "description": "the repository owner" },
+        { "name": "repo", "in": "path", "required": true, "description": "the repository name" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/repos/{owner}/{repo}/commits",
+      "operationId": "listCommits",
+      "summary": "List commits on a repository branch.",
+      "parameters": [
+        { "name": "owner", "in": "path", "required": true, "description": "the repository owner" },
+        { "name": "repo", "in": "path", "required": true, "description": "the repository name" },
+        { "name": "sha", "in": "query", "required": false, "description": "SHA or branch name to start listing commits from" },
+        { "name": "path", "in": "query", "required": false, "description": "only commits containing this file path" },
+        { "name": "per_page", "in": "query", "required": false, "description": "results per page (max 100)" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/repos/{owner}/{repo}/commits/{ref}",
+      "operationId": "getCommit",
+      "summary": "Get details for a single commit by SHA, branch, or tag reference.",
+      "parameters": [
+        { "name": "owner", "in": "path", "required": true, "description": "the repository owner" },
+        { "name": "repo", "in": "path", "required": true, "description": "the repository name" },
+        { "name": "ref", "in": "path", "required": true, "description": "the commit SHA, branch name, or tag name" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/repos/{owner}/{repo}/tags",
+      "operationId": "listTags",
+      "summary": "List the git tags of a repository.",
+      "parameters": [
+        { "name": "owner", "in": "path", "required": true, "description": "the repository owner" },
+        { "name": "repo", "in": "path", "required": true, "description": "the repository name" },
+        { "name": "per_page", "in": "query", "required": false, "description": "results per page (max 100)" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/repos/{owner}/{repo}/git/tags/{tag_sha}",
+      "operationId": "getTag",
+      "summary": "Get details of a single annotated git tag object. Requires the tag_sha (the object SHA of the annotated tag); obtain it from listTags.",
+      "parameters": [
+        { "name": "owner", "in": "path", "required": true, "description": "the repository owner" },
+        { "name": "repo", "in": "path", "required": true, "description": "the repository name" },
+        { "name": "tag_sha", "in": "path", "required": true, "description": "the object SHA of the annotated tag" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/repos/{owner}/{repo}/releases",
+      "operationId": "listReleases",
+      "summary": "List the releases of a repository.",
+      "parameters": [
+        { "name": "owner", "in": "path", "required": true, "description": "the repository owner" },
+        { "name": "repo", "in": "path", "required": true, "description": "the repository name" },
+        { "name": "per_page", "in": "query", "required": false, "description": "results per page (max 100)" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/repos/{owner}/{repo}/releases/latest",
+      "operationId": "getLatestRelease",
+      "summary": "Get the latest published full release for a repository.",
+      "parameters": [
+        { "name": "owner", "in": "path", "required": true, "description": "the repository owner" },
+        { "name": "repo", "in": "path", "required": true, "description": "the repository name" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/repos/{owner}/{repo}/releases/tags/{tag}",
+      "operationId": "getReleaseByTag",
+      "summary": "Get a release identified by its git tag name.",
+      "parameters": [
+        { "name": "owner", "in": "path", "required": true, "description": "the repository owner" },
+        { "name": "repo", "in": "path", "required": true, "description": "the repository name" },
+        { "name": "tag", "in": "path", "required": true, "description": "the git tag name of the release" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/repos/{owner}/{repo}/issues",
+      "operationId": "listRepoIssues",
+      "summary": "List issues in a repository.",
+      "parameters": [
+        { "name": "owner", "in": "path", "required": true, "description": "the repository owner" },
+        { "name": "repo", "in": "path", "required": true, "description": "the repository name" },
+        { "name": "state", "in": "query", "required": false, "description": "open | closed | all" },
+        { "name": "labels", "in": "query", "required": false, "description": "comma-separated list of label names" },
+        { "name": "per_page", "in": "query", "required": false, "description": "results per page (max 100)" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/repos/{owner}/{repo}/issues/{issue_number}",
+      "operationId": "getIssue",
+      "summary": "Get a single issue by its number.",
+      "parameters": [
+        { "name": "owner", "in": "path", "required": true, "description": "the repository owner" },
+        { "name": "repo", "in": "path", "required": true, "description": "the repository name" },
+        { "name": "issue_number", "in": "path", "required": true, "description": "the issue number within the repository" }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/repos/{owner}/{repo}/issues",
+      "operationId": "createIssue",
+      "summary": "Create a new issue in a repository. The JSON body carries title, body, assignees, labels, and milestone.",
+      "parameters": [
+        { "name": "owner", "in": "path", "required": true, "description": "the repository owner" },
+        { "name": "repo", "in": "path", "required": true, "description": "the repository name" }
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/repos/{owner}/{repo}/issues/{issue_number}",
+      "operationId": "updateIssue",
+      "summary": "Update an existing issue. The JSON body may set title, body, state, state_reason, assignees, and labels.",
+      "parameters": [
+        { "name": "owner", "in": "path", "required": true, "description": "the repository owner" },
+        { "name": "repo", "in": "path", "required": true, "description": "the repository name" },
+        { "name": "issue_number", "in": "path", "required": true, "description": "the issue number to update" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/repos/{owner}/{repo}/issues/{issue_number}/comments",
+      "operationId": "listIssueComments",
+      "summary": "List the comments on an issue or pull request.",
+      "parameters": [
+        { "name": "owner", "in": "path", "required": true, "description": "the repository owner" },
+        { "name": "repo", "in": "path", "required": true, "description": "the repository name" },
+        { "name": "issue_number", "in": "path", "required": true, "description": "the issue or pull request number" },
+        { "name": "per_page", "in": "query", "required": false, "description": "results per page (max 100)" }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/repos/{owner}/{repo}/issues/{issue_number}/comments",
+      "operationId": "addIssueComment",
+      "summary": "Add a comment to an issue or pull request. The JSON body must include the comment body text.",
+      "parameters": [
+        { "name": "owner", "in": "path", "required": true, "description": "the repository owner" },
+        { "name": "repo", "in": "path", "required": true, "description": "the repository name" },
+        { "name": "issue_number", "in": "path", "required": true, "description": "the issue or pull request number (pass the PR number to comment on a PR)" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/repos/{owner}/{repo}/issues/{issue_number}/sub_issues",
+      "operationId": "listSubIssues",
+      "summary": "List the sub-issues of a parent issue.",
+      "parameters": [
+        { "name": "owner", "in": "path", "required": true, "description": "the repository owner" },
+        { "name": "repo", "in": "path", "required": true, "description": "the repository name" },
+        { "name": "issue_number", "in": "path", "required": true, "description": "the parent issue number" },
+        { "name": "per_page", "in": "query", "required": false, "description": "results per page (max 100)" }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/repos/{owner}/{repo}/issues/{issue_number}/sub_issues",
+      "operationId": "addSubIssue",
+      "summary": "Add a sub-issue to a parent issue. Requires the numeric id of an existing issue in the same repository, supplied as sub_issue_id in the JSON body; obtain it from listRepoIssues.",
+      "parameters": [
+        { "name": "owner", "in": "path", "required": true, "description": "the repository owner" },
+        { "name": "repo", "in": "path", "required": true, "description": "the repository name" },
+        { "name": "issue_number", "in": "path", "required": true, "description": "the parent issue number" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/repos/{owner}/{repo}/labels/{name}",
+      "operationId": "getLabel",
+      "summary": "Get a single label from a repository by name.",
+      "parameters": [
+        { "name": "owner", "in": "path", "required": true, "description": "the repository owner" },
+        { "name": "repo", "in": "path", "required": true, "description": "the repository name" },
+        { "name": "name", "in": "path", "required": true, "description": "the label name" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/orgs/{org}/issue-types",
+      "operationId": "listIssueTypes",
+      "summary": "List the issue types defined for an organization.",
+      "parameters": [
+        { "name": "org", "in": "path", "required": true, "description": "the organization login" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/repos/{owner}/{repo}/pulls",
+      "operationId": "listPullRequests",
+      "summary": "List pull requests in a repository. To filter by author, use searchPullRequests instead.",
+      "parameters": [
+        { "name": "owner", "in": "path", "required": true, "description": "the repository owner" },
+        { "name": "repo", "in": "path", "required": true, "description": "the repository name" },
+        { "name": "state", "in": "query", "required": false, "description": "open | closed | all" },
+        { "name": "base", "in": "query", "required": false, "description": "filter by base branch name" },
+        { "name": "per_page", "in": "query", "required": false, "description": "results per page (max 100)" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/repos/{owner}/{repo}/pulls/{pull_number}",
+      "operationId": "getPullRequest",
+      "summary": "Get a single pull request by its number.",
+      "parameters": [
+        { "name": "owner", "in": "path", "required": true, "description": "the repository owner" },
+        { "name": "repo", "in": "path", "required": true, "description": "the repository name" },
+        { "name": "pull_number", "in": "path", "required": true, "description": "the pull request number" }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/repos/{owner}/{repo}/pulls",
+      "operationId": "createPullRequest",
+      "summary": "Create a new pull request. The JSON body carries title, head, base, body, and draft.",
+      "parameters": [
+        { "name": "owner", "in": "path", "required": true, "description": "the repository owner" },
+        { "name": "repo", "in": "path", "required": true, "description": "the repository name" }
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/repos/{owner}/{repo}/pulls/{pull_number}",
+      "operationId": "updatePullRequest",
+      "summary": "Update an existing pull request. The JSON body may set title, body, state, base, and maintainer_can_modify.",
+      "parameters": [
+        { "name": "owner", "in": "path", "required": true, "description": "the repository owner" },
+        { "name": "repo", "in": "path", "required": true, "description": "the repository name" },
+        { "name": "pull_number", "in": "path", "required": true, "description": "the pull request number to update" }
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/repos/{owner}/{repo}/pulls/{pull_number}/merge",
+      "operationId": "mergePullRequest",
+      "summary": "Merge a pull request. The JSON body may set commit_title, commit_message, and merge_method.",
+      "parameters": [
+        { "name": "owner", "in": "path", "required": true, "description": "the repository owner" },
+        { "name": "repo", "in": "path", "required": true, "description": "the repository name" },
+        { "name": "pull_number", "in": "path", "required": true, "description": "the pull request number to merge" }
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/repos/{owner}/{repo}/pulls/{pull_number}/update-branch",
+      "operationId": "updatePullRequestBranch",
+      "summary": "Update a pull request's head branch with the latest changes from the base branch.",
+      "parameters": [
+        { "name": "owner", "in": "path", "required": true, "description": "the repository owner" },
+        { "name": "repo", "in": "path", "required": true, "description": "the repository name" },
+        { "name": "pull_number", "in": "path", "required": true, "description": "the pull request number" }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/repos/{owner}/{repo}/pulls/{pull_number}/reviews",
+      "operationId": "createPullRequestReview",
+      "summary": "Create a review on a pull request. The JSON body carries event (APPROVE | REQUEST_CHANGES | COMMENT), body, and line comments.",
+      "parameters": [
+        { "name": "owner", "in": "path", "required": true, "description": "the repository owner" },
+        { "name": "repo", "in": "path", "required": true, "description": "the repository name" },
+        { "name": "pull_number", "in": "path", "required": true, "description": "the pull request number to review" }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/repos/{owner}/{repo}/pulls/{pull_number}/comments",
+      "operationId": "addPullRequestReviewComment",
+      "summary": "Add a review comment on a specific line of a pull request. The JSON body carries body, commit_id, path, and line.",
+      "parameters": [
+        { "name": "owner", "in": "path", "required": true, "description": "the repository owner" },
+        { "name": "repo", "in": "path", "required": true, "description": "the repository name" },
+        { "name": "pull_number", "in": "path", "required": true, "description": "the pull request number" }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/repos/{owner}/{repo}/pulls/{pull_number}/requested_reviewers",
+      "operationId": "requestReviewers",
+      "summary": "Request reviewers for a pull request. The JSON body carries reviewers and team_reviewers.",
+      "parameters": [
+        { "name": "owner", "in": "path", "required": true, "description": "the repository owner" },
+        { "name": "repo", "in": "path", "required": true, "description": "the repository name" },
+        { "name": "pull_number", "in": "path", "required": true, "description": "the pull request number" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/repos/{owner}/{repo}/secret-scanning/alerts",
+      "operationId": "listSecretScanningAlerts",
+      "summary": "List the secret scanning alerts for a repository.",
+      "parameters": [
+        { "name": "owner", "in": "path", "required": true, "description": "the repository owner" },
+        { "name": "repo", "in": "path", "required": true, "description": "the repository name" },
+        { "name": "state", "in": "query", "required": false, "description": "open | resolved" },
+        { "name": "per_page", "in": "query", "required": false, "description": "results per page (max 100)" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/orgs/{org}/teams/{team_slug}/members",
+      "operationId": "getTeamMembers",
+      "summary": "List the members of a team in an organization.",
+      "parameters": [
+        { "name": "org", "in": "path", "required": true, "description": "the organization login" },
+        { "name": "team_slug", "in": "path", "required": true, "description": "the URL slug of the team" },
+        { "name": "per_page", "in": "query", "required": false, "description": "results per page (max 100)" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/search/repositories",
+      "operationId": "searchRepositories",
+      "summary": "Search for repositories using GitHub's search syntax.",
+      "parameters": [
+        { "name": "q", "in": "query", "required": true, "description": "the search query using GitHub search qualifiers" },
+        { "name": "sort", "in": "query", "required": false, "description": "stars | forks | help-wanted-issues | updated" },
+        { "name": "order", "in": "query", "required": false, "description": "asc | desc" },
+        { "name": "per_page", "in": "query", "required": false, "description": "results per page (max 100)" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/search/code",
+      "operationId": "searchCode",
+      "summary": "Search for code across repositories using GitHub's code search syntax.",
+      "parameters": [
+        { "name": "q", "in": "query", "required": true, "description": "the code search query" },
+        { "name": "per_page", "in": "query", "required": false, "description": "results per page (max 100)" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/search/commits",
+      "operationId": "searchCommits",
+      "summary": "Search for commits across repositories.",
+      "parameters": [
+        { "name": "q", "in": "query", "required": true, "description": "the commit search query" },
+        { "name": "sort", "in": "query", "required": false, "description": "author-date | committer-date" },
+        { "name": "order", "in": "query", "required": false, "description": "asc | desc" },
+        { "name": "per_page", "in": "query", "required": false, "description": "results per page (max 100)" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/search/issues",
+      "operationId": "searchIssues",
+      "summary": "Search for issues using GitHub's search syntax. Add is:issue to the query to exclude pull requests.",
+      "parameters": [
+        { "name": "q", "in": "query", "required": true, "description": "the issue search query" },
+        { "name": "sort", "in": "query", "required": false, "description": "comments | created | updated | reactions" },
+        { "name": "order", "in": "query", "required": false, "description": "asc | desc" },
+        { "name": "per_page", "in": "query", "required": false, "description": "results per page (max 100)" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/search/issues",
+      "operationId": "searchPullRequests",
+      "summary": "Search for pull requests. Uses the issues search endpoint; add is:pr to the q query to restrict results to pull requests.",
+      "parameters": [
+        { "name": "q", "in": "query", "required": true, "description": "the search query (include is:pr to match only pull requests)" },
+        { "name": "sort", "in": "query", "required": false, "description": "comments | created | updated | reactions" },
+        { "name": "order", "in": "query", "required": false, "description": "asc | desc" },
+        { "name": "per_page", "in": "query", "required": false, "description": "results per page (max 100)" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/search/users",
+      "operationId": "searchUsers",
+      "summary": "Search for users and organizations.",
+      "parameters": [
+        { "name": "q", "in": "query", "required": true, "description": "the user search query" },
+        { "name": "sort", "in": "query", "required": false, "description": "followers | repositories | joined" },
+        { "name": "order", "in": "query", "required": false, "description": "asc | desc" },
+        { "name": "per_page", "in": "query", "required": false, "description": "results per page (max 100)" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+node_modules/
+dist/
+*.log
+.DS_Store
+coverage/
+.vitest/
+
+# Runtime tooling artifacts (not source)
+.claude-flow/
+.claude/scheduled_tasks.lock

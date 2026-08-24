@@ -1,0 +1,88 @@
+{
+  "name": "thesun",
+  "version": "0.1.0",
+  "description": "Autonomous MCP server generation and orchestration platform. Generates, tests, and operates MCP servers with near-zero human involvement.",
+  "author": "Tim Schwarz",
+  "homepage": "https://github.com/schwarztim/thesun",
+  "commands": [
+    {
+      "name": "sun",
+      "description": "Generate MCP servers autonomously",
+      "path": "commands/sun.md"
+    },
+    {
+      "name": "sun-auth",
+      "description": "Capture authentication from any webapp. Opens browser, you log in, tokens saved. Use: /sun-auth <service> <login-url>",
+      "path": "commands/auth.md"
+    }
+  ],
+  "skills": [
+    {
+      "name": "optimize-mcp-creation",
+      "description": "Fully autonomous MCP creation pipeline. PROACTIVELY USE THIS when: (1) user wants to interact with an API/tool that has no existing MCP server, (2) user asks about a service/API integration that Claude cannot directly access, (3) user mentions wanting to automate a workflow with an external tool, (4) user says 'use thesun for X' or 'create an MCP for X'. Single invocation — researches API ecosystem, designs task-oriented tools, generates via thesun, scores quality, auto-fixes until passing. THE default for ALL MCP creation.",
+      "path": "skills/optimize-mcp-creation.md"
+    },
+    {
+      "name": "generate-mcp",
+      "description": "Direct thesun generation without intelligence gathering or quality scoring. Use optimize-mcp-creation instead for all normal MCP creation. Only use this skill to bypass the optimizer for rapid iteration on known-working MCPs or debugging the builder itself.",
+      "path": "skills/generate-mcp.md"
+    },
+    {
+      "name": "fix-mcp",
+      "description": "Fix, repair, or improve an existing MCP server. Use when: (1) user reports an MCP has build errors or test failures, (2) user wants to improve/update an existing MCP, (3) MCP is not starting correctly or has issues. Uses thesun FIX mode: thesun({ target: 'toolname', fix: '/path/to/mcp' }). Validates, identifies issues, and autonomously fixes problems.",
+      "path": "skills/fix-mcp.md"
+    },
+    {
+      "name": "validate-mcp",
+      "description": "Validate an MCP server and return a quality score (0-100) WITHOUT modifying it. Use for auditing, pre-deployment checks, or quality comparison. Checks: package.json, entry point, README, tests, build, graceful startup.",
+      "path": "skills/validate-mcp.md"
+    },
+    {
+      "name": "list-mcps",
+      "description": "List all MCP servers registered in Claude configuration. Shows installed MCPs, their paths, and status. Use when user asks 'what MCPs do I have?' or 'is X MCP installed?'",
+      "path": "skills/list-mcps.md"
+    },
+    {
+      "name": "build-status",
+      "description": "Check status of active MCP builds and view system health dashboard. Use when user asks about build progress, costs, or system health.",
+      "path": "skills/build-status.md"
+    },
+    {
+      "name": "research-api",
+      "description": "Research and discover all APIs for a tool WITHOUT generating code. Use for exploration and planning before committing to full MCP generation. Finds docs, OpenAPI specs, existing MCPs, and gaps.",
+      "path": "skills/research-api.md"
+    },
+    {
+      "name": "update-mcps",
+      "description": "Proactively search the web to improve and update MCP servers. Finds new API features, security vulnerabilities, and best practices from other implementations. Works on both local and non-local MCPs. Documents changes on Confluence and GitHub. Use for maintenance, security audits, or keeping MCPs current.",
+      "path": "skills/update-mcps.md"
+    }
+  ],
+  "agents": [
+    {
+      "name": "mcp-optimizer",
+      "description": "Intelligence layer for MCP generation. Pre-generation API analysis, reference template selection, accumulated knowledge consultation, blueprint generation, and post-generation 100-point quality assessment.",
+      "path": "agents/mcp-optimizer.md"
+    },
+    {
+      "name": "meta-planner",
+      "description": "High-level strategic planner (Opus) that adapts workflows dynamically. Analyzes requests, anticipates problems, and designs custom approaches when standard workflow doesn't fit. Should be invoked FIRST for any complex request.",
+      "path": "agents/meta-planner.md"
+    },
+    {
+      "name": "mcp-builder",
+      "description": "Autonomous agent that generates complete MCP servers from tool specifications. Runs discovery, generation, testing, security scanning, and optimization with minimal human intervention.",
+      "path": "agents/mcp-builder.md"
+    },
+    {
+      "name": "api-researcher",
+      "description": "Researches and catalogs all APIs for a tool. Finds existing MCPs, vendor docs, OpenAPI specs, and identifies gaps.",
+      "path": "agents/api-researcher.md"
+    },
+    {
+      "name": "mcp-updater",
+      "description": "Autonomous agent that searches the web for MCP improvements and applies updates. Monitors API changelogs, security advisories, and community best practices. Updates both local and non-local MCPs. Documents changes on Confluence and GitHub.",
+      "path": "agents/mcp-updater.md"
+    }
+  ]
+}

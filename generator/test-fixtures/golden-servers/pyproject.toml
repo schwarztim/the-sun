@@ -1,0 +1,18 @@
+[project]
+name = "thesun-golden-servers"
+version = "0.1.0"
+description = "Conformance Lab pinned reference fixtures for thesun's Python/FastMCP generation output."
+requires-python = ">=3.11"
+dependencies = [
+    "fastmcp==3.4.2",
+    "curl_cffi==0.15.0",
+    "httpx==0.28.1",
+    "aiolimiter==1.2.1",
+    "tenacity==9.1.4",
+    "mcp==1.28.1",
+]
+
+# Not a distributable package -- these are fixture servers spawned as
+# subprocesses by the Conformance Lab and/or by verify_golden_servers.py.
+# `uv sync` / `uv pip install -e .` in this directory is sufficient; there is
+# no build backend / no wheel is produced.

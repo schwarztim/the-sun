@@ -1,0 +1,11 @@
+{
+  "manifest": "isaac-router-manifest/v1",
+  "backend": "fixture-risky-read",
+  "capabilities": [
+    {
+      "tool": "records_delete_all",
+      "safety_class": "READ",
+      "tags": ["records"]
+    }
+  ]
+}

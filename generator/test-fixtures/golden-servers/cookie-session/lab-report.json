@@ -1,0 +1,134 @@
+{
+  "target": "cookie_session",
+  "serverDir": "/workspace/thesun/test-fixtures/golden-servers/cookie-session",
+  "startedAt": "2026-07-03T18:30:49.611Z",
+  "finishedAt": "2026-07-03T18:30:52.898Z",
+  "passed": true,
+  "transport": "streamable-http",
+  "toolCount": 3,
+  "gates": [
+    {
+      "gate": "protocol",
+      "passed": true,
+      "message": "connect -> initialize -> listTools() succeeded (3 tool(s))"
+    },
+    {
+      "gate": "instrumentation",
+      "passed": true,
+      "message": "all 3 tool(s) carry valid descriptions and annotations, and a help tool exists",
+      "detail": {
+        "subResults": [
+          {
+            "tool": "get_profile",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "get_profile",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "add_profile_note",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "add_profile_note",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "cookie_session_help",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "cookie_session_help",
+            "check": "annotations",
+            "passed": true
+          }
+        ],
+        "helpToolPassed": true
+      }
+    },
+    {
+      "gate": "transport",
+      "passed": true,
+      "message": "server is reachable over streamable-http"
+    },
+    {
+      "gate": "wire-fingerprint",
+      "passed": true,
+      "message": "JA4 t13d1516h2_8daaf6152771_02713d6af862 matches the Chrome-Linux anchors (prefix t13d15, cipher hash 8daaf6152771) [via self-test]",
+      "detail": {
+        "mechanism": "self-test",
+        "ja4": "t13d1516h2_8daaf6152771_02713d6af862"
+      }
+    },
+    {
+      "gate": "credential-scan",
+      "passed": true,
+      "message": "scanned 7 file(s), no hardcoded credentials found",
+      "detail": []
+    },
+    {
+      "gate": "callability",
+      "passed": true,
+      "message": "all 2 invokable tool(s) returned a well-formed JSON-RPC result or auth-error",
+      "detail": [
+        {
+          "tool": "get_profile",
+          "wellFormed": true,
+          "isError": true,
+          "note": "returned isError:true (acceptable — credential-free/auth-error path)"
+        },
+        {
+          "tool": "add_profile_note",
+          "wellFormed": true,
+          "isError": true,
+          "note": "returned isError:true (acceptable — credential-free/auth-error path)"
+        }
+      ]
+    },
+    {
+      "gate": "precision",
+      "passed": true,
+      "message": "all invoked tools resolved to a known op — no 404s",
+      "detail": []
+    },
+    {
+      "gate": "coverage",
+      "passed": true,
+      "message": "coverage manifest valid (100% coverage, basis=observed, 2 op(s))",
+      "detail": {
+        "basis": "observed",
+        "coverage_pct": 100,
+        "ops": [
+          {
+            "path": "/profile",
+            "method": "GET",
+            "tool": "get_profile"
+          },
+          {
+            "path": "/profile/notes",
+            "method": "POST",
+            "tool": "add_profile_note"
+          }
+        ]
+      }
+    },
+    {
+      "gate": "rate-limiter",
+      "passed": true,
+      "message": "\"cookie_session\" is not a KNOWN_PATTERNS rate-limited target — gate is informational-pass"
+    }
+  ],
+  "residualUnverifiedSurface": [
+    "semantic correctness of tool behavior (the Lab checks shape/protocol, not business logic)",
+    "write-path safety beyond destructiveHint/idempotentHint annotation presence",
+    "live WAF/anti-bot acceptance at the real target — the wire-fingerprint gate is necessary, not sufficient, for real-target acceptance",
+    "auth scopes / permission boundaries granted by the operator's captured session"
+  ],
+  "live_acceptance_last_verified": null
+}

@@ -1,0 +1,4 @@
+{
+  "targetName": "rest_bearer",
+  "targetBaseUrlEnvVar": "MOCK_API_BASE_URL"
+}

@@ -1,0 +1,12 @@
+{
+  "manifest": "isaac-router-manifest/v1",
+  "backend": "fixture-missing-guard",
+  "capabilities": [
+    {
+      "tool": "send_alert",
+      "safety_class": "HUMAN_OUTBOUND",
+      "tags": ["alert"],
+      "write_guard": ""
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "name": "@hermes/broker",
+  "version": "0.0.1",
+  "type": "module",
+  "bin": {
+    "hermes": "./dist/cli.js"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "rm -rf dist && tsc -p tsconfig.json",
+    "test": "vitest run",
+    "test:reliability": "vitest run tests/reliability-evals.test.ts",
+    "test:watch": "vitest",
+    "smoke:live": "node scripts/live-smoke.mjs",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "dev": "tsx src/cli.ts"
+  },
+  "dependencies": {
+    "@hermes/auth-core": "workspace:*",
+    "@hermes/provider-akamai-wsa": "workspace:*",
+    "@hermes/provider-az-teams": "workspace:*",
+    "@hermes/provider-azure-keyvault": "workspace:*",
+    "@hermes/provider-cookie-session": "workspace:*",
+    "@hermes/provider-crowdstrike": "workspace:*",
+    "@hermes/provider-dynatrace": "workspace:*",
+    "@hermes/provider-ms365": "workspace:*",
+    "@hermes/provider-oauth2": "workspace:*",
+    "@hermes/provider-servicenow": "workspace:*",
+    "@hermes/vault": "workspace:*",
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "commander": "^12.0.0",
+    "fastify": "^5.8.5",
+    "pino": "^9.0.0",
+    "pino-pretty": "^11.0.0",
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "@hermes/client": "workspace:*",
+    "tsx": "^4.7.0"
+  }
+}

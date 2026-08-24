@@ -1,0 +1,78 @@
+{
+  "manifest": "isaac-router-manifest/v1",
+  "backend": "atlassian-api-key",
+  "capabilities": [
+    {
+      "tool": "get_confluence_page",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": ["confluence", "read"]
+    },
+    {
+      "tool": "search_confluence",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": ["confluence", "search", "read"]
+    },
+    {
+      "tool": "list_confluence_spaces",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": ["confluence", "list", "read"]
+    },
+    {
+      "tool": "create_confluence_page",
+      "safety_class": "WRITE",
+      "locality": "remote",
+      "tags": ["confluence", "create", "write"]
+    },
+    {
+      "tool": "update_confluence_page",
+      "safety_class": "WRITE",
+      "locality": "remote",
+      "tags": ["confluence", "update", "write"]
+    },
+    {
+      "tool": "delete_confluence_page",
+      "safety_class": "WRITE",
+      "locality": "remote",
+      "tags": ["confluence", "delete", "write"]
+    },
+    {
+      "tool": "get_jira_issue",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": ["jira", "read"]
+    },
+    {
+      "tool": "search_jira_issues",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": ["jira", "search", "read"]
+    },
+    {
+      "tool": "list_jira_projects",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": ["jira", "list", "read"]
+    },
+    {
+      "tool": "create_jira_issue",
+      "safety_class": "WRITE",
+      "locality": "remote",
+      "tags": ["jira", "create", "write"]
+    },
+    {
+      "tool": "update_jira_issue",
+      "safety_class": "WRITE",
+      "locality": "remote",
+      "tags": ["jira", "update", "write"]
+    },
+    {
+      "tool": "add_jira_comment",
+      "safety_class": "WRITE",
+      "locality": "remote",
+      "tags": ["jira", "comment", "write"]
+    }
+  ]
+}

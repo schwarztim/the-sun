@@ -1,0 +1,18 @@
+{
+  "basis": "observed",
+  "coverage_pct": 100,
+  "ops": [
+    {
+      "path": "/graphql",
+      "method": "POST",
+      "tool": "graphql_viewer",
+      "justification": "GraphQL query operation 'Viewer' over the single POST /graphql endpoint."
+    },
+    {
+      "path": "/graphql",
+      "method": "POST",
+      "tool": "graphql_create_widget",
+      "justification": "GraphQL mutation operation 'CreateWidget' over the single POST /graphql endpoint."
+    }
+  ]
+}

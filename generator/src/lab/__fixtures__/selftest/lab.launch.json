@@ -1,0 +1,11 @@
+{
+  "transport": "streamable-http",
+  "command": "python3",
+  "args": ["mini-selftest-server.py"],
+  "portEnvVar": "THESUN_PORT",
+  "hostEnvVar": "THESUN_HOST",
+  "mcpPath": "/mcp",
+  "targetName": "lab_fixture_selftest",
+  "targetBaseUrlEnvVar": "UNUSED_BASE_URL",
+  "requiresBrowserTLS": true
+}

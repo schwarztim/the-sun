@@ -1,0 +1,29 @@
+# Self-contained snippet — merge into gateway/config.fleet.yaml (or its
+# default-manifest successor) `backends:` map in Phase 2. Do not apply directly;
+# another agent may be editing the shared gateway config concurrently.
+#
+# NOTE the endpoint path: the official server mounts MCP at the HTTP ROOT ("/"),
+# not "/mcp" like every thesun-generated server. Verified by curl against a live
+# instance (see ../README.md). Using ".../mcp" here would 404.
+backends:
+  github-mcp:
+    transport: http
+    url: "http://127.0.0.1:42027/"
+    namespace: "github_mcp"
+    enabled: true
+    restart_policy: "on-failure"
+    max_restarts: 3
+    connect_timeout_ms: 15000
+    # Injects the PAT as a per-request bearer header. ${GITHUB_PAT} is resolved
+    # from the gateway process's own env (see github.default.toml part 2) —
+    # gateway/src/config.ts already does ${VAR} substitution at config load, so
+    # no gateway code changes are needed, only this env line + this block.
+    headers:
+      Authorization: "Bearer ${GITHUB_PAT}"
+    source: "vendor/github"
+    description: "Official github/github-mcp-server (Go), HTTP mode, PAT auth"
+
+# Also add "github-mcp" to fleet.toolhive.ingest_skip if/when this backend is
+# added statically (mirrors the existing entries for shodan/github/stash/etc.
+# that migrated off ToolHive) so a stray container re-adoption can't collide
+# with this name.

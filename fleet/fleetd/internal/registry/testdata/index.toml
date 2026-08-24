@@ -1,0 +1,480 @@
+# thesun-registry index (catalog / store index for the thesun MCP Store).
+# Schema: see SCHEMA.md. Consumed by "thesun search" and "thesun add".
+# Seeds are catalog-only: status = "pending-release". Real signed binaries,
+# download urls, sha256 checksums, and ed25519 signatures are written later by
+# "thesun publish" / CI. No checksums or signatures are invented here.
+
+schema = "thesun-registry/v1"
+
+[[entry]]
+name = "atlassian"
+description = "Jira and Confluence Cloud REST API (issues, search, projects)."
+category = "productivity"
+tags = ["jira", "confluence", "atlassian", "issues"]
+tier = "community"
+maintainer = "thesun"
+source = "https://github.com/schwarztim/thesun-servers"
+revoked = false
+
+  [[entry.version]]
+  version = "0.1.0"
+  status = "pending-release"
+  ed25519_sig = ""
+  camouflage = false
+  rate_limit = false
+
+    [entry.version.lab_report]
+    passed = false
+    gates = ["protocol", "instrumentation", "transport", "wire-fingerprint", "credential-scan", "callability", "precision", "coverage", "rate-limiter"]
+    tool_count = 26
+    transport = "streamable-http"
+    residual_unverified_surface = ["semantic correctness of tool behavior (the Lab checks shape/protocol, not business logic)", "write-path safety beyond destructiveHint/idempotentHint annotation presence", "live WAF/anti-bot acceptance at the real target: the wire-fingerprint gate is necessary, not sufficient, for real-target acceptance", "auth scopes / permission boundaries granted by the operator's captured session"]
+
+    [entry.version.gateway_manifest]
+    read_count = 13
+    write_count = 12
+    has_write = true
+    safety_classes = ["READ", "WRITE"]
+
+    [entry.version.auth]
+    auth_scheme = "basic"
+    hermes_service = "atlassian"
+    hermes_scheme = "basic"
+
+    # Platform binaries are populated at publish time (thesun publish / CI).
+    # Example (no fake values written for seeds):
+    # [[entry.version.platform]]
+    # os = "darwin"      # darwin | linux | windows
+    # arch = "arm64"     # arm64 | amd64
+    # url = ""           # https URL of the signed binary
+    # sha256 = ""        # hex SHA-256 of the binary
+
+[[entry]]
+name = "datastream2"
+description = "Runs KQL queries against Azure Log Analytics (single kql_query tool). Not yet conformance-proven."
+category = "observability"
+tags = ["kql", "azure", "log-analytics", "logs"]
+tier = "community"
+maintainer = "thesun"
+source = "https://github.com/schwarztim/thesun-servers"
+revoked = false
+
+  [[entry.version]]
+  version = "0.1.0"
+  status = "pending-release"
+  ed25519_sig = ""
+  camouflage = false
+  rate_limit = false
+
+    [entry.version.lab_report]
+    passed = false
+    gates = []
+    tool_count = 1
+    transport = "streamable-http"
+    residual_unverified_surface = ["no lab-report.json on disk: this server has not been run through the Conformance Lab yet", "no coverage.json on disk: op safety classes are not machine-derived"]
+
+    [entry.version.gateway_manifest]
+    read_count = 0
+    write_count = 0
+    has_write = false
+    safety_classes = []
+
+    [entry.version.auth]
+    auth_scheme = "bearer"
+    hermes_service = "datastream2"
+    hermes_scheme = "token"
+
+    # Platform binaries are populated at publish time (thesun publish / CI).
+    # Example (no fake values written for seeds):
+    # [[entry.version.platform]]
+    # os = "darwin"      # darwin | linux | windows
+    # arch = "arm64"     # arm64 | amd64
+    # url = ""           # https URL of the signed binary
+    # sha256 = ""        # hex SHA-256 of the binary
+
+[[entry]]
+name = "figma"
+description = "Figma design files REST API (file and user metadata; read-only). Not yet conformance-proven."
+category = "design"
+tags = ["figma", "design", "files"]
+tier = "community"
+maintainer = "thesun"
+source = "https://github.com/schwarztim/thesun-servers"
+revoked = false
+
+  [[entry.version]]
+  version = "0.1.0"
+  status = "pending-release"
+  ed25519_sig = ""
+  camouflage = false
+  rate_limit = false
+
+    [entry.version.lab_report]
+    passed = false
+    gates = []
+    tool_count = 2
+    transport = "streamable-http"
+    residual_unverified_surface = ["no lab-report.json on disk: this server has not been run through the Conformance Lab yet", "tool_count and safety classes are derived from coverage.json op methods, not Lab-attested"]
+
+    [entry.version.gateway_manifest]
+    read_count = 2
+    write_count = 0
+    has_write = false
+    safety_classes = ["READ"]
+
+    [entry.version.auth]
+    auth_scheme = "apikey"
+    hermes_service = "figma"
+    hermes_scheme = "api_key"
+
+    # Platform binaries are populated at publish time (thesun publish / CI).
+    # Example (no fake values written for seeds):
+    # [[entry.version.platform]]
+    # os = "darwin"      # darwin | linux | windows
+    # arch = "arm64"     # arm64 | amd64
+    # url = ""           # https URL of the signed binary
+    # sha256 = ""        # hex SHA-256 of the binary
+
+[[entry]]
+name = "github"
+description = "GitHub REST API (repositories, issues, pull requests, users)."
+category = "devops"
+tags = ["github", "git", "repos", "issues", "ci"]
+tier = "community"
+maintainer = "thesun"
+source = "https://github.com/schwarztim/thesun-servers"
+revoked = false
+
+  [[entry.version]]
+  version = "0.1.0"
+  status = "pending-release"
+  ed25519_sig = ""
+  camouflage = false
+  rate_limit = true
+
+    [entry.version.lab_report]
+    passed = false
+    gates = ["protocol", "instrumentation", "transport", "wire-fingerprint", "credential-scan", "callability", "precision", "coverage", "rate-limiter"]
+    tool_count = 47
+    transport = "streamable-http"
+    residual_unverified_surface = ["semantic correctness of tool behavior (the Lab checks shape/protocol, not business logic)", "write-path safety beyond destructiveHint/idempotentHint annotation presence", "live WAF/anti-bot acceptance at the real target: the wire-fingerprint gate is necessary, not sufficient, for real-target acceptance", "auth scopes / permission boundaries granted by the operator's captured session"]
+
+    [entry.version.gateway_manifest]
+    read_count = 30
+    write_count = 16
+    has_write = true
+    safety_classes = ["READ", "WRITE"]
+
+    [entry.version.auth]
+    auth_scheme = "bearer"
+    hermes_service = "github"
+    hermes_scheme = "bearer"
+
+    # Platform binaries are populated at publish time (thesun publish / CI).
+    # Example (no fake values written for seeds):
+    # [[entry.version.platform]]
+    # os = "darwin"      # darwin | linux | windows
+    # arch = "arm64"     # arm64 | amd64
+    # url = ""           # https URL of the signed binary
+    # sha256 = ""        # hex SHA-256 of the binary
+
+[[entry]]
+name = "netskope"
+description = "Netskope security cloud API (alerts, events, policy). Not yet conformance-proven."
+category = "security"
+tags = ["netskope", "security", "swg", "casb"]
+tier = "community"
+maintainer = "thesun"
+source = "https://github.com/schwarztim/thesun-servers"
+revoked = false
+
+  [[entry.version]]
+  version = "0.1.0"
+  status = "pending-release"
+  ed25519_sig = ""
+  camouflage = false
+  rate_limit = false
+
+    [entry.version.lab_report]
+    passed = false
+    gates = []
+    tool_count = 14
+    transport = "streamable-http"
+    residual_unverified_surface = ["no lab-report.json on disk: this server has not been run through the Conformance Lab yet", "tool_count and safety classes are derived from coverage.json op methods, not Lab-attested"]
+
+    [entry.version.gateway_manifest]
+    read_count = 2
+    write_count = 12
+    has_write = true
+    safety_classes = ["READ", "WRITE"]
+
+    [entry.version.auth]
+    auth_scheme = "apikey"
+    hermes_service = "netskope"
+    hermes_scheme = "api_key"
+
+    # Platform binaries are populated at publish time (thesun publish / CI).
+    # Example (no fake values written for seeds):
+    # [[entry.version.platform]]
+    # os = "darwin"      # darwin | linux | windows
+    # arch = "arm64"     # arm64 | amd64
+    # url = ""           # https URL of the signed binary
+    # sha256 = ""        # hex SHA-256 of the binary
+
+[[entry]]
+name = "servicenow"
+description = "ServiceNow ITSM tables API (incidents, changes, CMDB)."
+category = "itsm"
+tags = ["servicenow", "itsm", "incidents", "cmdb"]
+tier = "curated"
+maintainer = "thesun"
+source = "https://github.com/schwarztim/thesun-servers"
+revoked = false
+
+  [[entry.version]]
+  version = "0.1.0"
+  status = "pending-release"
+  ed25519_sig = ""
+  camouflage = false
+  rate_limit = false
+
+    [entry.version.lab_report]
+    passed = true
+    gates = ["protocol", "instrumentation", "transport", "wire-fingerprint", "credential-scan", "callability", "precision", "coverage", "rate-limiter"]
+    tool_count = 83
+    transport = "streamable-http"
+    residual_unverified_surface = ["semantic correctness of tool behavior (the Lab checks shape/protocol, not business logic)", "write-path safety beyond destructiveHint/idempotentHint annotation presence", "live WAF/anti-bot acceptance at the real target: the wire-fingerprint gate is necessary, not sufficient, for real-target acceptance", "auth scopes / permission boundaries granted by the operator's captured session"]
+
+    [entry.version.gateway_manifest]
+    read_count = 58
+    write_count = 11
+    has_write = true
+    safety_classes = ["READ", "WRITE"]
+
+    [entry.version.auth]
+    auth_scheme = "basic"
+    hermes_service = "servicenow"
+    hermes_scheme = "basic"
+
+    # Platform binaries are populated at publish time (thesun publish / CI).
+    # Example (no fake values written for seeds):
+    # [[entry.version.platform]]
+    # os = "darwin"      # darwin | linux | windows
+    # arch = "arm64"     # arm64 | amd64
+    # url = ""           # https URL of the signed binary
+    # sha256 = ""        # hex SHA-256 of the binary
+
+[[entry]]
+name = "shodan"
+description = "Shodan internet intelligence API (host search, DNS, scans)."
+category = "security"
+tags = ["shodan", "security", "osint", "recon"]
+tier = "curated"
+maintainer = "thesun"
+source = "https://github.com/schwarztim/thesun-servers"
+revoked = false
+
+  [[entry.version]]
+  version = "0.1.0"
+  status = "pending-release"
+  ed25519_sig = ""
+  camouflage = false
+  rate_limit = false
+
+    [entry.version.lab_report]
+    passed = true
+    gates = ["protocol", "instrumentation", "transport", "wire-fingerprint", "credential-scan", "callability", "precision", "coverage", "rate-limiter"]
+    tool_count = 33
+    transport = "streamable-http"
+    residual_unverified_surface = ["semantic correctness of tool behavior (the Lab checks shape/protocol, not business logic)", "write-path safety beyond destructiveHint/idempotentHint annotation presence", "live WAF/anti-bot acceptance at the real target: the wire-fingerprint gate is necessary, not sufficient, for real-target acceptance", "auth scopes / permission boundaries granted by the operator's captured session"]
+
+    [entry.version.gateway_manifest]
+    read_count = 29
+    write_count = 3
+    has_write = true
+    safety_classes = ["READ", "WRITE"]
+
+    [entry.version.auth]
+    auth_scheme = "apikey"
+    hermes_service = "shodan"
+    hermes_scheme = "api_key"
+
+    # Platform binaries are populated at publish time (thesun publish / CI).
+    # Example (no fake values written for seeds):
+    # [[entry.version.platform]]
+    # os = "darwin"      # darwin | linux | windows
+    # arch = "arm64"     # arm64 | amd64
+    # url = ""           # https URL of the signed binary
+    # sha256 = ""        # hex SHA-256 of the binary
+
+[[entry]]
+name = "stash"
+description = "Bitbucket Server REST API (projects, repos, pull requests). Not yet conformance-proven."
+category = "devops"
+tags = ["bitbucket", "stash", "git", "pull-requests"]
+tier = "community"
+maintainer = "thesun"
+source = "https://github.com/schwarztim/thesun-servers"
+revoked = false
+
+  [[entry.version]]
+  version = "0.1.0"
+  status = "pending-release"
+  ed25519_sig = ""
+  camouflage = false
+  rate_limit = false
+
+    [entry.version.lab_report]
+    passed = false
+    gates = []
+    tool_count = 18
+    transport = "streamable-http"
+    residual_unverified_surface = ["no lab-report.json on disk: this server has not been run through the Conformance Lab yet", "tool_count and safety classes are derived from coverage.json op methods, not Lab-attested"]
+
+    [entry.version.gateway_manifest]
+    read_count = 10
+    write_count = 8
+    has_write = true
+    safety_classes = ["READ", "WRITE"]
+
+    [entry.version.auth]
+    auth_scheme = "bearer"
+    hermes_service = "stash"
+    hermes_scheme = "bearer"
+
+    # Platform binaries are populated at publish time (thesun publish / CI).
+    # Example (no fake values written for seeds):
+    # [[entry.version.platform]]
+    # os = "darwin"      # darwin | linux | windows
+    # arch = "arm64"     # arm64 | amd64
+    # url = ""           # https URL of the signed binary
+    # sha256 = ""        # hex SHA-256 of the binary
+
+[[entry]]
+name = "tessie"
+description = "Tessie Tesla vehicle API (vehicle state, location, controls). Not yet conformance-proven."
+category = "automotive"
+tags = ["tessie", "tesla", "vehicle", "iot"]
+tier = "community"
+maintainer = "thesun"
+source = "https://github.com/schwarztim/thesun-servers"
+revoked = false
+
+  [[entry.version]]
+  version = "0.1.0"
+  status = "pending-release"
+  ed25519_sig = ""
+  camouflage = false
+  rate_limit = false
+
+    [entry.version.lab_report]
+    passed = false
+    gates = []
+    tool_count = 24
+    transport = "streamable-http"
+    residual_unverified_surface = ["no lab-report.json on disk: this server has not been run through the Conformance Lab yet", "tool_count and safety classes are derived from coverage.json op methods, not Lab-attested"]
+
+    [entry.version.gateway_manifest]
+    read_count = 20
+    write_count = 4
+    has_write = true
+    safety_classes = ["READ", "WRITE"]
+
+    [entry.version.auth]
+    auth_scheme = "bearer"
+    hermes_service = "tessie"
+    hermes_scheme = "bearer"
+
+    # Platform binaries are populated at publish time (thesun publish / CI).
+    # Example (no fake values written for seeds):
+    # [[entry.version.platform]]
+    # os = "darwin"      # darwin | linux | windows
+    # arch = "arm64"     # arm64 | amd64
+    # url = ""           # https URL of the signed binary
+    # sha256 = ""        # hex SHA-256 of the binary
+
+[[entry]]
+name = "tufin"
+description = "Tufin SecureTrack network security policy API (devices, rules; read-only)."
+category = "networking"
+tags = ["tufin", "firewall", "network-security", "securetrack"]
+tier = "curated"
+maintainer = "thesun"
+source = "https://github.com/schwarztim/thesun-servers"
+revoked = false
+
+  [[entry.version]]
+  version = "0.1.0"
+  status = "pending-release"
+  ed25519_sig = ""
+  camouflage = false
+  rate_limit = false
+
+    [entry.version.lab_report]
+    passed = true
+    gates = ["protocol", "instrumentation", "transport", "wire-fingerprint", "credential-scan", "callability", "precision", "coverage", "rate-limiter"]
+    tool_count = 22
+    transport = "streamable-http"
+    residual_unverified_surface = ["semantic correctness of tool behavior (the Lab checks shape/protocol, not business logic)", "write-path safety beyond destructiveHint/idempotentHint annotation presence", "live WAF/anti-bot acceptance at the real target: the wire-fingerprint gate is necessary, not sufficient, for real-target acceptance", "auth scopes / permission boundaries granted by the operator's captured session"]
+
+    [entry.version.gateway_manifest]
+    read_count = 17
+    write_count = 0
+    has_write = false
+    safety_classes = ["READ"]
+
+    [entry.version.auth]
+    auth_scheme = "session"
+    hermes_service = "tufin"
+    hermes_scheme = "session"
+
+    # Platform binaries are populated at publish time (thesun publish / CI).
+    # Example (no fake values written for seeds):
+    # [[entry.version.platform]]
+    # os = "darwin"      # darwin | linux | windows
+    # arch = "arm64"     # arm64 | amd64
+    # url = ""           # https URL of the signed binary
+    # sha256 = ""        # hex SHA-256 of the binary
+
+[[entry]]
+name = "venafi"
+description = "Venafi machine identity and certificate management API (read-only)."
+category = "pki"
+tags = ["venafi", "pki", "certificates", "tls"]
+tier = "curated"
+maintainer = "thesun"
+source = "https://github.com/schwarztim/thesun-servers"
+revoked = false
+
+  [[entry.version]]
+  version = "0.1.0"
+  status = "pending-release"
+  ed25519_sig = ""
+  camouflage = false
+  rate_limit = false
+
+    [entry.version.lab_report]
+    passed = true
+    gates = ["protocol", "instrumentation", "transport", "wire-fingerprint", "credential-scan", "callability", "precision", "coverage", "rate-limiter"]
+    tool_count = 5
+    transport = "streamable-http"
+    residual_unverified_surface = ["semantic correctness of tool behavior (the Lab checks shape/protocol, not business logic)", "write-path safety beyond destructiveHint/idempotentHint annotation presence", "live WAF/anti-bot acceptance at the real target: the wire-fingerprint gate is necessary, not sufficient, for real-target acceptance", "auth scopes / permission boundaries granted by the operator's captured session"]
+
+    [entry.version.gateway_manifest]
+    read_count = 4
+    write_count = 0
+    has_write = false
+    safety_classes = ["READ"]
+
+    [entry.version.auth]
+    auth_scheme = "token"
+    hermes_service = "venafi"
+    hermes_scheme = "hermes-token"
+
+    # Platform binaries are populated at publish time (thesun publish / CI).
+    # Example (no fake values written for seeds):
+    # [[entry.version.platform]]
+    # os = "darwin"      # darwin | linux | windows
+    # arch = "arm64"     # arm64 | amd64
+    # url = ""           # https URL of the signed binary
+    # sha256 = ""        # hex SHA-256 of the binary

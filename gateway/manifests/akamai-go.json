@@ -1,0 +1,341 @@
+{
+  "manifest": "isaac-router-manifest/v1",
+  "backend": "akamai-go",
+  "capabilities": [
+    {
+      "tool": "akamai_raw_request",
+      "safety_class": "PRODUCTION",
+      "locality": "remote",
+      "tags": [
+        "akamai",
+        "universal-executor",
+        "production"
+      ],
+      "note": "Universal executor: dispatches any of the 1145 catalogued operations by toolName, so its blast radius is the entire Akamai API surface, including property and security-config activation against live CDN. The gateway cannot infer the real safety class from the tool name alone, so this is pinned to the most dangerous operation it can reach rather than the most common one."
+    },
+    {
+      "tool": "akamai_read_request",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "akamai",
+        "read-only",
+        "property",
+        "configuration",
+        "dispatcher"
+      ],
+      "note": "Read-only dispatcher over the same 1145-operation catalogue as akamai_raw_request, and the reason a read-only caller never needs that tool: it resolves the operation in the embedded catalogue and refuses anything whose catalogued method is not GET, with a two-entry named allowlist for the Edge Diagnostics error translator (a POST that submits a diagnostic string and changes no configuration). The method is read from the catalogue entry and never from caller input, so a caller cannot assert that a write is a read, and an operation the catalogue cannot classify is refused rather than guessed at. Its blast radius is the Akamai read surface, 622 catalogued GET operations plus that one diagnostic POST, which is why it is READ while akamai_raw_request stays PRODUCTION with no carve-outs."
+    },
+    {
+      "tool": "akamai_account_overview",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "akamai",
+        "identity",
+        "account",
+        "groups"
+      ]
+    },
+    {
+      "tool": "akamai_translate_error",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "akamai",
+        "edge-diagnostics",
+        "error-translator",
+        "troubleshooting"
+      ],
+      "note": "Narrow counterpart to akamai_raw_request for a single capability: it submits an Akamai error reference string to the Edge Diagnostics error translator and returns the diagnostic detail behind the request that failed. READ despite the HTTP method being POST, because the POST is how that API accepts a lookup rather than a mutation: it changes no property, security configuration, content, or delivery behavior, and the only thing it creates is an asynchronous record of its own read. The two endpoint paths are compile-time constants in the tool, and the poll path varies only by an integer requestId that Akamai itself returned, so no caller input can steer this at another operation, product, path, or method."
+    },
+    {
+      "tool": "akamai_list_operations",
+      "safety_class": "READ",
+      "locality": "local",
+      "tags": [
+        "akamai",
+        "registry",
+        "discovery"
+      ]
+    },
+    {
+      "tool": "akamai_registry_stats",
+      "safety_class": "READ",
+      "locality": "local",
+      "tags": [
+        "akamai",
+        "registry",
+        "stats"
+      ]
+    },
+    {
+      "tool": "akamai-mcp_help",
+      "safety_class": "READ",
+      "locality": "local",
+      "tags": [
+        "akamai",
+        "help"
+      ]
+    },
+    {
+      "tool": "akamai_property_list",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "akamai",
+        "property",
+        "papi",
+        "staging",
+        "production",
+        "cdn"
+      ],
+      "note": "Named tool over one pinned catalogued operation, akamai_papi_get-properties, with no operation argument: the caller supplies a contract and a group and can reach nothing else. READ because listing properties returns each one's latestVersion, stagingVersion, and productionVersion and changes none of them. This is the tool a caller asking what is live on staging versus production was missing, and its absence is why one invented the name rather than reaching for the executor."
+    },
+    {
+      "tool": "akamai_property_get",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "akamai",
+        "property",
+        "papi",
+        "cdn"
+      ],
+      "note": "Pinned to akamai_papi_get-property. Reads one property's metadata, including the version numbers live on staging and production."
+    },
+    {
+      "tool": "akamai_property_hostnames",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "akamai",
+        "property",
+        "hostnames",
+        "papi",
+        "cdn"
+      ],
+      "note": "Pinned to akamai_papi_get-property-version-hostnames. Reads the hostnames and edge hostnames one property version serves."
+    },
+    {
+      "tool": "akamai_property_rules",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "akamai",
+        "property",
+        "rules",
+        "papi",
+        "cdn"
+      ],
+      "note": "Pinned to akamai_papi_get-property-version-rules. Reads a property version's delivery rule tree. The write counterparts (PUT and PATCH on the same path) are not reachable from any named tool; they stay behind akamai_raw_request."
+    },
+    {
+      "tool": "akamai_property_activations",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "akamai",
+        "property",
+        "activation-history",
+        "papi",
+        "cdn"
+      ],
+      "note": "Pinned to akamai_papi_get-property-activations, the GET that LISTS activation history. READ, and not to be confused with akamai_papi_post-property-activations, the POST that STARTS an activation against live CDN: that operation is not reachable from this or any other named tool, and no named tool accepts an operation argument that could redirect one here."
+    },
+    {
+      "tool": "akamai_property_search",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "akamai",
+        "property",
+        "search",
+        "papi",
+        "cdn"
+      ],
+      "note": "Pinned to akamai_papi_post-search-find-by-value. READ despite the HTTP method being POST: the body carries the hostname, property name, or edge hostname being searched for, and the response is the matching properties. It creates nothing and activates nothing. The POST exists because that is how PAPI accepts a search term, not because the call mutates; this is the only way to answer which property serves a given hostname without already knowing its contract and group."
+    },
+    {
+      "tool": "akamai_hostname_list",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "akamai",
+        "hostnames",
+        "inventory",
+        "papi",
+        "cdn"
+      ],
+      "note": "Pinned to akamai_papi_get-hostnames. Reads the account-wide hostname inventory with optional filters and bounded pagination."
+    },
+    {
+      "tool": "akamai_security_config_list",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "akamai",
+        "appsec",
+        "waf",
+        "security-config"
+      ],
+      "note": "Pinned to akamai_appsec_get-configs, and it takes no arguments at all. READ: it lists which WAF configurations exist and which version of each is live on staging and production. The appsec product holds 213 catalogued operations, including policy rewrites and configuration activation; none of them are reachable from this tool or from any other named tool, which take no operation argument."
+    },
+    {
+      "tool": "akamai_security_config_get",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "akamai",
+        "appsec",
+        "waf",
+        "security-config"
+      ],
+      "note": "Pinned to akamai_appsec_get-config. Reads one security configuration's versions and protected hostnames."
+    },
+    {
+      "tool": "akamai_network_list_list",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "akamai",
+        "network-lists",
+        "waf",
+        "allowlist",
+        "blocklist"
+      ],
+      "note": "Pinned to akamai_network_lists_get-network-lists. Reads which IP and geography lists exist. Elements are excluded by default because a single list can hold tens of thousands of addresses."
+    },
+    {
+      "tool": "akamai_network_list_get",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "akamai",
+        "network-lists",
+        "waf",
+        "allowlist",
+        "blocklist"
+      ],
+      "note": "Pinned to akamai_network_lists_get-network-list. Reads one list's contents and its deployment status on each network, which is how a caller answers whether an address is blocked. The append, update, and activate operations on the same resource are POST and PUT and are not reachable from any named tool."
+    },
+    {
+      "tool": "akamai_dns_zone_list",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "akamai",
+        "edge-dns",
+        "zones"
+      ],
+      "note": "Pinned to akamai_config_dns_get-zones. Reads the Edge DNS zone inventory with bounded pagination."
+    },
+    {
+      "tool": "akamai_dns_records",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "akamai",
+        "edge-dns",
+        "records"
+      ],
+      "note": "Pinned to akamai_config_dns_get-zones-zone-recordsets. Reads one zone's record sets. Edge DNS writes go through changelists, an entirely different set of operations, none of which any named tool can reach."
+    },
+    {
+      "tool": "akamai_certificate_list",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "akamai",
+        "cps",
+        "certificates",
+        "tls"
+      ],
+      "note": "Pinned to akamai_cps_get-enrollments. READ, and it exists as a named tool mostly because of two things a caller cannot be expected to know: CPS returns 406 Not Acceptable unless the request names a specific versioned media type (pinned here as the enrollments v11 type), and CPS rejects the ctr_ prefixed contract id that every other Akamai product on this server returns, so the tool strips it."
+    },
+    {
+      "tool": "akamai_certificate_get",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "akamai",
+        "cps",
+        "certificates",
+        "tls"
+      ],
+      "note": "Pinned to akamai_cps_get-enrollment, with the singular enrollment v11 media type; the collection and the item are different CPS media types. Reads one enrollment. Certificate renewal and deployment are POST and PUT operations that no named tool can reach."
+    },
+    {
+      "tool": "akamai_traffic_report",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "akamai",
+        "reporting",
+        "traffic",
+        "analytics"
+      ],
+      "note": "Pinned to akamai_reporting_api_post-report-data. READ despite the HTTP method being POST: the body is the query (dimensions, metrics, filters) because it does not fit in a URL, and the endpoint computes over traffic Akamai already served. It creates no report definition and changes no configuration. Defaults to the CDN traffic report; the three path parts address other reports within the same read-only reporting surface."
+    },
+    {
+      "tool": "akamai_edge_curl",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "akamai",
+        "edge-diagnostics",
+        "curl",
+        "troubleshooting"
+      ],
+      "note": "Pinned to akamai_edge_diagnostics_post-curl. READ despite the POST: it fetches a URL from an edge server and returns what came back, changing no property, security configuration, cached content, or delivery behavior. Every operation in the Edge Diagnostics product is a POST, so a method rule cannot distinguish these from anything else, which is why each is named individually rather than admitted by a pattern. Requires the Edge Diagnostics grant on the API client; without it Akamai answers 403 pep-authz."
+    },
+    {
+      "tool": "akamai_edge_dig",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "akamai",
+        "edge-diagnostics",
+        "dns",
+        "troubleshooting"
+      ],
+      "note": "Pinned to akamai_edge_diagnostics_post-dig. READ despite the POST: a DNS lookup run from an edge server. Requires the Edge Diagnostics grant on the API client."
+    },
+    {
+      "tool": "akamai_edge_mtr",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "akamai",
+        "edge-diagnostics",
+        "network",
+        "troubleshooting"
+      ],
+      "note": "Pinned to akamai_edge_diagnostics_post-mtr. READ despite the POST: a network path trace from an edge server, which sends probe packets and changes nothing. Requires the Edge Diagnostics grant on the API client."
+    },
+    {
+      "tool": "akamai_grep_logs",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "akamai",
+        "edge-diagnostics",
+        "logs",
+        "troubleshooting"
+      ],
+      "note": "Pinned to akamai_edge_diagnostics_post-grep. READ despite the POST: it searches log lines an edge server already wrote for traffic it already served. Asynchronous at Akamai (202 plus a requestId), and the tool polls within a bounded wait because an MCP caller cannot sleep between calls; the poll path is built from Akamai's own integer requestId, never from the link in the response body. Requires the Edge Diagnostics grant on the API client."
+    },
+    {
+      "tool": "akamai_url_health_check",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "akamai",
+        "edge-diagnostics",
+        "health-check",
+        "troubleshooting"
+      ],
+      "note": "Pinned to akamai_edge_diagnostics_post-url-health-check. READ despite the POST: a composite diagnostic (curl plus DNS, optionally MTR and log lines) against one URL. Asynchronous and polled on the same bounded terms as akamai_grep_logs. Requires the Edge Diagnostics grant on the API client."
+    }
+  ]
+}

@@ -1,0 +1,84 @@
+{
+  "target": "_stdio",
+  "serverDir": "/workspace/thesun/test-fixtures/golden-servers/_stdio",
+  "startedAt": "2026-07-03T18:30:57.688Z",
+  "finishedAt": "2026-07-03T18:31:20.059Z",
+  "passed": false,
+  "transport": "stdio",
+  "toolCount": 1,
+  "gates": [
+    {
+      "gate": "protocol",
+      "passed": true,
+      "message": "connect -> initialize -> listTools() succeeded (1 tool(s))"
+    },
+    {
+      "gate": "instrumentation",
+      "passed": false,
+      "message": "list_items [annotations]: Tool \"list_items\" has no annotations; help tool: Missing _stdio_help tool",
+      "detail": {
+        "subResults": [
+          {
+            "tool": "list_items",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "list_items",
+            "check": "annotations",
+            "passed": false,
+            "error": "Tool \"list_items\" has no annotations"
+          }
+        ],
+        "helpToolPassed": false,
+        "helpToolError": "Missing _stdio_help tool"
+      }
+    },
+    {
+      "gate": "transport",
+      "passed": false,
+      "message": "server only responded over stdio — a shipped generated server must be streamable-http-only"
+    },
+    {
+      "gate": "wire-fingerprint",
+      "passed": false,
+      "skipped": true,
+      "message": "skipped: transport is stdio, not streamable-http"
+    },
+    {
+      "gate": "credential-scan",
+      "passed": true,
+      "message": "scanned 5 file(s), no hardcoded credentials found",
+      "detail": []
+    },
+    {
+      "gate": "callability",
+      "passed": false,
+      "skipped": true,
+      "message": "skipped: transport is stdio, not streamable-http"
+    },
+    {
+      "gate": "precision",
+      "passed": false,
+      "skipped": true,
+      "message": "skipped: transport is stdio, not streamable-http"
+    },
+    {
+      "gate": "coverage",
+      "passed": false,
+      "message": "no coverage.json manifest found at /workspace/thesun/test-fixtures/golden-servers/_stdio/coverage.json"
+    },
+    {
+      "gate": "rate-limiter",
+      "passed": true,
+      "message": "\"_stdio\" is not a KNOWN_PATTERNS rate-limited target — gate is informational-pass"
+    }
+  ],
+  "residualUnverifiedSurface": [
+    "semantic correctness of tool behavior (the Lab checks shape/protocol, not business logic)",
+    "write-path safety beyond destructiveHint/idempotentHint annotation presence",
+    "live WAF/anti-bot acceptance at the real target — the wire-fingerprint gate is necessary, not sufficient, for real-target acceptance",
+    "auth scopes / permission boundaries granted by the operator's captured session"
+  ],
+  "live_acceptance_last_verified": null
+}

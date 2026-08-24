@@ -1,0 +1,13 @@
+{
+  "name": "thesun-ms365-vendor",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Pinned vendor wrapper for @softeria/ms-365-mcp-server, thesun's shipped-default Microsoft 365 MCP (Teams/Mail/Calendar/Files via device-code login).",
+  "type": "module",
+  "scripts": {
+    "start": "node run.js"
+  },
+  "dependencies": {
+    "@softeria/ms-365-mcp-server": "0.128.2"
+  }
+}

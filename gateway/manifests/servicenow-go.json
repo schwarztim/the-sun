@@ -1,0 +1,26 @@
+{
+  "manifest": "isaac-router-manifest/v1",
+  "backend": "servicenow-go",
+  "capabilities": [
+    { "tool": "servicenow_list_incident", "safety_class": "READ", "locality": "remote", "tags": ["servicenow", "incident", "read", "list", "get"] },
+    { "tool": "servicenow_get_incident", "safety_class": "READ", "locality": "remote", "tags": ["servicenow", "incident", "read", "get"] },
+    { "tool": "servicenow_list_change_request", "safety_class": "READ", "locality": "remote", "tags": ["servicenow", "change", "read", "list", "get"] },
+    { "tool": "servicenow_get_change_request", "safety_class": "READ", "locality": "remote", "tags": ["servicenow", "change", "read", "get"] },
+    { "tool": "servicenow_list_change_task", "safety_class": "READ", "locality": "remote", "tags": ["servicenow", "change", "task", "read", "list", "get"] },
+    { "tool": "servicenow_list_problem", "safety_class": "READ", "locality": "remote", "tags": ["servicenow", "problem", "read", "list", "get"] },
+    { "tool": "servicenow_get_problem", "safety_class": "READ", "locality": "remote", "tags": ["servicenow", "problem", "read", "get"] },
+    { "tool": "servicenow_list_request", "safety_class": "READ", "locality": "remote", "tags": ["servicenow", "request", "read", "list", "get"] },
+    { "tool": "servicenow_list_requested_item", "safety_class": "READ", "locality": "remote", "tags": ["servicenow", "ritm", "read", "list", "get"] },
+    { "tool": "servicenow_list_knowledge", "safety_class": "READ", "locality": "remote", "tags": ["servicenow", "knowledge", "read", "list", "get"] },
+    { "tool": "servicenow_list_sys_user", "safety_class": "READ", "locality": "remote", "tags": ["servicenow", "user", "read", "list", "get"] },
+    { "tool": "servicenow_get_sys_user", "safety_class": "READ", "locality": "remote", "tags": ["servicenow", "user", "read", "get"] },
+    { "tool": "servicenow_list_group", "safety_class": "READ", "locality": "remote", "tags": ["servicenow", "group", "read", "list", "get"] },
+    { "tool": "servicenow_query_table", "safety_class": "READ", "locality": "remote", "tags": ["servicenow", "table", "read", "list", "get", "generic"] },
+    { "tool": "servicenow_get_record", "safety_class": "READ", "locality": "remote", "tags": ["servicenow", "table", "read", "get", "generic"] },
+    { "tool": "servicenow_create_incident", "safety_class": "WRITE", "locality": "remote", "tags": ["servicenow", "incident", "create", "write", "post"] },
+    { "tool": "servicenow_update_incident", "safety_class": "WRITE", "locality": "remote", "tags": ["servicenow", "incident", "update", "write", "patch"] },
+    { "tool": "servicenow_create_record", "safety_class": "WRITE", "locality": "remote", "tags": ["servicenow", "table", "create", "write", "post", "generic"] },
+    { "tool": "servicenow_update_record", "safety_class": "WRITE", "locality": "remote", "tags": ["servicenow", "table", "update", "write", "patch", "generic"] },
+    { "tool": "servicenow-mcp_help", "safety_class": "READ", "locality": "local", "tags": ["servicenow", "help"] }
+  ]
+}

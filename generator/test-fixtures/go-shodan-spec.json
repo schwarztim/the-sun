@@ -1,0 +1,306 @@
+{
+  "name": "shodan",
+  "version": "2.0.0",
+  "baseUrl": "https://api.shodan.io",
+  "authScheme": "api_key",
+  "apiKeyQueryParam": "key",
+  "defaultPort": "42011",
+  "endpoints": [
+    {
+      "method": "GET",
+      "path": "/shodan/host/search",
+      "operationId": "search",
+      "summary": "Search Shodan for exposed devices matching a query. Supports filters like 'port:', 'country:', 'org:', 'product:', 'os:', 'vuln:'. Consumes 1 query credit per page.",
+      "parameters": [
+        { "name": "query", "in": "query", "required": true, "description": "Shodan search query, e.g. 'apache country:US' or 'port:22 org:google'" },
+        { "name": "page", "in": "query", "required": false, "description": "page number, 100 results per page (default 1)" },
+        { "name": "facets", "in": "query", "required": false, "description": "comma-separated facets for a breakdown, e.g. 'country,port,org'" },
+        { "name": "minify", "in": "query", "required": false, "description": "true to return only basic host info per match" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/shodan/host/{ip}",
+      "operationId": "host",
+      "summary": "Return all Shodan information for a host by IP: open ports, service banners, vulnerabilities, and SSL certificates.",
+      "parameters": [
+        { "name": "ip", "in": "path", "required": true, "description": "the IPv4 or IPv6 address to look up, e.g. '8.8.8.8'" },
+        { "name": "history", "in": "query", "required": false, "description": "true to include all historical banners" },
+        { "name": "minify", "in": "query", "required": false, "description": "true to return only basic host info without banners" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/shodan/host/count",
+      "operationId": "count",
+      "summary": "Count the number of results for a search query without consuming query credits or returning individual results.",
+      "parameters": [
+        { "name": "query", "in": "query", "required": true, "description": "Shodan search query" },
+        { "name": "facets", "in": "query", "required": false, "description": "comma-separated facets for a breakdown, e.g. 'country:10,port:5'" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/dns/resolve",
+      "operationId": "dns_resolve",
+      "summary": "Resolve hostnames to IP addresses (forward DNS lookup).",
+      "parameters": [
+        { "name": "hostnames", "in": "query", "required": true, "description": "comma-separated hostnames, e.g. 'google.com,facebook.com'" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/dns/reverse",
+      "operationId": "dns_reverse",
+      "summary": "Look up the hostnames that point to a set of IP addresses (reverse DNS lookup).",
+      "parameters": [
+        { "name": "ips", "in": "query", "required": true, "description": "comma-separated IP addresses, e.g. '8.8.8.8,1.1.1.1'" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/dns/domain/{domain}",
+      "operationId": "dns_domain",
+      "summary": "Return DNS information and subdomains for a domain. Consumes 1 query credit.",
+      "parameters": [
+        { "name": "domain", "in": "path", "required": true, "description": "the domain name to look up, e.g. 'google.com'" },
+        { "name": "history", "in": "query", "required": false, "description": "true to include historical DNS data" },
+        { "name": "type", "in": "query", "required": false, "description": "filter by DNS record type: A, AAAA, CNAME, NS, etc." },
+        { "name": "page", "in": "query", "required": false, "description": "page number for paginating results" }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/shodan/scan",
+      "operationId": "scan",
+      "summary": "Request Shodan to crawl (scan) specific IPs or CIDR ranges on demand. Each IP consumes 1 scan credit. Pass a JSON body {\"ips\": \"8.8.8.8,1.1.1.1/24\"} or the ips query parameter.",
+      "parameters": [
+        { "name": "ips", "in": "query", "required": true, "description": "comma-separated IPs or CIDR ranges to scan, e.g. '8.8.8.8,1.1.1.1/24'" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/shodan/scan/{id}",
+      "operationId": "scan_status",
+      "summary": "Check the status of a previously submitted on-demand scan. The {id} path parameter requires a scan id — call shodan_scan first to obtain it.",
+      "parameters": [
+        { "name": "id", "in": "path", "required": true, "description": "the scan id returned by shodan_scan; call shodan_scan first to obtain it" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/shodan/scans",
+      "operationId": "list_scans",
+      "summary": "List all of the on-demand scans that are currently active on the account.",
+      "parameters": []
+    },
+    {
+      "method": "POST",
+      "path": "/shodan/alert",
+      "operationId": "alert_create",
+      "summary": "Create a network alert that monitors an IP range for changes. Pass a JSON body {\"name\": \"...\", \"filters\": {\"ip\": \"198.20.0.0/16\"}, \"expires\": 0}.",
+      "parameters": []
+    },
+    {
+      "method": "GET",
+      "path": "/shodan/alert/info",
+      "operationId": "alert_list",
+      "summary": "List all of the network alerts that are active on the account.",
+      "parameters": []
+    },
+    {
+      "method": "GET",
+      "path": "/shodan/alert/{id}/info",
+      "operationId": "alert_get",
+      "summary": "Return the details of a specific network alert. The {id} path parameter requires an alert id — call shodan_alert_list first to obtain it.",
+      "parameters": [
+        { "name": "id", "in": "path", "required": true, "description": "the alert id; call shodan_alert_list first to obtain it" }
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/shodan/alert/{id}",
+      "operationId": "alert_delete",
+      "summary": "Delete a network alert. The {id} path parameter requires an alert id — call shodan_alert_list first to obtain it.",
+      "parameters": [
+        { "name": "id", "in": "path", "required": true, "description": "the alert id to delete; call shodan_alert_list first to obtain it" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/shodan/alert/triggers",
+      "operationId": "alert_triggers",
+      "summary": "List the available network alert trigger types (e.g. new services, industrial control systems, vulnerabilities).",
+      "parameters": []
+    },
+    {
+      "method": "GET",
+      "path": "/shodan/ports",
+      "operationId": "ports",
+      "summary": "List all ports that Shodan crawls on the Internet.",
+      "parameters": []
+    },
+    {
+      "method": "GET",
+      "path": "/shodan/protocols",
+      "operationId": "protocols",
+      "summary": "List all protocols that can be used when performing on-demand Internet scans.",
+      "parameters": []
+    },
+    {
+      "method": "GET",
+      "path": "/shodan/host/search/filters",
+      "operationId": "filters",
+      "summary": "List all the search filters that can be used in the Shodan host search query.",
+      "parameters": []
+    },
+    {
+      "method": "GET",
+      "path": "/shodan/host/search/facets",
+      "operationId": "facets",
+      "summary": "List all the facets that can be used to get aggregate breakdowns of search results.",
+      "parameters": []
+    },
+    {
+      "method": "GET",
+      "path": "/api-info",
+      "operationId": "api_info",
+      "summary": "Return API plan information for the configured key: query credits, scan credits, and plan limits.",
+      "parameters": []
+    },
+    {
+      "method": "GET",
+      "path": "/account/profile",
+      "operationId": "account_profile",
+      "summary": "Return account information associated with the configured API key (display name, membership, creation date).",
+      "parameters": []
+    },
+    {
+      "method": "GET",
+      "path": "/tools/myip",
+      "operationId": "myip",
+      "summary": "Return your current public IP address as seen by Shodan.",
+      "parameters": []
+    },
+    {
+      "method": "GET",
+      "path": "/labs/honeyscore/{ip}",
+      "operationId": "honeyscore",
+      "summary": "Calculate the probability that an IP is a honeypot, from 0.0 (not a honeypot) to 1.0 (honeypot).",
+      "parameters": [
+        { "name": "ip", "in": "path", "required": true, "description": "the IP address to score, e.g. '8.8.8.8'" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/shodan/query",
+      "operationId": "saved_queries",
+      "summary": "Browse the directory of saved search queries that Shodan users have shared.",
+      "parameters": [
+        { "name": "page", "in": "query", "required": false, "description": "page number, 10 results per page (default 1)" },
+        { "name": "sort", "in": "query", "required": false, "description": "sort order: 'votes' or 'timestamp'" },
+        { "name": "order", "in": "query", "required": false, "description": "sort direction: 'asc' or 'desc'" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/shodan/query/search",
+      "operationId": "search_queries",
+      "summary": "Search the directory of saved search queries shared by Shodan users.",
+      "parameters": [
+        { "name": "query", "in": "query", "required": true, "description": "search term for the saved-query directory" },
+        { "name": "page", "in": "query", "required": false, "description": "page number for paginating results" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "https://exploits.shodan.io/api/search",
+      "operationId": "exploits_search",
+      "summary": "Search the Shodan Exploits database (Exploit-DB, Metasploit, CVE, and more). Consumes 1 query credit.",
+      "parameters": [
+        { "name": "query", "in": "query", "required": true, "description": "exploit search query with filters like 'cve:CVE-2021-44228', 'author:', 'platform:', 'type:'" },
+        { "name": "page", "in": "query", "required": false, "description": "page number, 100 results per page (default 1)" },
+        { "name": "facets", "in": "query", "required": false, "description": "comma-separated facets for a breakdown: author, platform, port, source, type" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "https://exploits.shodan.io/api/count",
+      "operationId": "exploits_count",
+      "summary": "Count exploits matching a query in the Shodan Exploits database without returning individual results.",
+      "parameters": [
+        { "name": "query", "in": "query", "required": true, "description": "exploit search query, e.g. 'cve:CVE-2021-44228' or 'platform:windows'" },
+        { "name": "facets", "in": "query", "required": false, "description": "comma-separated facets for an aggregate breakdown" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "https://cvedb.shodan.io/cve/{cve_id}",
+      "operationId": "cve_lookup",
+      "summary": "Look up a single CVE by its identifier in Shodan CVEDB: returns CVSS, EPSS, KEV status, references, and affected CPEs. The {cve_id} path parameter requires a CVE identifier such as 'CVE-2021-44228'.",
+      "parameters": [
+        { "name": "cve_id", "in": "path", "required": true, "description": "the CVE identifier to look up, e.g. 'CVE-2021-44228'" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "https://cvedb.shodan.io/cves",
+      "operationId": "cve_search",
+      "summary": "Search Shodan CVEDB for vulnerabilities by product, CPE 2.3, KEV status, EPSS, or date range. Do not specify both cpe23 and product.",
+      "parameters": [
+        { "name": "product", "in": "query", "required": false, "description": "product name to search, e.g. 'nginx' (mutually exclusive with cpe23)" },
+        { "name": "cpe23", "in": "query", "required": false, "description": "CPE 2.3 string to filter by, e.g. 'cpe:2.3:a:apache:log4j:2.14.1' (mutually exclusive with product)" },
+        { "name": "is_kev", "in": "query", "required": false, "description": "true to return only CISA Known Exploited Vulnerabilities" },
+        { "name": "sort_by_epss", "in": "query", "required": false, "description": "true to sort results by EPSS score (descending)" },
+        { "name": "start_date", "in": "query", "required": false, "description": "earliest published date filter, YYYY-MM-DD" },
+        { "name": "end_date", "in": "query", "required": false, "description": "latest published date filter, YYYY-MM-DD" },
+        { "name": "skip", "in": "query", "required": false, "description": "number of results to skip for pagination" },
+        { "name": "limit", "in": "query", "required": false, "description": "maximum number of results to return (default 1000, max 1000)" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "https://cvedb.shodan.io/cpes",
+      "operationId": "cpe_lookup",
+      "summary": "Look up CPE 2.3 identifiers matching a product name in Shodan CVEDB.",
+      "parameters": [
+        { "name": "product", "in": "query", "required": true, "description": "product name to search for CPEs, e.g. 'apache'" },
+        { "name": "count", "in": "query", "required": false, "description": "true to return only the number of matching CPEs" },
+        { "name": "skip", "in": "query", "required": false, "description": "number of results to skip for pagination" },
+        { "name": "limit", "in": "query", "required": false, "description": "maximum number of results to return" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "https://cvedb.shodan.io/cves",
+      "operationId": "cves_newest",
+      "summary": "List the most recently published CVEs from Shodan CVEDB.",
+      "parameters": [
+        { "name": "limit", "in": "query", "required": false, "description": "number of CVEs to return (default 1000, max 1000)" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "https://cvedb.shodan.io/cves",
+      "operationId": "cves_kev",
+      "summary": "List CISA Known Exploited Vulnerabilities (KEV) tracked in Shodan CVEDB. Set is_kev=true to restrict results to the KEV catalog.",
+      "parameters": [
+        { "name": "is_kev", "in": "query", "required": false, "description": "true to return only CISA KEV catalog entries" },
+        { "name": "limit", "in": "query", "required": false, "description": "maximum number of results to return" },
+        { "name": "skip", "in": "query", "required": false, "description": "number of results to skip for pagination" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "https://cvedb.shodan.io/cves",
+      "operationId": "cves_by_epss",
+      "summary": "List CVEs from Shodan CVEDB ranked by EPSS (Exploit Prediction Scoring System) score.",
+      "parameters": [
+        { "name": "sort_by_epss", "in": "query", "required": false, "description": "true to sort results by EPSS score, highest first" },
+        { "name": "min_epss", "in": "query", "required": false, "description": "minimum EPSS score to include, 0.0 to 1.0" },
+        { "name": "skip", "in": "query", "required": false, "description": "number of results to skip for pagination" },
+        { "name": "limit", "in": "query", "required": false, "description": "maximum number of results to return" }
+      ]
+    }
+  ]
+}

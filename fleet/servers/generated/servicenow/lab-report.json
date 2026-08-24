@@ -1,0 +1,1745 @@
+{
+  "target": "servicenow-mcp",
+  "serverDir": "~/thesun/fleet/servers/generated/servicenow",
+  "startedAt": "2026-07-04T19:46:38.128Z",
+  "finishedAt": "2026-07-04T19:49:11.792Z",
+  "passed": true,
+  "transport": "streamable-http",
+  "toolCount": 83,
+  "gates": [
+    {
+      "gate": "protocol",
+      "passed": true,
+      "message": "connect -> initialize -> listTools() succeeded (83 tool(s))"
+    },
+    {
+      "gate": "instrumentation",
+      "passed": true,
+      "message": "all 83 tool(s) carry valid descriptions and annotations, and a help tool exists",
+      "detail": {
+        "subResults": [
+          {
+            "tool": "servicenow-mcp_help",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow-mcp_help",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_activity_stream",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_activity_stream",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_aggregate",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_aggregate",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_approvals_pending",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_approvals_pending",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_attachment_upload",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_attachment_upload",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_batch_request",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_batch_request",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_catalog_add_to_cart",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_catalog_add_to_cart",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_catalog_get_cart",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_catalog_get_cart",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_catalog_order",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_catalog_order",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_catalog_submit_cart",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_catalog_submit_cart",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_create_change_request",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_create_change_request",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_create_event",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_create_event",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_create_incident",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_create_incident",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_create_problem",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_create_problem",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_create_record",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_create_record",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_delete_attachment",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_delete_attachment",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_delete_record",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_delete_record",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_download_attachment",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_download_attachment",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_get_asset",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_get_asset",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_get_attachment",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_get_attachment",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_get_catalog_item",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_get_catalog_item",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_get_change_request",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_get_change_request",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_get_incident",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_get_incident",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_get_knowledge",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_get_knowledge",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_get_problem",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_get_problem",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_get_record",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_get_record",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_get_sys_user",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_get_sys_user",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_import_set_load",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_import_set_load",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_acl",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_acl",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_approval",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_approval",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_asset",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_asset",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_attachment",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_attachment",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_audit",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_audit",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_catalog_category",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_catalog_category",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_catalog_item",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_catalog_item",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_catalog_item_variable",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_catalog_item_variable",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_change_request",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_change_request",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_change_task",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_change_task",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_choice",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_choice",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_cmdb_ci",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_cmdb_ci",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_cmdb_class",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_cmdb_class",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_cmdb_instance",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_cmdb_instance",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_cmdb_relationship",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_cmdb_relationship",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_contract",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_contract",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_cost_center",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_cost_center",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_department",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_department",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_discovery_schedule",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_discovery_schedule",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_discovery_status",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_discovery_status",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_email",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_email",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_event",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_event",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_group",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_group",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_group_member",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_group_member",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_incident",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_incident",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_journal",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_journal",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_knowledge",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_knowledge",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_license",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_license",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_license_entitlement",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_license_entitlement",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_location",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_location",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_notification",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_notification",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_problem",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_problem",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_request",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_request",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_requested_item",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_requested_item",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_role",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_role",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_scheduled_job",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_scheduled_job",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_sla",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_sla",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_software",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_software",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_sys_user",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_sys_user",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_task",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_task",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_task_sla",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_task_sla",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_update_set",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_update_set",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_user_role",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_user_role",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_workflow",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_workflow",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_workflow_context",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_list_workflow_context",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_my_context",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_my_context",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_my_work_queue",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_my_work_queue",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_order_guide_submit",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_order_guide_submit",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_query_table",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_query_table",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_record_producer_submit",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_record_producer_submit",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_requests_get_details",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_requests_get_details",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_requests_get_my_recent",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_requests_get_my_recent",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_table_schema",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_table_schema",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_update_incident",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_update_incident",
+            "check": "annotations",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_update_record",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "servicenow_update_record",
+            "check": "annotations",
+            "passed": true
+          }
+        ],
+        "helpToolPassed": true
+      }
+    },
+    {
+      "gate": "transport",
+      "passed": true,
+      "message": "server is reachable over streamable-http"
+    },
+    {
+      "gate": "wire-fingerprint",
+      "passed": true,
+      "message": "target does not declare requiresBrowserTLS (anti-bot) — a browser-realistic TLS fingerprint is not required; gate is informational-pass"
+    },
+    {
+      "gate": "credential-scan",
+      "passed": true,
+      "message": "scanned 3 file(s), no hardcoded credentials found",
+      "detail": []
+    },
+    {
+      "gate": "callability",
+      "passed": true,
+      "message": "all 82 invokable tool(s) returned a well-formed JSON-RPC result or auth-error",
+      "detail": [
+        {
+          "tool": "servicenow_activity_stream",
+          "wellFormed": true,
+          "isError": false,
+          "note": "returned a well-formed result"
+        },
+        {
+          "tool": "servicenow_aggregate",
+          "wellFormed": true,
+          "isError": true,
+          "note": "returned isError:true (acceptable — credential-free/auth-error path)"
+        },
+        {
+          "tool": "servicenow_approvals_pending",
+          "wellFormed": true,
+          "isError": false,
+          "note": "returned a well-formed result"
+        },
+        {
+          "tool": "servicenow_attachment_upload",
+          "wellFormed": true,
+          "isError": true,
+          "note": "returned isError:true (acceptable — credential-free/auth-error path)"
+        },
+        {
+          "tool": "servicenow_batch_request",
+          "wellFormed": true,
+          "isError": true,
+          "note": "returned isError:true (acceptable — credential-free/auth-error path)"
+        },
+        {
+          "tool": "servicenow_catalog_add_to_cart",
+          "wellFormed": true,
+          "isError": true,
+          "note": "returned isError:true (acceptable — credential-free/auth-error path)"
+        },
+        {
+          "tool": "servicenow_catalog_get_cart",
+          "wellFormed": true,
+          "isError": false,
+          "note": "returned a well-formed result"
+        },
+        {
+          "tool": "servicenow_catalog_order",
+          "wellFormed": true,
+          "isError": true,
+          "note": "returned isError:true (acceptable — credential-free/auth-error path)"
+        },
+        {
+          "tool": "servicenow_catalog_submit_cart",
+          "wellFormed": true,
+          "isError": true,
+          "note": "returned isError:true (acceptable — credential-free/auth-error path)"
+        },
+        {
+          "tool": "servicenow_create_change_request",
+          "wellFormed": true,
+          "isError": false,
+          "note": "returned a well-formed result"
+        },
+        {
+          "tool": "servicenow_create_event",
+          "wellFormed": true,
+          "isError": true,
+          "note": "returned isError:true (acceptable — credential-free/auth-error path)"
+        },
+        {
+          "tool": "servicenow_create_incident",
+          "wellFormed": true,
+          "isError": false,
+          "note": "returned a well-formed result"
+        },
+        {
+          "tool": "servicenow_create_problem",
+          "wellFormed": true,
+          "isError": false,
+          "note": "returned a well-formed result"
+        },
+        {
+          "tool": "servicenow_create_record",
+          "wellFormed": true,
+          "isError": true,
+          "note": "returned isError:true (acceptable — credential-free/auth-error path)"
+        },
+        {
+          "tool": "servicenow_delete_attachment",
+          "wellFormed": true,
+          "isError": true,
+          "note": "returned isError:true (acceptable — credential-free/auth-error path)"
+        },
+        {
+          "tool": "servicenow_delete_record",
+          "wellFormed": true,
+          "isError": true,
+          "note": "returned isError:true (acceptable — credential-free/auth-error path)"
+        },
+        {
+          "tool": "servicenow_download_attachment",
+          "wellFormed": true,
+          "isError": true,
+          "note": "returned isError:true (acceptable — credential-free/auth-error path)"
+        },
+        {
+          "tool": "servicenow_get_asset",
+          "wellFormed": true,
+          "isError": true,
+          "note": "returned isError:true (acceptable — credential-free/auth-error path)"
+        },
+        {
+          "tool": "servicenow_get_attachment",
+          "wellFormed": true,
+          "isError": true,
+          "note": "returned isError:true (acceptable — credential-free/auth-error path)"
+        },
+        {
+          "tool": "servicenow_get_catalog_item",
+          "wellFormed": true,
+          "isError": true,
+          "note": "returned isError:true (acceptable — credential-free/auth-error path)"
+        },
+        {
+          "tool": "servicenow_get_change_request",
+          "wellFormed": true,
+          "isError": true,
+          "note": "returned isError:true (acceptable — credential-free/auth-error path)"
+        },
+        {
+          "tool": "servicenow_get_incident",
+          "wellFormed": true,
+          "isError": true,
+          "note": "returned isError:true (acceptable — credential-free/auth-error path)"
+        },
+        {
+          "tool": "servicenow_get_knowledge",
+          "wellFormed": true,
+          "isError": true,
+          "note": "returned isError:true (acceptable — credential-free/auth-error path)"
+        },
+        {
+          "tool": "servicenow_get_problem",
+          "wellFormed": true,
+          "isError": true,
+          "note": "returned isError:true (acceptable — credential-free/auth-error path)"
+        },
+        {
+          "tool": "servicenow_get_record",
+          "wellFormed": true,
+          "isError": true,
+          "note": "returned isError:true (acceptable — credential-free/auth-error path)"
+        },
+        {
+          "tool": "servicenow_get_sys_user",
+          "wellFormed": true,
+          "isError": true,
+          "note": "returned isError:true (acceptable — credential-free/auth-error path)"
+        },
+        {
+          "tool": "servicenow_import_set_load",
+          "wellFormed": true,
+          "isError": true,
+          "note": "returned isError:true (acceptable — credential-free/auth-error path)"
+        },
+        {
+          "tool": "servicenow_list_acl",
+          "wellFormed": true,
+          "isError": true,
+          "note": "returned isError:true (acceptable — credential-free/auth-error path)"
+        },
+        {
+          "tool": "servicenow_list_approval",
+          "wellFormed": true,
+          "isError": false,
+          "note": "returned a well-formed result"
+        },
+        {
+          "tool": "servicenow_list_asset",
+          "wellFormed": true,
+          "isError": false,
+          "note": "returned a well-formed result"
+        },
+        {
+          "tool": "servicenow_list_attachment",
+          "wellFormed": true,
+          "isError": false,
+          "note": "returned a well-formed result"
+        },
+        {
+          "tool": "servicenow_list_audit",
+          "wellFormed": true,
+          "isError": true,
+          "note": "returned isError:true (acceptable — credential-free/auth-error path)"
+        },
+        {
+          "tool": "servicenow_list_catalog_category",
+          "wellFormed": true,
+          "isError": false,
+          "note": "returned a well-formed result"
+        },
+        {
+          "tool": "servicenow_list_catalog_item",
+          "wellFormed": true,
+          "isError": false,
+          "note": "returned a well-formed result"
+        },
+        {
+          "tool": "servicenow_list_catalog_item_variable",
+          "wellFormed": true,
+          "isError": false,
+          "note": "returned a well-formed result"
+        },
+        {
+          "tool": "servicenow_list_change_request",
+          "wellFormed": true,
+          "isError": false,
+          "note": "returned a well-formed result"
+        },
+        {
+          "tool": "servicenow_list_change_task",
+          "wellFormed": true,
+          "isError": false,
+          "note": "returned a well-formed result"
+        },
+        {
+          "tool": "servicenow_list_choice",
+          "wellFormed": true,
+          "isError": false,
+          "note": "returned a well-formed result"
+        },
+        {
+          "tool": "servicenow_list_cmdb_ci",
+          "wellFormed": true,
+          "isError": false,
+          "note": "returned a well-formed result"
+        },
+        {
+          "tool": "servicenow_list_cmdb_class",
+          "wellFormed": true,
+          "isError": false,
+          "note": "returned a well-formed result"
+        },
+        {
+          "tool": "servicenow_list_cmdb_instance",
+          "wellFormed": true,
+          "isError": true,
+          "note": "returned isError:true (acceptable — credential-free/auth-error path)"
+        },
+        {
+          "tool": "servicenow_list_cmdb_relationship",
+          "wellFormed": true,
+          "isError": false,
+          "note": "returned a well-formed result"
+        },
+        {
+          "tool": "servicenow_list_contract",
+          "wellFormed": true,
+          "isError": false,
+          "note": "returned a well-formed result"
+        },
+        {
+          "tool": "servicenow_list_cost_center",
+          "wellFormed": true,
+          "isError": true,
+          "note": "returned isError:true (acceptable — credential-free/auth-error path)"
+        },
+        {
+          "tool": "servicenow_list_department",
+          "wellFormed": true,
+          "isError": false,
+          "note": "returned a well-formed result"
+        },
+        {
+          "tool": "servicenow_list_discovery_schedule",
+          "wellFormed": true,
+          "isError": true,
+          "note": "returned isError:true (acceptable — credential-free/auth-error path)"
+        },
+        {
+          "tool": "servicenow_list_discovery_status",
+          "wellFormed": true,
+          "isError": false,
+          "note": "returned a well-formed result"
+        },
+        {
+          "tool": "servicenow_list_email",
+          "wellFormed": true,
+          "isError": false,
+          "note": "returned a well-formed result"
+        },
+        {
+          "tool": "servicenow_list_event",
+          "wellFormed": true,
+          "isError": true,
+          "note": "returned isError:true (acceptable — credential-free/auth-error path)"
+        },
+        {
+          "tool": "servicenow_list_group",
+          "wellFormed": true,
+          "isError": false,
+          "note": "returned a well-formed result"
+        },
+        {
+          "tool": "servicenow_list_group_member",
+          "wellFormed": true,
+          "isError": false,
+          "note": "returned a well-formed result"
+        },
+        {
+          "tool": "servicenow_list_incident",
+          "wellFormed": true,
+          "isError": false,
+          "note": "returned a well-formed result"
+        },
+        {
+          "tool": "servicenow_list_journal",
+          "wellFormed": true,
+          "isError": true,
+          "note": "returned isError:true (acceptable — credential-free/auth-error path)"
+        },
+        {
+          "tool": "servicenow_list_knowledge",
+          "wellFormed": true,
+          "isError": false,
+          "note": "returned a well-formed result"
+        },
+        {
+          "tool": "servicenow_list_license",
+          "wellFormed": true,
+          "isError": false,
+          "note": "returned a well-formed result"
+        },
+        {
+          "tool": "servicenow_list_license_entitlement",
+          "wellFormed": true,
+          "isError": false,
+          "note": "returned a well-formed result"
+        },
+        {
+          "tool": "servicenow_list_location",
+          "wellFormed": true,
+          "isError": false,
+          "note": "returned a well-formed result"
+        },
+        {
+          "tool": "servicenow_list_notification",
+          "wellFormed": true,
+          "isError": false,
+          "note": "returned a well-formed result"
+        },
+        {
+          "tool": "servicenow_list_problem",
+          "wellFormed": true,
+          "isError": false,
+          "note": "returned a well-formed result"
+        },
+        {
+          "tool": "servicenow_list_request",
+          "wellFormed": true,
+          "isError": false,
+          "note": "returned a well-formed result"
+        },
+        {
+          "tool": "servicenow_list_requested_item",
+          "wellFormed": true,
+          "isError": false,
+          "note": "returned a well-formed result"
+        },
+        {
+          "tool": "servicenow_list_role",
+          "wellFormed": true,
+          "isError": false,
+          "note": "returned a well-formed result"
+        },
+        {
+          "tool": "servicenow_list_scheduled_job",
+          "wellFormed": true,
+          "isError": false,
+          "note": "returned a well-formed result"
+        },
+        {
+          "tool": "servicenow_list_sla",
+          "wellFormed": true,
+          "isError": false,
+          "note": "returned a well-formed result"
+        },
+        {
+          "tool": "servicenow_list_software",
+          "wellFormed": true,
+          "isError": false,
+          "note": "returned a well-formed result"
+        },
+        {
+          "tool": "servicenow_list_sys_user",
+          "wellFormed": true,
+          "isError": false,
+          "note": "returned a well-formed result"
+        },
+        {
+          "tool": "servicenow_list_task",
+          "wellFormed": true,
+          "isError": true,
+          "note": "returned isError:true (acceptable — credential-free/auth-error path)"
+        },
+        {
+          "tool": "servicenow_list_task_sla",
+          "wellFormed": true,
+          "isError": true,
+          "note": "returned isError:true (acceptable — credential-free/auth-error path)"
+        },
+        {
+          "tool": "servicenow_list_update_set",
+          "wellFormed": true,
+          "isError": true,
+          "note": "returned isError:true (acceptable — credential-free/auth-error path)"
+        },
+        {
+          "tool": "servicenow_list_user_role",
+          "wellFormed": true,
+          "isError": false,
+          "note": "returned a well-formed result"
+        },
+        {
+          "tool": "servicenow_list_workflow",
+          "wellFormed": true,
+          "isError": true,
+          "note": "returned isError:true (acceptable — credential-free/auth-error path)"
+        },
+        {
+          "tool": "servicenow_list_workflow_context",
+          "wellFormed": true,
+          "isError": true,
+          "note": "returned isError:true (acceptable — credential-free/auth-error path)"
+        },
+        {
+          "tool": "servicenow_my_context",
+          "wellFormed": true,
+          "isError": false,
+          "note": "returned a well-formed result"
+        },
+        {
+          "tool": "servicenow_my_work_queue",
+          "wellFormed": true,
+          "isError": false,
+          "note": "returned a well-formed result"
+        },
+        {
+          "tool": "servicenow_order_guide_submit",
+          "wellFormed": true,
+          "isError": true,
+          "note": "returned isError:true (acceptable — credential-free/auth-error path)"
+        },
+        {
+          "tool": "servicenow_query_table",
+          "wellFormed": true,
+          "isError": true,
+          "note": "returned isError:true (acceptable — credential-free/auth-error path)"
+        },
+        {
+          "tool": "servicenow_record_producer_submit",
+          "wellFormed": true,
+          "isError": true,
+          "note": "returned isError:true (acceptable — credential-free/auth-error path)"
+        },
+        {
+          "tool": "servicenow_requests_get_details",
+          "wellFormed": true,
+          "isError": false,
+          "note": "returned a well-formed result"
+        },
+        {
+          "tool": "servicenow_requests_get_my_recent",
+          "wellFormed": true,
+          "isError": false,
+          "note": "returned a well-formed result"
+        },
+        {
+          "tool": "servicenow_table_schema",
+          "wellFormed": true,
+          "isError": false,
+          "note": "returned a well-formed result"
+        },
+        {
+          "tool": "servicenow_update_incident",
+          "wellFormed": true,
+          "isError": true,
+          "note": "returned isError:true (acceptable — credential-free/auth-error path)"
+        },
+        {
+          "tool": "servicenow_update_record",
+          "wellFormed": true,
+          "isError": true,
+          "note": "returned isError:true (acceptable — credential-free/auth-error path)"
+        }
+      ]
+    },
+    {
+      "gate": "precision",
+      "passed": true,
+      "message": "all invoked tools resolved to a known op — no 404s",
+      "detail": []
+    },
+    {
+      "gate": "coverage",
+      "passed": true,
+      "message": "coverage manifest valid (100% coverage, basis=spec, 69 op(s))",
+      "detail": {
+        "basis": "spec",
+        "coverage_pct": 100,
+        "ops": [
+          {
+            "path": "/api/now/table/incident",
+            "method": "GET",
+            "tool": "servicenow_list_incident"
+          },
+          {
+            "path": "/api/now/table/incident/{sysId}",
+            "method": "GET",
+            "tool": "servicenow_get_incident"
+          },
+          {
+            "path": "/api/now/table/change_request",
+            "method": "GET",
+            "tool": "servicenow_list_change_request"
+          },
+          {
+            "path": "/api/now/table/change_request/{sysId}",
+            "method": "GET",
+            "tool": "servicenow_get_change_request"
+          },
+          {
+            "path": "/api/now/table/change_task",
+            "method": "GET",
+            "tool": "servicenow_list_change_task"
+          },
+          {
+            "path": "/api/now/table/problem",
+            "method": "GET",
+            "tool": "servicenow_list_problem"
+          },
+          {
+            "path": "/api/now/table/problem/{sysId}",
+            "method": "GET",
+            "tool": "servicenow_get_problem"
+          },
+          {
+            "path": "/api/now/table/sc_request",
+            "method": "GET",
+            "tool": "servicenow_list_request"
+          },
+          {
+            "path": "/api/now/table/sc_req_item",
+            "method": "GET",
+            "tool": "servicenow_list_requested_item"
+          },
+          {
+            "path": "/api/now/table/kb_knowledge",
+            "method": "GET",
+            "tool": "servicenow_list_knowledge"
+          },
+          {
+            "path": "/api/now/table/kb_knowledge/{sysId}",
+            "method": "GET",
+            "tool": "servicenow_get_knowledge"
+          },
+          {
+            "path": "/api/now/table/sys_user",
+            "method": "GET",
+            "tool": "servicenow_list_sys_user"
+          },
+          {
+            "path": "/api/now/table/sys_user/{sysId}",
+            "method": "GET",
+            "tool": "servicenow_get_sys_user"
+          },
+          {
+            "path": "/api/now/table/sys_user_group",
+            "method": "GET",
+            "tool": "servicenow_list_group"
+          },
+          {
+            "path": "/api/now/table/{table}",
+            "method": "GET",
+            "tool": "servicenow_query_table"
+          },
+          {
+            "path": "/api/now/table/{table}/{sysId}",
+            "method": "GET",
+            "tool": "servicenow_get_record"
+          },
+          {
+            "path": "/api/now/table/incident",
+            "method": "POST",
+            "tool": "servicenow_create_incident"
+          },
+          {
+            "path": "/api/now/table/incident/{sysId}",
+            "method": "PATCH",
+            "tool": "servicenow_update_incident"
+          },
+          {
+            "path": "/api/now/table/change_request",
+            "method": "POST",
+            "tool": "servicenow_create_change_request"
+          },
+          {
+            "path": "/api/now/table/problem",
+            "method": "POST",
+            "tool": "servicenow_create_problem"
+          },
+          {
+            "path": "/api/now/table/{table}",
+            "method": "POST",
+            "tool": "servicenow_create_record"
+          },
+          {
+            "path": "/api/now/table/{table}/{sysId}",
+            "method": "PATCH",
+            "tool": "servicenow_update_record"
+          },
+          {
+            "path": "/api/now/table/{table}/{sysId}",
+            "method": "DELETE",
+            "tool": "servicenow_delete_record"
+          },
+          {
+            "path": "/api/now/table/sc_cat_item",
+            "method": "GET",
+            "tool": "servicenow_list_catalog_item"
+          },
+          {
+            "path": "/api/now/table/sc_cat_item/{sysId}",
+            "method": "GET",
+            "tool": "servicenow_get_catalog_item"
+          },
+          {
+            "path": "/api/now/table/sc_category",
+            "method": "GET",
+            "tool": "servicenow_list_catalog_category"
+          },
+          {
+            "path": "/api/now/table/item_option_new",
+            "method": "GET",
+            "tool": "servicenow_list_catalog_item_variable"
+          },
+          {
+            "path": "/api/now/table/cmdb_ci",
+            "method": "GET",
+            "tool": "servicenow_list_cmdb_ci"
+          },
+          {
+            "path": "/api/now/table/cmdb_rel_ci",
+            "method": "GET",
+            "tool": "servicenow_list_cmdb_relationship"
+          },
+          {
+            "path": "/api/now/cmdb/instance/{className}",
+            "method": "GET",
+            "tool": "servicenow_list_cmdb_instance"
+          },
+          {
+            "path": "/api/now/table/cmdb_class_info",
+            "method": "GET",
+            "tool": "servicenow_list_cmdb_class"
+          },
+          {
+            "path": "/api/now/table/sys_user_grmember",
+            "method": "GET",
+            "tool": "servicenow_list_group_member"
+          },
+          {
+            "path": "/api/now/table/sys_user_has_role",
+            "method": "GET",
+            "tool": "servicenow_list_user_role"
+          },
+          {
+            "path": "/api/now/table/sys_user_role",
+            "method": "GET",
+            "tool": "servicenow_list_role"
+          },
+          {
+            "path": "/api/now/table/sys_security_acl",
+            "method": "GET",
+            "tool": "servicenow_list_acl"
+          },
+          {
+            "path": "/api/now/table/sysapproval_approver",
+            "method": "GET",
+            "tool": "servicenow_list_approval"
+          },
+          {
+            "path": "/api/now/table/task",
+            "method": "GET",
+            "tool": "servicenow_list_task"
+          },
+          {
+            "path": "/api/now/table/contract_sla",
+            "method": "GET",
+            "tool": "servicenow_list_sla"
+          },
+          {
+            "path": "/api/now/table/task_sla",
+            "method": "GET",
+            "tool": "servicenow_list_task_sla"
+          },
+          {
+            "path": "/api/now/table/wf_workflow",
+            "method": "GET",
+            "tool": "servicenow_list_workflow"
+          },
+          {
+            "path": "/api/now/table/wf_context",
+            "method": "GET",
+            "tool": "servicenow_list_workflow_context"
+          },
+          {
+            "path": "/api/now/table/sys_email",
+            "method": "GET",
+            "tool": "servicenow_list_email"
+          },
+          {
+            "path": "/api/now/table/sysevent_email_action",
+            "method": "GET",
+            "tool": "servicenow_list_notification"
+          },
+          {
+            "path": "/api/now/table/sysevent",
+            "method": "GET",
+            "tool": "servicenow_list_event"
+          },
+          {
+            "path": "/api/now/table/sysevent",
+            "method": "POST",
+            "tool": "servicenow_create_event"
+          },
+          {
+            "path": "/api/now/table/sys_journal_field",
+            "method": "GET",
+            "tool": "servicenow_list_journal"
+          },
+          {
+            "path": "/api/now/table/sys_audit",
+            "method": "GET",
+            "tool": "servicenow_list_audit"
+          },
+          {
+            "path": "/api/now/table/sysauto_script",
+            "method": "GET",
+            "tool": "servicenow_list_scheduled_job"
+          },
+          {
+            "path": "/api/now/table/sys_update_set",
+            "method": "GET",
+            "tool": "servicenow_list_update_set"
+          },
+          {
+            "path": "/api/now/table/alm_asset",
+            "method": "GET",
+            "tool": "servicenow_list_asset"
+          },
+          {
+            "path": "/api/now/table/alm_asset/{sysId}",
+            "method": "GET",
+            "tool": "servicenow_get_asset"
+          },
+          {
+            "path": "/api/now/table/alm_license",
+            "method": "GET",
+            "tool": "servicenow_list_license"
+          },
+          {
+            "path": "/api/now/table/alm_entitlement",
+            "method": "GET",
+            "tool": "servicenow_list_license_entitlement"
+          },
+          {
+            "path": "/api/now/table/cmdb_sam_sw_install",
+            "method": "GET",
+            "tool": "servicenow_list_software"
+          },
+          {
+            "path": "/api/now/table/ast_contract",
+            "method": "GET",
+            "tool": "servicenow_list_contract"
+          },
+          {
+            "path": "/api/now/table/cmn_location",
+            "method": "GET",
+            "tool": "servicenow_list_location"
+          },
+          {
+            "path": "/api/now/table/cmn_department",
+            "method": "GET",
+            "tool": "servicenow_list_department"
+          },
+          {
+            "path": "/api/now/table/cmn_cost_center",
+            "method": "GET",
+            "tool": "servicenow_list_cost_center"
+          },
+          {
+            "path": "/api/now/table/discovery_status",
+            "method": "GET",
+            "tool": "servicenow_list_discovery_status"
+          },
+          {
+            "path": "/api/now/table/discovery_schedule",
+            "method": "GET",
+            "tool": "servicenow_list_discovery_schedule"
+          },
+          {
+            "path": "/api/now/table/sys_dictionary",
+            "method": "GET",
+            "tool": "servicenow_table_schema"
+          },
+          {
+            "path": "/api/now/table/sys_choice",
+            "method": "GET",
+            "tool": "servicenow_list_choice"
+          },
+          {
+            "path": "/api/now/attachment",
+            "method": "GET",
+            "tool": "servicenow_list_attachment"
+          },
+          {
+            "path": "/api/now/attachment/{sysId}",
+            "method": "GET",
+            "tool": "servicenow_get_attachment"
+          },
+          {
+            "path": "/api/now/attachment/{sysId}/file",
+            "method": "GET",
+            "tool": "servicenow_download_attachment"
+          },
+          {
+            "path": "/api/now/attachment/{sysId}",
+            "method": "DELETE",
+            "tool": "servicenow_delete_attachment"
+          },
+          {
+            "path": "/api/now/stats/{table}",
+            "method": "GET",
+            "tool": "servicenow_aggregate"
+          },
+          {
+            "path": "/api/now/import/{table}",
+            "method": "POST",
+            "tool": "servicenow_import_set_load"
+          },
+          {
+            "path": "/api/now/v1/batch",
+            "method": "POST",
+            "tool": "servicenow_batch_request"
+          }
+        ]
+      }
+    },
+    {
+      "gate": "rate-limiter",
+      "passed": true,
+      "message": "\"servicenow-mcp\" is not a KNOWN_PATTERNS rate-limited target — gate is informational-pass"
+    }
+  ],
+  "residualUnverifiedSurface": [
+    "semantic correctness of tool behavior (the Lab checks shape/protocol, not business logic)",
+    "write-path safety beyond destructiveHint/idempotentHint annotation presence",
+    "live WAF/anti-bot acceptance at the real target — the wire-fingerprint gate is necessary, not sufficient, for real-target acceptance",
+    "auth scopes / permission boundaries granted by the operator's captured session"
+  ],
+  "live_acceptance_last_verified": null
+}

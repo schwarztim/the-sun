@@ -1,0 +1,34 @@
+# fleetd manifest — copy to ~/.mcp-fleet/fleet.toml (the source of truth).
+#
+# Rules (fail-closed at startup):
+#   - every `port` MUST be within 42000-42999
+#   - no two servers may share a port or a name
+#   - `bin` is required
+#
+# Secrets:
+#   - literal env values pass through to the child env unchanged
+#   - "hermes://<service>/<scheme>" values are resolved from the Hermes broker
+#     at spawn time and injected into the child env ONLY (never written to disk,
+#     logs, or the published gateway config). If a ref can't be resolved, that
+#     one server is marked "degraded" — the fleet stays up.
+
+# Optional: gateway admin reload endpoint (POSTed after each publish; non-fatal).
+# gateway_reload_url = "http://127.0.0.1:3100/admin/reload-config"
+
+[[server]]
+name = "tufin-mcp"
+bin = "/Users/you/Projects/mcp-fleet/servers/bin/tufin-mcp"
+port = 42011
+health = "/healthz"       # default is /healthz
+max_restarts = 5          # circuit breaker: degrade after N consecutive failures
+[server.env]
+TUFIN_TOKEN = "hermes://tufin/session"   # resolved from Hermes at spawn (never on disk)
+LOG_LEVEL   = "info"                      # literal, passed through
+
+[[server]]
+name = "github-mcp"
+bin = "/opt/homebrew/bin/github-mcp-server"   # T2: vendor binary, run directly
+args = ["stdio-disabled", "--http"]
+port = 42021
+[server.env]
+GITHUB_TOKEN = "hermes://github/pat"

@@ -1,0 +1,126 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Golden Fixture: Bearer REST API",
+    "version": "1.0.0",
+    "description": "Minimal spec-backed REST API with bearer auth and cursor pagination, used as the thesun Conformance Lab's deterministic-generation-path golden fixture."
+  },
+  "servers": [{ "url": "/" }],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
+    "schemas": {
+      "Item": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "value": { "type": "integer" }
+        },
+        "required": ["id", "name", "value"]
+      },
+      "ItemPage": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/Item" }
+          },
+          "next_cursor": {
+            "type": "string",
+            "nullable": true,
+            "description": "Opaque cursor to pass as ?cursor= on the next call. null when exhausted."
+          }
+        },
+        "required": ["items", "next_cursor"]
+      },
+      "NewItem": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" }
+        },
+        "required": ["name"]
+      }
+    }
+  },
+  "security": [{ "bearerAuth": [] }],
+  "paths": {
+    "/items": {
+      "get": {
+        "operationId": "listItems",
+        "summary": "List items with cursor pagination",
+        "parameters": [
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "string" },
+            "description": "Opaque pagination cursor from a prior response's next_cursor."
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer", "default": 10, "minimum": 1, "maximum": 100 }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A page of items",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ItemPage" } }
+            }
+          },
+          "401": { "description": "Missing or invalid bearer token" }
+        }
+      },
+      "post": {
+        "operationId": "createItem",
+        "summary": "Create a new item",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/NewItem" } }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created item",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/Item" } }
+            }
+          },
+          "401": { "description": "Missing or invalid bearer token" }
+        }
+      }
+    },
+    "/items/{itemId}": {
+      "get": {
+        "operationId": "getItem",
+        "summary": "Fetch a single item by id",
+        "parameters": [
+          {
+            "name": "itemId",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The item",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/Item" } }
+            }
+          },
+          "401": { "description": "Missing or invalid bearer token" },
+          "404": { "description": "Item not found" }
+        }
+      }
+    }
+  }
+}

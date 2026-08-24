@@ -1,0 +1,7 @@
+node_modules/
+dist/
+.DS_Store
+.env
+.env.*
+config.fleet.yaml.bak*
+FORTIFY-VULN-NOTES.md

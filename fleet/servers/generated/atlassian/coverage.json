@@ -1,0 +1,131 @@
+{
+  "basis": "spec",
+  "coverage_pct": 100,
+  "ops": [
+    {
+      "path": "/rest/api/3/search/jql",
+      "method": "POST",
+      "tool": "atlassian_search_jira_issues"
+    },
+    {
+      "path": "/rest/api/3/issue/{issueKey}",
+      "method": "GET",
+      "tool": "atlassian_get_issue"
+    },
+    {
+      "path": "/rest/api/3/issue",
+      "method": "POST",
+      "tool": "atlassian_create_issue"
+    },
+    {
+      "path": "/rest/api/3/issue/{issueKey}",
+      "method": "PUT",
+      "tool": "atlassian_update_issue"
+    },
+    {
+      "path": "/rest/api/3/issue/{issueKey}/comment",
+      "method": "POST",
+      "tool": "atlassian_add_jira_comment"
+    },
+    {
+      "path": "/rest/api/3/issue/{issueKey}/transitions",
+      "method": "GET",
+      "tool": "atlassian_get_transitions"
+    },
+    {
+      "path": "/rest/api/3/issue/{issueKey}/transitions",
+      "method": "POST",
+      "tool": "atlassian_transition_issue"
+    },
+    {
+      "path": "/rest/api/3/project/search",
+      "method": "GET",
+      "tool": "atlassian_get_projects"
+    },
+    {
+      "path": "/rest/api/3/project/{projectKey}",
+      "method": "GET",
+      "tool": "atlassian_get_project"
+    },
+    {
+      "path": "/rest/api/3/myself",
+      "method": "GET",
+      "tool": "atlassian_get_current_user"
+    },
+    {
+      "path": "/rest/api/3/search/jql",
+      "method": "POST",
+      "tool": "atlassian_get_my_issues"
+    },
+    {
+      "path": "/rest/api/3/search/jql",
+      "method": "POST",
+      "tool": "atlassian_get_in_progress_issues"
+    },
+    {
+      "path": "/rest/api/3/search/jql",
+      "method": "POST",
+      "tool": "atlassian_get_recent_issues"
+    },
+    {
+      "path": "/rest/api/3/issue/{issueKey}/assignee",
+      "method": "PUT",
+      "tool": "atlassian_assign_issue"
+    },
+    {
+      "path": "/rest/api/3/user/search",
+      "method": "GET",
+      "tool": "atlassian_search_users"
+    },
+    {
+      "path": "/wiki/rest/api/content/search",
+      "method": "GET",
+      "tool": "atlassian_search_confluence"
+    },
+    {
+      "path": "/wiki/rest/api/content/{pageId}",
+      "method": "GET",
+      "tool": "atlassian_get_confluence_page"
+    },
+    {
+      "path": "/wiki/rest/api/content",
+      "method": "GET",
+      "tool": "atlassian_get_confluence_page_by_title"
+    },
+    {
+      "path": "/wiki/rest/api/content",
+      "method": "POST",
+      "tool": "atlassian_create_confluence_page"
+    },
+    {
+      "path": "/wiki/rest/api/content/{pageId}",
+      "method": "PUT",
+      "tool": "atlassian_update_confluence_page"
+    },
+    {
+      "path": "/wiki/rest/api/space",
+      "method": "GET",
+      "tool": "atlassian_get_confluence_spaces"
+    },
+    {
+      "path": "/wiki/rest/api/space/{spaceKey}",
+      "method": "GET",
+      "tool": "atlassian_get_confluence_space"
+    },
+    {
+      "path": "/wiki/rest/api/content",
+      "method": "POST",
+      "tool": "atlassian_add_confluence_comment"
+    },
+    {
+      "path": "/wiki/rest/api/content/search",
+      "method": "GET",
+      "tool": "atlassian_search_confluence_by_text"
+    },
+    {
+      "path": "/wiki/api/v2/pages/{pageId}",
+      "method": "GET",
+      "tool": "atlassian_get_confluence_page_v2"
+    }
+  ]
+}

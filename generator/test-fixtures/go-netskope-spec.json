@@ -1,0 +1,451 @@
+{
+  "name": "netskope",
+  "baseUrl": "https://example.goskope.com",
+  "authScheme": "api_key",
+  "apiKeyQueryParam": "token",
+  "authEnvPrefix": "NETSKOPE",
+  "defaultPort": "42016",
+  "endpoints": [
+    {
+      "method": "POST",
+      "path": "/api/v1/alerts",
+      "operationId": "getAlerts",
+      "summary": "Retrieve alerts (policy, DLP, malware, watchlist, quarantine, anomaly, uba, malsite, ctep, compromised_credential). Filter by type, time range, and query.",
+      "parameters": [
+        {
+          "name": "type",
+          "in": "query",
+          "required": false,
+          "description": "Alert type: anomaly|policy|malware|DLP|watchlist|quarantine|uba|malsite|remediation|security_assessment|ctep|compromised_credential"
+        },
+        {
+          "name": "query",
+          "in": "query",
+          "required": false,
+          "description": "Free-form filter query, e.g. 'app eq Dropbox'"
+        },
+        {
+          "name": "timeperiod",
+          "in": "query",
+          "required": false,
+          "description": "Time window in seconds (e.g. 86400 = last 24h)"
+        },
+        {
+          "name": "starttime",
+          "in": "query",
+          "required": false,
+          "description": "Start time as Unix timestamp"
+        },
+        {
+          "name": "endtime",
+          "in": "query",
+          "required": false,
+          "description": "End time as Unix timestamp"
+        },
+        {
+          "name": "acked",
+          "in": "query",
+          "required": false,
+          "description": "Filter by acknowledged status (true|false)"
+        },
+        {
+          "name": "limit",
+          "in": "query",
+          "required": false,
+          "description": "Max results (default 50)"
+        },
+        {
+          "name": "skip",
+          "in": "query",
+          "required": false,
+          "description": "Pagination offset"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/events",
+      "operationId": "getEvents",
+      "summary": "Retrieve events from SaaS traffic and logs (page, application, audit, infrastructure, network).",
+      "parameters": [
+        {
+          "name": "type",
+          "in": "query",
+          "required": true,
+          "description": "Event type: page|application|audit|infrastructure|network"
+        },
+        {
+          "name": "query",
+          "in": "query",
+          "required": false,
+          "description": "Free-form filter query"
+        },
+        {
+          "name": "timeperiod",
+          "in": "query",
+          "required": false,
+          "description": "Time window in seconds"
+        },
+        {
+          "name": "starttime",
+          "in": "query",
+          "required": false,
+          "description": "Start time as Unix timestamp"
+        },
+        {
+          "name": "endtime",
+          "in": "query",
+          "required": false,
+          "description": "End time as Unix timestamp"
+        },
+        {
+          "name": "limit",
+          "in": "query",
+          "required": false,
+          "description": "Max results (default 50)"
+        },
+        {
+          "name": "skip",
+          "in": "query",
+          "required": false,
+          "description": "Pagination offset"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/alerts",
+      "operationId": "getDlpIncidents",
+      "summary": "Retrieve Data Loss Prevention (DLP) incidents (alerts with type=DLP).",
+      "parameters": [
+        {
+          "name": "query",
+          "in": "query",
+          "required": false,
+          "description": "Free-form filter query for DLP incidents"
+        },
+        {
+          "name": "timeperiod",
+          "in": "query",
+          "required": false,
+          "description": "Time window in seconds (default 86400)"
+        },
+        {
+          "name": "starttime",
+          "in": "query",
+          "required": false,
+          "description": "Start time as Unix timestamp"
+        },
+        {
+          "name": "endtime",
+          "in": "query",
+          "required": false,
+          "description": "End time as Unix timestamp"
+        },
+        {
+          "name": "limit",
+          "in": "query",
+          "required": false,
+          "description": "Max results (default 50)"
+        },
+        {
+          "name": "skip",
+          "in": "query",
+          "required": false,
+          "description": "Pagination offset"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/clients",
+      "operationId": "listClients",
+      "summary": "Get Netskope clients: device info, user associations, and client status.",
+      "parameters": [
+        {
+          "name": "query",
+          "in": "query",
+          "required": false,
+          "description": "Filter query for client data"
+        },
+        {
+          "name": "limit",
+          "in": "query",
+          "required": false,
+          "description": "Max results (default 50)"
+        },
+        {
+          "name": "skip",
+          "in": "query",
+          "required": false,
+          "description": "Pagination offset"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/clients",
+      "operationId": "getUsersByHost",
+      "summary": "List all users associated with a specific hostname/device.",
+      "parameters": [
+        {
+          "name": "hostname",
+          "in": "query",
+          "required": true,
+          "description": "The hostname to look up"
+        },
+        {
+          "name": "limit",
+          "in": "query",
+          "required": false,
+          "description": "Max results (default 50)"
+        },
+        {
+          "name": "skip",
+          "in": "query",
+          "required": false,
+          "description": "Pagination offset"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/clients",
+      "operationId": "getHostsByUser",
+      "summary": "List all hosts/devices associated with a specific username.",
+      "parameters": [
+        {
+          "name": "username",
+          "in": "query",
+          "required": true,
+          "description": "The username to look up"
+        },
+        {
+          "name": "limit",
+          "in": "query",
+          "required": false,
+          "description": "Max results (default 50)"
+        },
+        {
+          "name": "skip",
+          "in": "query",
+          "required": false,
+          "description": "Pagination offset"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/quarantine",
+      "operationId": "listQuarantineFiles",
+      "summary": "List all files in quarantine (op=get-files). Files quarantined by DLP or malware detection.",
+      "parameters": [
+        {
+          "name": "start_time",
+          "in": "query",
+          "required": false,
+          "description": "Start of file modification date filter (Unix timestamp)"
+        },
+        {
+          "name": "end_time",
+          "in": "query",
+          "required": false,
+          "description": "End of file modification date filter (Unix timestamp)"
+        },
+        {
+          "name": "limit",
+          "in": "query",
+          "required": false,
+          "description": "Max results (default 50)"
+        },
+        {
+          "name": "skip",
+          "in": "query",
+          "required": false,
+          "description": "Pagination offset"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/quarantine",
+      "operationId": "quarantineAction",
+      "summary": "Take an action on a quarantined file \u2014 block or allow (op=take-action). Requires quarantine_profile_id and file_id: call netskope_list_quarantine_files first to obtain both from each quarantined file's record, then pass those exact values here. Do not guess IDs.",
+      "parameters": [
+        {
+          "name": "quarantine_profile_id",
+          "in": "query",
+          "required": true,
+          "description": "The quarantine profile ID"
+        },
+        {
+          "name": "file_id",
+          "in": "query",
+          "required": true,
+          "description": "The file ID to take action on"
+        },
+        {
+          "name": "action",
+          "in": "query",
+          "required": true,
+          "description": "Action to take: block|allow"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/updateUrlList",
+      "operationId": "updateUrlList",
+      "summary": "Update a URL list \u2014 replaces the entire list content with the provided URLs.",
+      "parameters": [
+        {
+          "name": "name",
+          "in": "query",
+          "required": true,
+          "description": "Name of the existing URL list to update"
+        },
+        {
+          "name": "urls",
+          "in": "query",
+          "required": true,
+          "description": "Comma-separated URLs to set (replaces existing content)"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/updateFileHashList",
+      "operationId": "updateFileHashList",
+      "summary": "Update a file hash list (MD5 or SHA256 formats).",
+      "parameters": [
+        {
+          "name": "name",
+          "in": "query",
+          "required": true,
+          "description": "Name of the existing file hash list to update"
+        },
+        {
+          "name": "hashes",
+          "in": "query",
+          "required": true,
+          "description": "Comma-separated file hashes to set (MD5 or SHA256)"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/events/dataexport/events/{event_type}",
+      "operationId": "v2GetEvents",
+      "summary": "Retrieve events via the REST API v2 data-export iterator. Efficient pagination for large datasets.",
+      "parameters": [
+        {
+          "name": "event_type",
+          "in": "path",
+          "required": true,
+          "description": "Event type: alert|page|infrastructure|application|network|audit|connection|incident|endpoint"
+        },
+        {
+          "name": "starttime",
+          "in": "query",
+          "required": false,
+          "description": "Start time as Unix timestamp (epoch seconds)"
+        },
+        {
+          "name": "endtime",
+          "in": "query",
+          "required": false,
+          "description": "End time as Unix timestamp (epoch seconds)"
+        },
+        {
+          "name": "operation",
+          "in": "query",
+          "required": false,
+          "description": "Iterator operation: head|next|tail"
+        },
+        {
+          "name": "index",
+          "in": "query",
+          "required": false,
+          "description": "Index from previous response for pagination (with 'next')"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/events/data/{data_type}",
+      "operationId": "v2SearchData",
+      "summary": "Search data via the REST API v2 datasearch endpoint with advanced query capabilities.",
+      "parameters": [
+        {
+          "name": "data_type",
+          "in": "path",
+          "required": true,
+          "description": "Data type: alert|page|application|audit|infrastructure|network"
+        },
+        {
+          "name": "query",
+          "in": "query",
+          "required": false,
+          "description": "Search query string"
+        },
+        {
+          "name": "starttime",
+          "in": "query",
+          "required": false,
+          "description": "Start time as Unix timestamp"
+        },
+        {
+          "name": "endtime",
+          "in": "query",
+          "required": false,
+          "description": "End time as Unix timestamp"
+        },
+        {
+          "name": "limit",
+          "in": "query",
+          "required": false,
+          "description": "Max results (default 100)"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/role",
+      "operationId": "listUserRoles",
+      "summary": "List all user roles configured in Netskope (op=list).",
+      "parameters": []
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/alerts",
+      "operationId": "getSecurityAssessment",
+      "summary": "Get security assessment alerts for cloud infrastructure (misconfigurations and security risks; type=security_assessment).",
+      "parameters": [
+        {
+          "name": "query",
+          "in": "query",
+          "required": false,
+          "description": "Filter query, e.g. by compliance standard"
+        },
+        {
+          "name": "timeperiod",
+          "in": "query",
+          "required": false,
+          "description": "Time window in seconds (default 2592000 = 30d)"
+        },
+        {
+          "name": "limit",
+          "in": "query",
+          "required": false,
+          "description": "Max results (default 50)"
+        },
+        {
+          "name": "skip",
+          "in": "query",
+          "required": false,
+          "description": "Pagination offset"
+        }
+      ]
+    }
+  ]
+}

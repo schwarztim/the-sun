@@ -1,0 +1,78 @@
+# MCP Gateway sample configuration.
+# For large ToolHive/MCPU fleets, use config.fleet.yaml instead.
+
+gateway:
+  port: 3100
+  host: "127.0.0.1"
+  name: "mcp-gateway"
+  log_level: "info"
+  tool_prefix: ""
+  # mux facade (8 gateway_* meta-tools) — the minimal default surface.
+  # "namespaced" exposes every backend tool directly; enable per-deployment only.
+  tool_exposure: "mux"
+  streamable_http_stateless: true
+  streamable_http_json_response: true
+
+fleet:
+  enabled: true
+  toolhive:
+    docker_ps: true
+    endpoint_probe: false
+    probe_timeout_ms: 750
+    auto_ingest: true
+
+safety:
+  # blocking: unconfirmed gated calls (WRITE/SIDE_EFFECT/HUMAN_OUTBOUND/
+  # PRODUCTION/VAULT_VALUE/UNCLASSIFIED) are denied. "advisory" (warn + proceed)
+  # is available for staged rollouts only — flip deliberately.
+  enforce: "blocking"
+  decision_log:
+    enabled: true
+    path: "~/.mcp-gateway/decisions.jsonl"
+  # Backends permitted to keep the legacy fail-open default (unmanifested
+  # verb-less tool → READ) during manifest burn-down. Empty = fully fail-closed:
+  # every unmanifested verb-less tool is UNCLASSIFIED and gated.
+  unmanifested_read_allowlist: []
+
+auth:
+  # none  — loopback / single-operator mode (no tool-plane authentication).
+  # entra — validate Entra ID JWTs on /mcp, /sse, /messages. REQUIRED for any
+  #         instance reachable beyond loopback.
+  mode: "none"
+  # mode: "entra"
+  # tenant_id: "<entra-tenant-guid>"
+  # audience: "api://<app-registration-client-id>"
+
+backends:
+  # stdio transport is prohibited — it deadlocks under gateway management
+  # (handshake hangs, zero tools exposed, consumers burn tokens retrying).
+  # Re-front any stdio MCP server behind streamable-http and wire it as http:
+  #
+  # echo:
+  #   transport: "http"
+  #   url: "http://127.0.0.1:3000/mcp"
+  #   namespace: "echo"
+  #   enabled: false
+  #   restart_policy: "on-failure"
+  #   max_restarts: 3
+  #   health_check_interval: 60
+
+  example-http:
+    transport: http
+    url: "http://127.0.0.1:3001/mcp"
+    namespace: "example_http"
+    enabled: false
+    restart_policy: "on-failure"
+    max_restarts: 3
+    reconnect_interval: 5
+    health_check_interval: 60
+
+  example-sse:
+    transport: sse
+    url: "http://127.0.0.1:3002/sse"
+    namespace: "example_sse"
+    enabled: false
+    restart_policy: "on-failure"
+    max_restarts: 3
+    reconnect_interval: 5
+    health_check_interval: 60

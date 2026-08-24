@@ -1,0 +1,98 @@
+# fleet/default-manifest.toml — thesun's SHIPPED DEFAULT servers.
+#
+# Distinct from fleet/fleetd/fleet.toml.example (a generic, illustrative template
+# showing the TOML shape). This file is the curated list of servers thesun ships
+# out of the box, with genuinely-easy (no pre-shared secret) auth. The packaging/
+# install step is expected to merge these [[server]] blocks into the operator's
+# live ~/.mcp-fleet/fleet.toml (or copy this file there directly on a fresh install
+# where no fleet.toml exists yet).
+#
+# Rules (fail-closed at startup, same as fleet.toml.example):
+#   - every `port` MUST be within 42000-42999
+#   - no two servers may share a port or a name
+#   - `bin` is required
+#
+# Port allocation for shipped defaults (documented so future additions don't collide):
+#   42030 = ms365-mcp        (this file)
+#   42031 = atlassian-mcp    (this file)
+#   42032 = servicenow-mcp   (this file)
+#   42033-42039 reserved for other shipped defaults
+#
+# These are deliberately NOT the same ports as the live Tier-1 Go migration's
+# atlassian-go (42015) / servicenow-go (42018) in ~/.mcp-fleet/fleet.toml — this
+# file targets a fresh install with no prior fleet.toml, so it uses its own
+# collision-free window instead of assuming those ports are free.
+#
+# GitHub is intentionally NOT a shipped default (requires a PAT — not
+# genuinely-easy auth). To enable it opt-in, merge the block from
+# servers/vendor/github/github.default.toml into your thesun.toml instead.
+
+[[server]]
+name = "ms365-mcp"
+# Vendored @softeria/ms-365-mcp-server (open-source, MIT), pinned in
+# servers/vendor/ms365/package.json. Run `npm install` in that directory once
+# (or let install.sh do it) before starting the fleet. Replace the path below
+# with your actual thesun checkout location.
+bin = "node"
+args = [
+  "/Users/you/Projects/thesun/servers/vendor/ms365/node_modules/@softeria/ms-365-mcp-server/dist/index.js",
+  "--http", ":42030",
+  "--org-mode",
+  "--enable-auth-tools",
+]
+port = 42030
+health = "/"       # unauthenticated health check (see server's own /.well-known/* also exempt)
+max_restarts = 5
+[server.env]
+# Bypasses the per-request OAuth-bearer proxy layer (that layer is designed for
+# multi-user shared deployments). For a single operator's own machine on
+# loopback, this is correct: Graph calls fall back to the locally-cached
+# device-code login (see servers/vendor/ms365/README.md) instead of requiring
+# every MCP client request to carry its own bearer token.
+MS365_MCP_TRUST_PROXY_AUTH = "true"
+# No MS365_MCP_CLIENT_ID / MS365_MCP_TENANT_ID set — the package's own built-in
+# multi-tenant Azure AD app is used, which is what makes setup zero-config.
+# Override only if you register your own Azure AD app (see the server's README).
+
+[[server]]
+name = "atlassian-mcp"
+# thesun-generated Go server (fleet/servers/generated/atlassian). Build once:
+#   cd fleet/servers/generated/atlassian && go build -o bin/atlassian-mcp .
+# Replace the path below with your actual thesun checkout location if it
+# differs from the placeholder.
+bin = "/Users/you/Projects/thesun/fleet/servers/generated/atlassian/bin/atlassian-mcp"
+port = 42031
+health = "/healthz"
+max_restarts = 5
+[server.env]
+MCP_HOST = "127.0.0.1"
+MCP_PORT = "42031"
+# REQUIRED: your own Atlassian Cloud site. There is no default and none is
+# possible, since every site has its own subdomain. The server refuses to start
+# until this is set, naming this variable in the error.
+ATLASSIAN_BASE_URL = "https://your-domain.atlassian.net"
+# Basic auth (email:api_token) — Atlassian Cloud API tokens, no corporate SSO
+# needed. Store it once via the Hermes broker (never typed into thesun.toml):
+#   thesun secrets set atlassian basic
+# The server resolves it in dual mode: HERMES_URL + HERMES_CLIENT_TOKEN first
+# (broker), falling back to the ATLASSIAN_API_KEY env var below if unset.
+ATLASSIAN_API_KEY = "hermescred://atlassian/basic"
+
+[[server]]
+name = "servicenow-mcp"
+# thesun-generated Go server (fleet/servers/generated/servicenow). Build once:
+#   cd fleet/servers/generated/servicenow && go build -o bin/servicenow-mcp .
+# Replace the path below with your actual thesun checkout location if it
+# differs from the placeholder.
+bin = "/Users/you/Projects/thesun/fleet/servers/generated/servicenow/bin/servicenow-mcp"
+port = 42032
+health = "/healthz"
+max_restarts = 5
+[server.env]
+MCP_HOST = "127.0.0.1"
+MCP_PORT = "42032"
+# Generic easy auth (Basic) — no corporate SSO broker required. Set the
+# instance URL directly (not a secret) and store the credential via Hermes:
+#   thesun secrets set servicenow basic
+SERVICENOW_INSTANCE_URL = "https://your-instance.service-now.com"
+SERVICENOW_BASIC_AUTH = "hermescred://servicenow/basic"

@@ -1,0 +1,1478 @@
+{
+  "name": "az-teams-full",
+  "version": "1.0.0",
+  "baseUrl": "https://graph.microsoft.com/v1.0",
+  "authScheme": "hermes-token",
+  "hermesTokenService": "az-teams",
+  "hermesTokenScheme": "graph",
+  "defaultPort": "42030",
+  "endpoints": [
+    {
+      "method": "GET",
+      "path": "/me/joinedTeams",
+      "operationId": "teams_list_teams",
+      "summary": "List the Microsoft Teams the signed-in user belongs to.",
+      "parameters": []
+    },
+    {
+      "method": "GET",
+      "path": "/teams/{teamId}",
+      "operationId": "teams_get_team",
+      "summary": "Get a team's details. Requires a teamId obtained from teams_list_teams.",
+      "parameters": [
+        {
+          "name": "teamId",
+          "in": "path",
+          "required": true,
+          "description": "the teamId path value"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/teams/{teamId}/channels",
+      "operationId": "teams_list_channels",
+      "summary": "List channels in a team. Requires a teamId obtained from teams_list_teams.",
+      "parameters": [
+        {
+          "name": "teamId",
+          "in": "path",
+          "required": true,
+          "description": "the teamId path value"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/teams/{teamId}/channels/{channelId}/messages",
+      "operationId": "teams_get_channel_messages",
+      "summary": "List messages in a channel. Requires teamId and channelId obtained from teams_list_teams and teams_list_channels.",
+      "parameters": [
+        {
+          "name": "teamId",
+          "in": "path",
+          "required": true,
+          "description": "the teamId path value"
+        },
+        {
+          "name": "channelId",
+          "in": "path",
+          "required": true,
+          "description": "the channelId path value"
+        },
+        {
+          "name": "$top",
+          "in": "query",
+          "required": false,
+          "description": "max results to return"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/teams/{teamId}/channels/{channelId}/messages/{messageId}/replies",
+      "operationId": "teams_get_channel_replies",
+      "summary": "List replies to a channel message. Requires teamId, channelId and messageId obtained from teams_get_channel_messages.",
+      "parameters": [
+        {
+          "name": "teamId",
+          "in": "path",
+          "required": true,
+          "description": "the teamId path value"
+        },
+        {
+          "name": "channelId",
+          "in": "path",
+          "required": true,
+          "description": "the channelId path value"
+        },
+        {
+          "name": "messageId",
+          "in": "path",
+          "required": true,
+          "description": "the messageId path value"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/teams/{teamId}/channels",
+      "operationId": "teams_create_channel",
+      "summary": "Create a channel in a team. Requires a teamId obtained from teams_list_teams. Provide displayName/description in the JSON body.",
+      "parameters": [
+        {
+          "name": "teamId",
+          "in": "path",
+          "required": true,
+          "description": "the teamId path value"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/teams/{teamId}/members",
+      "operationId": "teams_list_members",
+      "summary": "List members of a team. Requires a teamId obtained from teams_list_teams.",
+      "parameters": [
+        {
+          "name": "teamId",
+          "in": "path",
+          "required": true,
+          "description": "the teamId path value"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/me/chats",
+      "operationId": "teams_list_chats",
+      "summary": "List the signed-in user's Teams chats (1:1 and group).",
+      "parameters": [
+        {
+          "name": "$top",
+          "in": "query",
+          "required": false,
+          "description": "max results to return"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/chats",
+      "operationId": "teams_create_group_chat",
+      "summary": "Create a group chat. Provide chatType and members in the JSON body.",
+      "parameters": []
+    },
+    {
+      "method": "GET",
+      "path": "/chats/{chatId}",
+      "operationId": "teams_get_chat",
+      "summary": "Get a chat's metadata. Requires a chatId obtained from teams_list_chats.",
+      "parameters": [
+        {
+          "name": "chatId",
+          "in": "path",
+          "required": true,
+          "description": "the chatId path value"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/chats/{chatId}/messages",
+      "operationId": "teams_get_chat_messages",
+      "summary": "List messages in a chat. Requires a chatId obtained from teams_list_chats.",
+      "parameters": [
+        {
+          "name": "chatId",
+          "in": "path",
+          "required": true,
+          "description": "the chatId path value"
+        },
+        {
+          "name": "$top",
+          "in": "query",
+          "required": false,
+          "description": "max results to return"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/chats/{chatId}/members",
+      "operationId": "teams_get_chat_members",
+      "summary": "List members of a chat. Requires a chatId obtained from teams_list_chats.",
+      "parameters": [
+        {
+          "name": "chatId",
+          "in": "path",
+          "required": true,
+          "description": "the chatId path value"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/chats/{chatId}/messages",
+      "operationId": "teams_send_message",
+      "summary": "Send a message to a chat. Requires a chatId obtained from teams_list_chats. Provide {\"body\":{\"content\":\"...\"}} in the JSON body.",
+      "parameters": [
+        {
+          "name": "chatId",
+          "in": "path",
+          "required": true,
+          "description": "the chatId path value"
+        }
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/chats/{chatId}/messages/{messageId}",
+      "operationId": "teams_update_message",
+      "summary": "Edit a chat message. Requires chatId and messageId obtained from teams_get_chat_messages.",
+      "parameters": [
+        {
+          "name": "chatId",
+          "in": "path",
+          "required": true,
+          "description": "the chatId path value"
+        },
+        {
+          "name": "messageId",
+          "in": "path",
+          "required": true,
+          "description": "the messageId path value"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/teams/{teamId}/channels/{channelId}/messages/{messageId}/replies",
+      "operationId": "teams_reply_to_message",
+      "summary": "Reply to a channel message. Requires teamId, channelId and messageId obtained from teams_get_channel_messages.",
+      "parameters": [
+        {
+          "name": "teamId",
+          "in": "path",
+          "required": true,
+          "description": "the teamId path value"
+        },
+        {
+          "name": "channelId",
+          "in": "path",
+          "required": true,
+          "description": "the channelId path value"
+        },
+        {
+          "name": "messageId",
+          "in": "path",
+          "required": true,
+          "description": "the messageId path value"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/chats/{chatId}/messages/{messageId}/softDelete",
+      "operationId": "teams_delete_message",
+      "summary": "Soft-delete a chat message. Requires chatId and messageId obtained from teams_get_chat_messages.",
+      "parameters": [
+        {
+          "name": "chatId",
+          "in": "path",
+          "required": true,
+          "description": "the chatId path value"
+        },
+        {
+          "name": "messageId",
+          "in": "path",
+          "required": true,
+          "description": "the messageId path value"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/chats/{chatId}/messages",
+      "operationId": "teams_send_priority_message",
+      "summary": "Send a high-importance message to a chat. Requires a chatId obtained from teams_list_chats. Set importance in the JSON body.",
+      "parameters": [
+        {
+          "name": "chatId",
+          "in": "path",
+          "required": true,
+          "description": "the chatId path value"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/users",
+      "operationId": "teams_search_users",
+      "summary": "Search the directory for users by name or email.",
+      "parameters": [
+        {
+          "name": "$search",
+          "in": "query",
+          "required": false,
+          "description": "search term, e.g. \"displayName:tim\""
+        },
+        {
+          "name": "$top",
+          "in": "query",
+          "required": false,
+          "description": "max results to return"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/me/presence/setStatusMessage",
+      "operationId": "teams_set_status_message",
+      "summary": "Set the signed-in user's Teams status message. Provide statusMessage in the JSON body.",
+      "parameters": []
+    },
+    {
+      "method": "GET",
+      "path": "/me/presence",
+      "operationId": "teams_get_presence",
+      "summary": "Get the signed-in user's Teams presence (availability and activity).",
+      "parameters": []
+    },
+    {
+      "method": "POST",
+      "path": "/communications/getPresencesByUserId",
+      "operationId": "teams_batch_presence",
+      "summary": "Get presence for multiple users. Provide {\"ids\":[...]} of user object ids in the JSON body.",
+      "parameters": []
+    },
+    {
+      "method": "GET",
+      "path": "/me/teamwork/associatedTeams",
+      "operationId": "teams_list_associated_teams",
+      "summary": "List teams the signed-in user is associated with.",
+      "parameters": []
+    },
+    {
+      "method": "GET",
+      "path": "/me/drive",
+      "operationId": "teams_get_drive_info",
+      "summary": "Get the signed-in user's OneDrive metadata.",
+      "parameters": []
+    },
+    {
+      "method": "POST",
+      "path": "/me/drive/items/{item_id}/createLink",
+      "operationId": "teams_create_share_link",
+      "summary": "Create a sharing link for a drive item. Requires an item_id obtained from onedrive_list_items. Set type/scope in the JSON body.",
+      "parameters": [
+        {
+          "name": "item_id",
+          "in": "path",
+          "required": true,
+          "description": "the item_id path value"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/me/people",
+      "operationId": "teams_people_search",
+      "summary": "Search the signed-in user's relevant people.",
+      "parameters": [
+        {
+          "name": "$search",
+          "in": "query",
+          "required": false,
+          "description": "person name or email to match"
+        },
+        {
+          "name": "$top",
+          "in": "query",
+          "required": false,
+          "description": "max results to return"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/me/people",
+      "operationId": "teams_search_people_for_chat",
+      "summary": "Search relevant people to start a chat with.",
+      "parameters": [
+        {
+          "name": "$search",
+          "in": "query",
+          "required": false,
+          "description": "person name or email to match"
+        },
+        {
+          "name": "$top",
+          "in": "query",
+          "required": false,
+          "description": "max results to return"
+        }
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/chats/{chatId}",
+      "operationId": "teams_rename_chat",
+      "summary": "Rename a group chat. Requires a chatId obtained from teams_list_chats. Set topic in the JSON body.",
+      "parameters": [
+        {
+          "name": "chatId",
+          "in": "path",
+          "required": true,
+          "description": "the chatId path value"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/chats/{chatId}/members",
+      "operationId": "teams_add_chat_member",
+      "summary": "Add a member to a chat. Requires a chatId obtained from teams_list_chats. Provide the conversationMember in the JSON body.",
+      "parameters": [
+        {
+          "name": "chatId",
+          "in": "path",
+          "required": true,
+          "description": "the chatId path value"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/me/calendarView",
+      "operationId": "calendar_list_events",
+      "summary": "List calendar events in a date range.",
+      "parameters": [
+        {
+          "name": "startDateTime",
+          "in": "query",
+          "required": true,
+          "description": "ISO 8601 range start, e.g. 2026-07-01T00:00:00Z"
+        },
+        {
+          "name": "endDateTime",
+          "in": "query",
+          "required": true,
+          "description": "ISO 8601 range end"
+        },
+        {
+          "name": "$top",
+          "in": "query",
+          "required": false,
+          "description": "max results to return"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/me/events/{event_id}",
+      "operationId": "calendar_get_event",
+      "summary": "Get a calendar event. Requires an event_id obtained from calendar_list_events.",
+      "parameters": [
+        {
+          "name": "event_id",
+          "in": "path",
+          "required": true,
+          "description": "the event_id path value"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/me/events",
+      "operationId": "calendar_create_event",
+      "summary": "Create a calendar event. Provide subject/start/end/attendees in the JSON body.",
+      "parameters": []
+    },
+    {
+      "method": "PATCH",
+      "path": "/me/events/{event_id}",
+      "operationId": "calendar_update_event",
+      "summary": "Update a calendar event. Requires an event_id obtained from calendar_list_events.",
+      "parameters": [
+        {
+          "name": "event_id",
+          "in": "path",
+          "required": true,
+          "description": "the event_id path value"
+        }
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/me/events/{event_id}",
+      "operationId": "calendar_delete_event",
+      "summary": "Delete a calendar event. Requires an event_id obtained from calendar_list_events.",
+      "parameters": [
+        {
+          "name": "event_id",
+          "in": "path",
+          "required": true,
+          "description": "the event_id path value"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/me/events/{event_id}/accept",
+      "operationId": "calendar_accept_event",
+      "summary": "Accept a calendar event invitation. Requires an event_id obtained from calendar_list_events.",
+      "parameters": [
+        {
+          "name": "event_id",
+          "in": "path",
+          "required": true,
+          "description": "the event_id path value"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/me/events/{event_id}/decline",
+      "operationId": "calendar_decline_event",
+      "summary": "Decline a calendar event invitation. Requires an event_id obtained from calendar_list_events.",
+      "parameters": [
+        {
+          "name": "event_id",
+          "in": "path",
+          "required": true,
+          "description": "the event_id path value"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/me/events/{event_id}/tentativelyAccept",
+      "operationId": "calendar_tentatively_accept_event",
+      "summary": "Tentatively accept a calendar event. Requires an event_id obtained from calendar_list_events.",
+      "parameters": [
+        {
+          "name": "event_id",
+          "in": "path",
+          "required": true,
+          "description": "the event_id path value"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/me/calendars",
+      "operationId": "calendar_list_calendars",
+      "summary": "List the signed-in user's calendars.",
+      "parameters": []
+    },
+    {
+      "method": "POST",
+      "path": "/me/calendar/getSchedule",
+      "operationId": "calendar_get_schedule",
+      "summary": "Get free/busy schedule for attendees. Provide schedules/startTime/endTime in the JSON body.",
+      "parameters": []
+    },
+    {
+      "method": "GET",
+      "path": "/me/contacts",
+      "operationId": "contacts_list",
+      "summary": "List the signed-in user's contacts.",
+      "parameters": [
+        {
+          "name": "$top",
+          "in": "query",
+          "required": false,
+          "description": "max results to return"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/me/contacts/{contact_id}",
+      "operationId": "contacts_get",
+      "summary": "Get a contact. Requires a contact_id obtained from contacts_list.",
+      "parameters": [
+        {
+          "name": "contact_id",
+          "in": "path",
+          "required": true,
+          "description": "the contact_id path value"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/me/contacts",
+      "operationId": "contacts_create",
+      "summary": "Create a contact. Provide givenName/emailAddresses in the JSON body.",
+      "parameters": []
+    },
+    {
+      "method": "PATCH",
+      "path": "/me/contacts/{contact_id}",
+      "operationId": "contacts_update",
+      "summary": "Update a contact. Requires a contact_id obtained from contacts_list.",
+      "parameters": [
+        {
+          "name": "contact_id",
+          "in": "path",
+          "required": true,
+          "description": "the contact_id path value"
+        }
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/me/contacts/{contact_id}",
+      "operationId": "contacts_delete",
+      "summary": "Delete a contact. Requires a contact_id obtained from contacts_list.",
+      "parameters": [
+        {
+          "name": "contact_id",
+          "in": "path",
+          "required": true,
+          "description": "the contact_id path value"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/me/contactFolders",
+      "operationId": "contacts_list_folders",
+      "summary": "List the signed-in user's contact folders.",
+      "parameters": []
+    },
+    {
+      "method": "GET",
+      "path": "/me/messages",
+      "operationId": "mail_list_messages",
+      "summary": "List messages in the signed-in user's mailbox.",
+      "parameters": [
+        {
+          "name": "$top",
+          "in": "query",
+          "required": false,
+          "description": "max results to return"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/me/messages/{message_id}",
+      "operationId": "mail_get_message",
+      "summary": "Get a mail message. Requires a message_id obtained from mail_list_messages.",
+      "parameters": [
+        {
+          "name": "message_id",
+          "in": "path",
+          "required": true,
+          "description": "the message_id path value"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/me/sendMail",
+      "operationId": "mail_send",
+      "summary": "Send a mail message. Provide {\"message\":{...}} in the JSON body.",
+      "parameters": []
+    },
+    {
+      "method": "POST",
+      "path": "/me/messages/{message_id}/reply",
+      "operationId": "mail_reply",
+      "summary": "Reply to a mail message. Requires a message_id obtained from mail_list_messages.",
+      "parameters": [
+        {
+          "name": "message_id",
+          "in": "path",
+          "required": true,
+          "description": "the message_id path value"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/me/messages/{message_id}/forward",
+      "operationId": "mail_forward",
+      "summary": "Forward a mail message. Requires a message_id obtained from mail_list_messages.",
+      "parameters": [
+        {
+          "name": "message_id",
+          "in": "path",
+          "required": true,
+          "description": "the message_id path value"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/me/messages/{message_id}/move",
+      "operationId": "mail_move",
+      "summary": "Move a mail message to another folder. Requires a message_id obtained from mail_list_messages.",
+      "parameters": [
+        {
+          "name": "message_id",
+          "in": "path",
+          "required": true,
+          "description": "the message_id path value"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/me/messages/{message_id}/copy",
+      "operationId": "mail_copy",
+      "summary": "Copy a mail message to another folder. Requires a message_id obtained from mail_list_messages.",
+      "parameters": [
+        {
+          "name": "message_id",
+          "in": "path",
+          "required": true,
+          "description": "the message_id path value"
+        }
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/me/messages/{message_id}",
+      "operationId": "mail_delete",
+      "summary": "Delete a mail message. Requires a message_id obtained from mail_list_messages.",
+      "parameters": [
+        {
+          "name": "message_id",
+          "in": "path",
+          "required": true,
+          "description": "the message_id path value"
+        }
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/me/messages/{message_id}",
+      "operationId": "mail_mark_read",
+      "summary": "Mark a mail message read/unread. Requires a message_id obtained from mail_list_messages. Set isRead in the JSON body.",
+      "parameters": [
+        {
+          "name": "message_id",
+          "in": "path",
+          "required": true,
+          "description": "the message_id path value"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/me/messages",
+      "operationId": "mail_create_draft",
+      "summary": "Create a draft mail message. Provide subject/body/toRecipients in the JSON body.",
+      "parameters": []
+    },
+    {
+      "method": "PATCH",
+      "path": "/me/messages/{message_id}",
+      "operationId": "mail_update_draft",
+      "summary": "Update a draft mail message. Requires a message_id obtained from mail_list_messages.",
+      "parameters": [
+        {
+          "name": "message_id",
+          "in": "path",
+          "required": true,
+          "description": "the message_id path value"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/me/messages/{message_id}/send",
+      "operationId": "mail_send_draft",
+      "summary": "Send an existing draft. Requires a message_id obtained from mail_create_draft.",
+      "parameters": [
+        {
+          "name": "message_id",
+          "in": "path",
+          "required": true,
+          "description": "the message_id path value"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/me/mailFolders",
+      "operationId": "mail_list_folders",
+      "summary": "List the signed-in user's mail folders.",
+      "parameters": []
+    },
+    {
+      "method": "POST",
+      "path": "/me/mailFolders",
+      "operationId": "mail_create_folder",
+      "summary": "Create a mail folder. Provide displayName in the JSON body.",
+      "parameters": []
+    },
+    {
+      "method": "DELETE",
+      "path": "/me/mailFolders/{folder_id}",
+      "operationId": "mail_delete_folder",
+      "summary": "Delete a mail folder. Requires a folder_id obtained from mail_list_folders.",
+      "parameters": [
+        {
+          "name": "folder_id",
+          "in": "path",
+          "required": true,
+          "description": "the folder_id path value"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/me/messages",
+      "operationId": "mail_search",
+      "summary": "Search the signed-in user's mailbox.",
+      "parameters": [
+        {
+          "name": "$search",
+          "in": "query",
+          "required": false,
+          "description": "search term over subject/body/from"
+        },
+        {
+          "name": "$top",
+          "in": "query",
+          "required": false,
+          "description": "max results to return"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/me/messages/{message_id}/attachments",
+      "operationId": "mail_list_attachments",
+      "summary": "List attachments on a message. Requires a message_id obtained from mail_list_messages.",
+      "parameters": [
+        {
+          "name": "message_id",
+          "in": "path",
+          "required": true,
+          "description": "the message_id path value"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/me/messages/{message_id}/attachments/{attachment_id}",
+      "operationId": "mail_get_attachment",
+      "summary": "Get a message attachment. Requires message_id and attachment_id obtained from mail_list_attachments.",
+      "parameters": [
+        {
+          "name": "message_id",
+          "in": "path",
+          "required": true,
+          "description": "the message_id path value"
+        },
+        {
+          "name": "attachment_id",
+          "in": "path",
+          "required": true,
+          "description": "the attachment_id path value"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/me/messages/{message_id}/attachments",
+      "operationId": "mail_add_attachment",
+      "summary": "Add an attachment to a message. Requires a message_id obtained from mail_create_draft. Provide the fileAttachment in the JSON body.",
+      "parameters": [
+        {
+          "name": "message_id",
+          "in": "path",
+          "required": true,
+          "description": "the message_id path value"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/me/mailFolders/inbox/messageRules",
+      "operationId": "mail_list_rules",
+      "summary": "List inbox message rules.",
+      "parameters": []
+    },
+    {
+      "method": "GET",
+      "path": "/me/mailFolders/inbox/messages",
+      "operationId": "mail_get_focused_inbox",
+      "summary": "List messages in the focused inbox.",
+      "parameters": [
+        {
+          "name": "$top",
+          "in": "query",
+          "required": false,
+          "description": "max results to return"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/me/messages",
+      "operationId": "mail_list_flagged",
+      "summary": "List flagged messages (use $filter=flag/flagStatus eq 'flagged').",
+      "parameters": [
+        {
+          "name": "$filter",
+          "in": "query",
+          "required": false,
+          "description": "OData filter, e.g. flag/flagStatus eq 'flagged'"
+        },
+        {
+          "name": "$top",
+          "in": "query",
+          "required": false,
+          "description": "max results to return"
+        }
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/me/messages/{message_id}",
+      "operationId": "mail_set_flag",
+      "summary": "Set the follow-up flag on a message. Requires a message_id obtained from mail_list_messages. Set flag in the JSON body.",
+      "parameters": [
+        {
+          "name": "message_id",
+          "in": "path",
+          "required": true,
+          "description": "the message_id path value"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/me/mailFolders/inbox",
+      "operationId": "mail_get_inbox_overview",
+      "summary": "Get inbox folder overview (unread/total counts).",
+      "parameters": []
+    },
+    {
+      "method": "GET",
+      "path": "/me/drive/root/search(q='{query}')",
+      "operationId": "onedrive_search",
+      "summary": "Search the signed-in user's OneDrive. Provide the query text in the query path segment.",
+      "parameters": [
+        {
+          "name": "query",
+          "in": "path",
+          "required": true,
+          "description": "the query path value"
+        },
+        {
+          "name": "$top",
+          "in": "query",
+          "required": false,
+          "description": "max results to return"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/me/drive/items/{folder_id}/children",
+      "operationId": "onedrive_list_items",
+      "summary": "List items in a OneDrive folder. Requires a folder_id obtained from onedrive_get_overview (use the drive root id for the top level).",
+      "parameters": [
+        {
+          "name": "folder_id",
+          "in": "path",
+          "required": true,
+          "description": "the folder_id path value"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/me/drive/items/{item_id}",
+      "operationId": "onedrive_get_item",
+      "summary": "Get a OneDrive item. Requires an item_id obtained from onedrive_list_items.",
+      "parameters": [
+        {
+          "name": "item_id",
+          "in": "path",
+          "required": true,
+          "description": "the item_id path value"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/me/drive/items/{parent_id}/children",
+      "operationId": "onedrive_create_folder",
+      "summary": "Create a folder in OneDrive. Requires a parent_id obtained from onedrive_list_items. Provide name/folder in the JSON body.",
+      "parameters": [
+        {
+          "name": "parent_id",
+          "in": "path",
+          "required": true,
+          "description": "the parent_id path value"
+        }
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/me/drive/items/{item_id}",
+      "operationId": "onedrive_delete_item",
+      "summary": "Delete a OneDrive item. Requires an item_id obtained from onedrive_list_items.",
+      "parameters": [
+        {
+          "name": "item_id",
+          "in": "path",
+          "required": true,
+          "description": "the item_id path value"
+        }
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/me/drive/items/{item_id}",
+      "operationId": "onedrive_move_item",
+      "summary": "Move a OneDrive item. Requires an item_id obtained from onedrive_list_items. Set parentReference in the JSON body.",
+      "parameters": [
+        {
+          "name": "item_id",
+          "in": "path",
+          "required": true,
+          "description": "the item_id path value"
+        }
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/me/drive/items/{item_id}",
+      "operationId": "onedrive_rename_item",
+      "summary": "Rename a OneDrive item. Requires an item_id obtained from onedrive_list_items. Set name in the JSON body.",
+      "parameters": [
+        {
+          "name": "item_id",
+          "in": "path",
+          "required": true,
+          "description": "the item_id path value"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/me/drive/items/{item_id}/copy",
+      "operationId": "onedrive_copy_item",
+      "summary": "Copy a OneDrive item. Requires an item_id obtained from onedrive_list_items.",
+      "parameters": [
+        {
+          "name": "item_id",
+          "in": "path",
+          "required": true,
+          "description": "the item_id path value"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/me/drive/items/{item_id}/createLink",
+      "operationId": "onedrive_get_share_link",
+      "summary": "Create a sharing link for a OneDrive item. Requires an item_id obtained from onedrive_list_items.",
+      "parameters": [
+        {
+          "name": "item_id",
+          "in": "path",
+          "required": true,
+          "description": "the item_id path value"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/me/drive",
+      "operationId": "onedrive_get_quota",
+      "summary": "Get OneDrive storage quota and usage.",
+      "parameters": []
+    },
+    {
+      "method": "GET",
+      "path": "/me/drive/recent",
+      "operationId": "onedrive_get_recent",
+      "summary": "List recently used OneDrive items.",
+      "parameters": []
+    },
+    {
+      "method": "GET",
+      "path": "/me/drive/sharedWithMe",
+      "operationId": "onedrive_get_shared_with_me",
+      "summary": "List items shared with the signed-in user.",
+      "parameters": []
+    },
+    {
+      "method": "GET",
+      "path": "/me/drive/items/{item_id}/content",
+      "operationId": "onedrive_download_url",
+      "summary": "Get the download content stream for an item. Requires an item_id obtained from onedrive_list_items.",
+      "parameters": [
+        {
+          "name": "item_id",
+          "in": "path",
+          "required": true,
+          "description": "the item_id path value"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/me/drive/items/{item_id}/permissions",
+      "operationId": "onedrive_get_permissions",
+      "summary": "List permissions on a OneDrive item. Requires an item_id obtained from onedrive_list_items.",
+      "parameters": [
+        {
+          "name": "item_id",
+          "in": "path",
+          "required": true,
+          "description": "the item_id path value"
+        }
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/me/drive/items/{item_id}/permissions/{permission_id}",
+      "operationId": "onedrive_revoke_permission",
+      "summary": "Revoke a permission on an item. Requires item_id and permission_id obtained from onedrive_get_permissions.",
+      "parameters": [
+        {
+          "name": "item_id",
+          "in": "path",
+          "required": true,
+          "description": "the item_id path value"
+        },
+        {
+          "name": "permission_id",
+          "in": "path",
+          "required": true,
+          "description": "the permission_id path value"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/me/drive/items/{item_id}/thumbnails",
+      "operationId": "onedrive_get_thumbnails",
+      "summary": "Get thumbnails for a OneDrive item. Requires an item_id obtained from onedrive_list_items.",
+      "parameters": [
+        {
+          "name": "item_id",
+          "in": "path",
+          "required": true,
+          "description": "the item_id path value"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/me/drive/root",
+      "operationId": "onedrive_get_overview",
+      "summary": "Get the OneDrive root folder overview.",
+      "parameters": []
+    },
+    {
+      "method": "GET",
+      "path": "/planner/plans/{plan_id}/tasks",
+      "operationId": "planner_list_tasks",
+      "summary": "List tasks in a plan. Requires a plan_id obtained from planner_list_plans.",
+      "parameters": [
+        {
+          "name": "plan_id",
+          "in": "path",
+          "required": true,
+          "description": "the plan_id path value"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/me/planner/plans",
+      "operationId": "planner_list_plans",
+      "summary": "List Planner plans the signed-in user can access.",
+      "parameters": []
+    },
+    {
+      "method": "GET",
+      "path": "/planner/plans/{plan_id}",
+      "operationId": "planner_get_plan",
+      "summary": "Get a Planner plan. Requires a plan_id obtained from planner_list_plans.",
+      "parameters": [
+        {
+          "name": "plan_id",
+          "in": "path",
+          "required": true,
+          "description": "the plan_id path value"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/planner/plans/{plan_id}/buckets",
+      "operationId": "planner_list_buckets",
+      "summary": "List buckets in a plan. Requires a plan_id obtained from planner_list_plans.",
+      "parameters": [
+        {
+          "name": "plan_id",
+          "in": "path",
+          "required": true,
+          "description": "the plan_id path value"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/planner/buckets",
+      "operationId": "planner_create_bucket",
+      "summary": "Create a Planner bucket. Provide name/planId in the JSON body.",
+      "parameters": []
+    },
+    {
+      "method": "GET",
+      "path": "/planner/buckets/{bucket_id}/tasks",
+      "operationId": "planner_get_bucket_tasks",
+      "summary": "List tasks in a bucket. Requires a bucket_id obtained from planner_list_buckets.",
+      "parameters": [
+        {
+          "name": "bucket_id",
+          "in": "path",
+          "required": true,
+          "description": "the bucket_id path value"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/planner/tasks/{task_id}",
+      "operationId": "planner_get_task",
+      "summary": "Get a Planner task. Requires a task_id obtained from planner_list_tasks.",
+      "parameters": [
+        {
+          "name": "task_id",
+          "in": "path",
+          "required": true,
+          "description": "the task_id path value"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/planner/tasks",
+      "operationId": "planner_create_task",
+      "summary": "Create a Planner task. Provide planId/bucketId/title in the JSON body.",
+      "parameters": []
+    },
+    {
+      "method": "PATCH",
+      "path": "/planner/tasks/{task_id}",
+      "operationId": "planner_update_task",
+      "summary": "Update a Planner task (needs an If-Match etag header). Requires a task_id obtained from planner_list_tasks.",
+      "parameters": [
+        {
+          "name": "task_id",
+          "in": "path",
+          "required": true,
+          "description": "the task_id path value"
+        }
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/planner/tasks/{task_id}",
+      "operationId": "planner_delete_task",
+      "summary": "Delete a Planner task (needs an If-Match etag header). Requires a task_id obtained from planner_list_tasks.",
+      "parameters": [
+        {
+          "name": "task_id",
+          "in": "path",
+          "required": true,
+          "description": "the task_id path value"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/me/planner/tasks",
+      "operationId": "planner_my_tasks",
+      "summary": "List Planner tasks assigned to the signed-in user.",
+      "parameters": []
+    },
+    {
+      "method": "GET",
+      "path": "/me/planner/tasks",
+      "operationId": "planner_get_overview",
+      "summary": "Get an overview of the signed-in user's Planner tasks.",
+      "parameters": []
+    },
+    {
+      "method": "GET",
+      "path": "/me/todo/lists/{list_id}/tasks",
+      "operationId": "todo_list_tasks",
+      "summary": "List tasks in a To Do list. Requires a list_id obtained from todo_list_task_lists.",
+      "parameters": [
+        {
+          "name": "list_id",
+          "in": "path",
+          "required": true,
+          "description": "the list_id path value"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/me/todo/lists",
+      "operationId": "todo_list_task_lists",
+      "summary": "List the signed-in user's To Do lists.",
+      "parameters": []
+    },
+    {
+      "method": "GET",
+      "path": "/me/todo/lists/{list_id}",
+      "operationId": "todo_get_task_list",
+      "summary": "Get a To Do list. Requires a list_id obtained from todo_list_task_lists.",
+      "parameters": [
+        {
+          "name": "list_id",
+          "in": "path",
+          "required": true,
+          "description": "the list_id path value"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/me/todo/lists",
+      "operationId": "todo_create_task_list",
+      "summary": "Create a To Do list. Provide displayName in the JSON body.",
+      "parameters": []
+    },
+    {
+      "method": "DELETE",
+      "path": "/me/todo/lists/{list_id}",
+      "operationId": "todo_delete_task_list",
+      "summary": "Delete a To Do list. Requires a list_id obtained from todo_list_task_lists.",
+      "parameters": [
+        {
+          "name": "list_id",
+          "in": "path",
+          "required": true,
+          "description": "the list_id path value"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/me/todo/lists/{list_id}/tasks/{task_id}",
+      "operationId": "todo_get_task",
+      "summary": "Get a To Do task. Requires list_id and task_id obtained from todo_list_tasks.",
+      "parameters": [
+        {
+          "name": "list_id",
+          "in": "path",
+          "required": true,
+          "description": "the list_id path value"
+        },
+        {
+          "name": "task_id",
+          "in": "path",
+          "required": true,
+          "description": "the task_id path value"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/me/todo/lists/{list_id}/tasks",
+      "operationId": "todo_create_task",
+      "summary": "Create a To Do task. Requires a list_id obtained from todo_list_task_lists. Provide title in the JSON body.",
+      "parameters": [
+        {
+          "name": "list_id",
+          "in": "path",
+          "required": true,
+          "description": "the list_id path value"
+        }
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/me/todo/lists/{list_id}/tasks/{task_id}",
+      "operationId": "todo_update_task",
+      "summary": "Update a To Do task. Requires list_id and task_id obtained from todo_list_tasks.",
+      "parameters": [
+        {
+          "name": "list_id",
+          "in": "path",
+          "required": true,
+          "description": "the list_id path value"
+        },
+        {
+          "name": "task_id",
+          "in": "path",
+          "required": true,
+          "description": "the task_id path value"
+        }
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/me/todo/lists/{list_id}/tasks/{task_id}",
+      "operationId": "todo_complete_task",
+      "summary": "Mark a To Do task complete. Requires list_id and task_id obtained from todo_list_tasks. Set status to completed in the JSON body.",
+      "parameters": [
+        {
+          "name": "list_id",
+          "in": "path",
+          "required": true,
+          "description": "the list_id path value"
+        },
+        {
+          "name": "task_id",
+          "in": "path",
+          "required": true,
+          "description": "the task_id path value"
+        }
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/me/todo/lists/{list_id}/tasks/{task_id}",
+      "operationId": "todo_delete_task",
+      "summary": "Delete a To Do task. Requires list_id and task_id obtained from todo_list_tasks.",
+      "parameters": [
+        {
+          "name": "list_id",
+          "in": "path",
+          "required": true,
+          "description": "the list_id path value"
+        },
+        {
+          "name": "task_id",
+          "in": "path",
+          "required": true,
+          "description": "the task_id path value"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/me/todo/lists",
+      "operationId": "todo_get_overview",
+      "summary": "Get an overview of the signed-in user's To Do lists.",
+      "parameters": []
+    },
+    {
+      "method": "GET",
+      "path": "/me/people",
+      "operationId": "people_search",
+      "summary": "Search the signed-in user's relevant people.",
+      "parameters": [
+        {
+          "name": "$search",
+          "in": "query",
+          "required": false,
+          "description": "person name or email to match"
+        },
+        {
+          "name": "$top",
+          "in": "query",
+          "required": false,
+          "description": "max results to return"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/me",
+      "operationId": "get_me",
+      "summary": "Get the signed-in user's Microsoft 365 profile (display name, email, job title).",
+      "parameters": []
+    }
+  ]
+}

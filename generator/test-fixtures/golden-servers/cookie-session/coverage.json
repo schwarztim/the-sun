@@ -1,0 +1,8 @@
+{
+  "basis": "observed",
+  "coverage_pct": 100,
+  "ops": [
+    { "path": "/profile", "method": "GET", "tool": "get_profile" },
+    { "path": "/profile/notes", "method": "POST", "tool": "add_profile_note" }
+  ]
+}

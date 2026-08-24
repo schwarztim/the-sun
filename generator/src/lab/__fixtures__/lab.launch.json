@@ -1,0 +1,11 @@
+{
+  "transport": "streamable-http",
+  "command": "node",
+  "args": ["mini-http-server.mjs"],
+  "portEnvVar": "PORT",
+  "hostEnvVar": "HOST",
+  "mcpPath": "/mcp",
+  "targetName": "example",
+  "targetBaseUrlEnvVar": "BASE_URL",
+  "requiresBrowserTLS": true
+}

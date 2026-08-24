@@ -1,0 +1,42 @@
+# github-mcp — vendored default (official github/github-mcp-server, Go, HTTP mode).
+#
+# SELF-CONTAINED SNIPPET — not wired into any live manifest. The lead merges the
+# relevant pieces into thesun.toml / the shared default-manifest + gateway config
+# in Phase 2. See ../README.md for the full rationale, transport verdict, and
+# verification evidence.
+#
+# Port 42027 is the next free slot as of 2026-07-06 (live ~/.mcp-fleet/fleet.toml
+# uses 42011-42020 + 42026; this repo's existing thesun-generated `github-go`
+# fallback already owns 42012). Re-check for collisions before merging.
+
+# ---- 1) fleetd-supervised entry: spawns the vendor binary directly (T2 — see
+#         gateway/GO-MIGRATION-DESIGN.md "T2 third-party, native-http capable").
+#         No credential in this block: the official binary's `http` subcommand
+#         authenticates per-request via a client-supplied `Authorization: Bearer
+#         <token>` header, NOT a spawn-time env var (verified against source —
+#         see README "Transport verdict"). The PAT is injected downstream, at
+#         the gateway, not here. ----
+
+[[server]]
+name = "github-mcp"
+kind = "mcp"
+bin  = "/opt/homebrew/bin/github-mcp-server"   # brew install github-mcp-server (official tap: homebrew-core)
+args = ["http", "--port", "42027", "--listen-host", "127.0.0.1"]
+port = 42027
+# No [server.env] — http mode takes no static credential.
+
+# ---- 2) Gateway's OWN supervised entry needs one additional env line so the
+#         PAT is resolved once (from Hermes) into the gateway process's env,
+#         then referenced by the gateway's backend `headers:` block below via
+#         `${GITHUB_PAT}` (gateway/src/config.ts already resolves `${VAR}` from
+#         process.env at config load — no new gateway code required). This is
+#         the EXISTING [[server]] name="gateway" kind="system" block emitted by
+#         `defaultManifest()` in fleet/fleetd/cmd/thesun/stack.go — add the
+#         [server.env] table to it; don't create a second gateway entry.
+#
+# [[server]]
+# name = "gateway"
+# kind = "system"
+# ... (existing fields unchanged) ...
+# [server.env]
+# GITHUB_PAT = "hermescred://github/token"

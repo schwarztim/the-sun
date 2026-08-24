@@ -1,0 +1,175 @@
+{
+  "name": "tufin",
+  "version": "dev",
+  "baseUrl": "https://tufin.example.com",
+  "authScheme": "cookie-session",
+  "hermesTokenService": "tufin",
+  "hermesTokenScheme": "session",
+  "defaultPort": "42019",
+  "endpoints": [
+    {
+      "method": "GET",
+      "path": "/securetrack/api/devices",
+      "operationId": "list_devices",
+      "description": "List firewall/security devices managed by Tufin SecureTrack. Use count and start to page. Read-only.",
+      "parameters": [
+        { "name": "count", "in": "query", "required": false, "description": "max devices to return per page" },
+        { "name": "start", "in": "query", "required": false, "description": "pagination offset (0-based)" },
+        { "name": "name", "in": "query", "required": false, "description": "filter by device name substring" },
+        { "name": "vendor", "in": "query", "required": false, "description": "filter by vendor (e.g. Cisco, PaloAltoNetworks, CheckPoint)" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/securetrack/api/devices/{deviceId}",
+      "operationId": "get_device",
+      "description": "Get a single SecureTrack device by its id. Requires a deviceId — call tufin_list_devices first to obtain one from a result row. Read-only.",
+      "parameters": [
+        { "name": "deviceId", "in": "path", "required": true, "description": "the device id — call tufin_list_devices first to obtain one" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/securetrack/api/devices/{deviceId}/rules",
+      "operationId": "get_device_rules",
+      "description": "List the security rules (policy) of a device. Requires a deviceId — call tufin_list_devices first. Use count and start to page. Read-only.",
+      "parameters": [
+        { "name": "deviceId", "in": "path", "required": true, "description": "the device id — call tufin_list_devices first to obtain one" },
+        { "name": "count", "in": "query", "required": false, "description": "max rules to return per page" },
+        { "name": "start", "in": "query", "required": false, "description": "pagination offset (0-based)" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/securetrack/api/devices/{deviceId}/policies",
+      "operationId": "get_device_policies",
+      "description": "List the installed policy packages of a device. Requires a deviceId — call tufin_list_devices first. Read-only.",
+      "parameters": [
+        { "name": "deviceId", "in": "path", "required": true, "description": "the device id — call tufin_list_devices first to obtain one" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/securetrack/api/devices/{deviceId}/interfaces",
+      "operationId": "get_device_interfaces",
+      "description": "List the network interfaces of a device. Requires a deviceId — call tufin_list_devices first. Read-only.",
+      "parameters": [
+        { "name": "deviceId", "in": "path", "required": true, "description": "the device id — call tufin_list_devices first to obtain one" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/securetrack/api/rule_search/{deviceId}",
+      "operationId": "search_device_rules",
+      "description": "Search rules within a single device by free-text/field query. Requires a deviceId — call tufin_list_devices first. Read-only.",
+      "parameters": [
+        { "name": "deviceId", "in": "path", "required": true, "description": "the device id — call tufin_list_devices first to obtain one" },
+        { "name": "search_text", "in": "query", "required": false, "description": "SecureTrack rule search expression, e.g. 'source:10.0.0.0/8 AND action:accept'" },
+        { "name": "count", "in": "query", "required": false, "description": "max rules to return" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/securetrack/api/rule_search",
+      "operationId": "search_rules",
+      "description": "Search rules across all devices by free-text/field query. Read-only.",
+      "parameters": [
+        { "name": "search_text", "in": "query", "required": false, "description": "SecureTrack rule search expression across all devices" },
+        { "name": "count", "in": "query", "required": false, "description": "max rules to return" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/securetrack/api/devices/{deviceId}/rules/{ruleId}/documentation",
+      "operationId": "get_rule_documentation",
+      "description": "Get the documentation (owner, ticket, comment, expiration) for a specific rule. Requires a deviceId and ruleId — call tufin_get_device_rules first to obtain both. Read-only.",
+      "parameters": [
+        { "name": "deviceId", "in": "path", "required": true, "description": "the device id — call tufin_get_device_rules first" },
+        { "name": "ruleId", "in": "path", "required": true, "description": "the rule id — call tufin_get_device_rules first to obtain one" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/securetrack/api/zones",
+      "operationId": "list_zones",
+      "description": "List all SecureTrack security zones. Read-only.",
+      "parameters": []
+    },
+    {
+      "method": "GET",
+      "path": "/securetrack/api/zones/{zoneId}/entries",
+      "operationId": "get_zone_entries",
+      "description": "List the subnet/host entries of a security zone. Requires a zoneId — call tufin_list_zones first to obtain one. Read-only.",
+      "parameters": [
+        { "name": "zoneId", "in": "path", "required": true, "description": "the zone id — call tufin_list_zones first to obtain one" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/securetrack/api/network_objects/search",
+      "operationId": "search_network_objects",
+      "description": "Search network objects (hosts, subnets, groups) by name or IP. Optionally restrict to a device — call tufin_list_devices first to obtain a device_id. Read-only.",
+      "parameters": [
+        { "name": "filter", "in": "query", "required": false, "description": "object name or IP filter expression" },
+        { "name": "device_id", "in": "query", "required": false, "description": "restrict search to a device — call tufin_list_devices to obtain an id" },
+        { "name": "count", "in": "query", "required": false, "description": "max objects to return" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/securetrack/api/policy_analysis/query/matching_rules",
+      "operationId": "analyze_traffic",
+      "description": "Policy analysis: find rules matching a source/destination/service traffic tuple. Optionally restrict to a device — call tufin_list_devices first to obtain a device_id. Read-only.",
+      "parameters": [
+        { "name": "source", "in": "query", "required": false, "description": "source IP or subnet" },
+        { "name": "destination", "in": "query", "required": false, "description": "destination IP or subnet" },
+        { "name": "service", "in": "query", "required": false, "description": "service/port, e.g. tcp/443" },
+        { "name": "device_id", "in": "query", "required": false, "description": "restrict to a device — call tufin_list_devices to obtain an id" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/securetrack/api/security_policies",
+      "operationId": "list_security_policies",
+      "description": "List Unified Security Policy (USP) matrices. Read-only.",
+      "parameters": []
+    },
+    {
+      "method": "GET",
+      "path": "/securetrack/api/security_policies/{policyId}",
+      "operationId": "get_security_policy",
+      "description": "Get a single Unified Security Policy by id. Requires a policyId — call tufin_list_security_policies first to obtain one. Read-only.",
+      "parameters": [
+        { "name": "policyId", "in": "path", "required": true, "description": "the security policy id — call tufin_list_security_policies first to obtain one" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/securetrack/api/security_policies/{policyId}/exceptions",
+      "operationId": "list_policy_exceptions",
+      "description": "List exceptions of a Unified Security Policy. Requires a policyId — call tufin_list_security_policies first to obtain one. Read-only.",
+      "parameters": [
+        { "name": "policyId", "in": "path", "required": true, "description": "the security policy id — call tufin_list_security_policies first to obtain one" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/securetrack/api/devices/topology_interfaces",
+      "operationId": "get_topology_interfaces",
+      "description": "List topology interfaces for a management device. Requires mgmtId — call tufin_list_devices to obtain a device id. Read-only.",
+      "parameters": [
+        { "name": "mgmtId", "in": "query", "required": false, "description": "management device id — call tufin_list_devices to obtain one" }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/securetrack/api/cleanups",
+      "operationId": "get_cleanup_issues",
+      "description": "List rule cleanup issues (shadowed, unused, permissive rules). Optionally restrict to a device — call tufin_list_devices first to obtain a device_id. Read-only.",
+      "parameters": [
+        { "name": "device_id", "in": "query", "required": false, "description": "restrict to a device — call tufin_list_devices to obtain an id" },
+        { "name": "count", "in": "query", "required": false, "description": "max issues to return" }
+      ]
+    }
+  ]
+}

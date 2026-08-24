@@ -1,0 +1,145 @@
+version: 2
+
+project_name: thesun
+
+# thesun's release feed (see fleet/fleetd/cmd/thesun/upgrade.go — defaultUpdateRepo).
+# Placeholder until the operator picks a real GitHub org/repo; override at
+# release time with `--repo` or the THESUN_UPDATE_REPO env var either way.
+release:
+  github:
+    owner: synman
+    name: thesun
+
+before:
+  hooks:
+    # Node subsystem builds (tsc compiles TypeScript -> dist/). Mirrors
+    # install.sh's per-subsystem steps 1/3/4 (fleet's own Go build is handled
+    # by the `builds:` section below, not here).
+    - sh -c "cd generator && npm install --silent && npm run build --silent"
+    - sh -c "cd gateway && npm install --silent && npm run build --silent"
+    # NOTE: `pnpm run build` (the workspace root's own explicit build script),
+    # NOT `pnpm -r build` — hermes's package build order matters (e.g.
+    # provider-akamai-wsa imports type declarations from the already-built
+    # @hermes/broker dist), and pnpm's default topological `-r` scheduling
+    # does not infer that ordering from package.json dependencies alone.
+    - sh -c "cd hermes && pnpm install --silent && pnpm run build"
+    # Node SEA (single-executable-application) binaries for gateway + hermes,
+    # for every target platform below — see packaging/sea/build-all.sh and
+    # docs/PACKAGING.md ("Node runtime bundling") for how this works and its
+    # current limitations (the interactive `hermes acquire --pretty` path and
+    # `hermes doctor`'s import.meta.url use are not yet SEA-safe; `start` —
+    # what fleetd actually supervises — is unaffected).
+    - bash packaging/sea/build-all.sh
+
+builds:
+  # POSIX build (darwin + linux) — see the `thesun-windows` build below for
+  # why Windows is split into its own build+archive pair.
+  - id: thesun
+    dir: fleet/fleetd
+    main: ./cmd/thesun
+    # "bin/thesun" (a relative path, not just a filename) nests the binary
+    # under bin/ inside the archive — required so bundleRoot() in
+    # fleet/fleetd/cmd/thesun/stack.go (BundleRoot: "<bundle>/bin/thesun ->
+    # <bundle>") resolves the extracted archive root correctly and can find
+    # generator/, gateway/, hermes/, fleet/default-manifest.toml relative to
+    # it. Verified empirically 2026-07-06: a bare "thesun" binary lands at
+    # the archive ROOT instead, which silently breaks every bundle-relative
+    # path the CLI computes.
+    binary: bin/thesun
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - darwin
+      - linux
+    goarch:
+      - amd64
+      - arm64
+    ldflags:
+      - -s -w -X main.version={{.Version}}
+  # Windows gets its OWN build+archive pair (not a `goos` entry on the build
+  # above) because archives[].files[].dst does NOT support Go templates
+  # (verified empirically 2026-07-06 — a `{{ if eq .Os "windows" }}.exe{{
+  # end }}` conditional in `dst` is copied into the archive literally,
+  # unexpanded; only `src` templates). Since the SEA binaries need a static
+  # ".exe" suffix on Windows and no suffix elsewhere, and one archives block
+  # applies the same `files:` list to every platform it covers, the only
+  # clean fix is two build IDs (POSIX vs Windows) feeding two archives
+  # entries with different static `dst` values. Only windows/amd64 is
+  # published — matches packaging/sea/build-all.sh's TARGETS list; Node SEA for
+  # windows/arm64 has no official nodejs.org prebuilt to embed as of this
+  # writing.
+  - id: thesun-windows
+    dir: fleet/fleetd
+    main: ./cmd/thesun
+    binary: bin/thesun
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - windows
+    goarch:
+      - amd64
+    ldflags:
+      - -s -w -X main.version={{.Version}}
+
+archives:
+  - id: thesun
+    ids:
+      - thesun
+    # Raw GOOS/GOARCH tokens (darwin/linux, amd64/arm64) — no title-casing —
+    # so this name matches assetName() in fleet/fleetd/cmd/thesun/upgrade.go
+    # exactly (`thesun-<os>-<arch>`), which computes the expected download
+    # name from runtime.GOOS/GOARCH without a separate translation table.
+    name_template: "thesun-{{ .Os }}-{{ .Arch }}"
+    formats: ["tar.gz"]
+    wrap_in_directory: false
+    files:
+      # The default (genuinely-easy-auth) MCP server manifest — see
+      # fleet/fleetd/cmd/thesun/stack.go mergeShippedDefaults.
+      - src: fleet/default-manifest.toml
+        dst: fleet/default-manifest.toml
+      - src: README.md
+        dst: README.md
+      - src: docs/PACKAGING.md
+        dst: docs/PACKAGING.md
+      # Standalone Node SEA binaries (no system node/npm/pnpm required) for
+      # this archive's exact OS/arch — produced by packaging/sea/build-all.sh in
+      # the `before` hook above, placed alongside bin/thesun.
+      - src: 'dist-sea/gateway/{{ .Os }}_{{ .Arch }}/gateway'
+        dst: 'bin/gateway'
+      - src: 'dist-sea/hermes/{{ .Os }}_{{ .Arch }}/hermes'
+        dst: 'bin/hermes'
+  - id: thesun-windows
+    ids:
+      - thesun-windows
+    name_template: "thesun-{{ .Os }}-{{ .Arch }}"
+    formats: ["zip"]
+    wrap_in_directory: false
+    files:
+      - src: fleet/default-manifest.toml
+        dst: fleet/default-manifest.toml
+      - src: README.md
+        dst: README.md
+      - src: docs/PACKAGING.md
+        dst: docs/PACKAGING.md
+      - src: 'dist-sea/gateway/{{ .Os }}_{{ .Arch }}/gateway.exe'
+        dst: 'bin/gateway.exe'
+      - src: 'dist-sea/hermes/{{ .Os }}_{{ .Arch }}/hermes.exe'
+        dst: 'bin/hermes.exe'
+
+checksum:
+  name_template: "checksums.txt"
+
+# The Node `generate`/`verify` subcommand (generator/) is intentionally NOT
+# part of this archive yet — it is a developer/power-user path (turning a
+# REST API into a new MCP server), not part of the always-on supervised
+# stack (hermes + gateway + servers) that this packaging effort targets. See
+# docs/PACKAGING.md "What's not yet in the archive".
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - "^docs:"
+      - "^test:"
+
+snapshot:
+  version_template: "{{ .Tag }}-next"

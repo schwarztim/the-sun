@@ -1,0 +1,4 @@
+{
+  "targetName": "ua_mismatch_fixture",
+  "targetBaseUrlEnvVar": "MOCK_API_BASE_URL"
+}

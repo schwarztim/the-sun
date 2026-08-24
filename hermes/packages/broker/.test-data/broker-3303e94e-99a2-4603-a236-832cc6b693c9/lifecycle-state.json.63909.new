@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "states": [
+    {
+      "service": "ms365",
+      "scheme": "graph",
+      "lastAcquireSuccessAt": 1785268768764,
+      "credentialStatus": "valid"
+    }
+  ]
+}

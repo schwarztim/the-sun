@@ -1,0 +1,469 @@
+{
+  "name": "stash",
+  "baseUrl": "https://stash.example.com",
+  "authScheme": "bearer",
+  "defaultPort": "42014",
+  "endpoints": [
+    {
+      "method": "GET",
+      "path": "/rest/api/1.0/projects",
+      "operationId": "listProjects",
+      "summary": "Discover and list all Bitbucket projects you have access to.",
+      "parameters": [
+        {
+          "name": "limit",
+          "in": "query",
+          "required": false,
+          "description": "number of projects to return (default 25, max 1000)"
+        },
+        {
+          "name": "start",
+          "in": "query",
+          "required": false,
+          "description": "start index for pagination (default 0)"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/rest/api/1.0/projects/{projectKey}/repos",
+      "operationId": "listRepositories",
+      "summary": "Browse and discover repositories within a project.",
+      "parameters": [
+        {
+          "name": "projectKey",
+          "in": "path",
+          "required": true,
+          "description": "the Bitbucket project key"
+        },
+        {
+          "name": "limit",
+          "in": "query",
+          "required": false,
+          "description": "number of repositories to return (default 25, max 1000)"
+        },
+        {
+          "name": "start",
+          "in": "query",
+          "required": false,
+          "description": "start index for pagination (default 0)"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/rest/api/1.0/projects/{projectKey}/repos/{repositorySlug}/pull-requests",
+      "operationId": "createPullRequest",
+      "summary": "Create a new pull request. Send the PR body (title, description, fromRef, toRef, reviewers) as raw JSON in the body field.",
+      "parameters": [
+        {
+          "name": "projectKey",
+          "in": "path",
+          "required": true,
+          "description": "the Bitbucket project key"
+        },
+        {
+          "name": "repositorySlug",
+          "in": "path",
+          "required": true,
+          "description": "the repository slug where the PR is created"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/rest/api/1.0/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}",
+      "operationId": "getPullRequest",
+      "summary": "Retrieve detailed information about a pull request. Requires the pullRequestId, discoverable via listRepositories and the PR list.",
+      "parameters": [
+        {
+          "name": "projectKey",
+          "in": "path",
+          "required": true,
+          "description": "the Bitbucket project key"
+        },
+        {
+          "name": "repositorySlug",
+          "in": "path",
+          "required": true,
+          "description": "the repository slug containing the PR"
+        },
+        {
+          "name": "pullRequestId",
+          "in": "path",
+          "required": true,
+          "description": "the pull request ID"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/rest/api/1.0/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/merge",
+      "operationId": "mergePullRequest",
+      "summary": "Merge an approved pull request. Provide version, message and strategy as raw JSON in the body field. Requires the pullRequestId of an approved, mergeable PR.",
+      "parameters": [
+        {
+          "name": "projectKey",
+          "in": "path",
+          "required": true,
+          "description": "the Bitbucket project key"
+        },
+        {
+          "name": "repositorySlug",
+          "in": "path",
+          "required": true,
+          "description": "the repository slug containing the PR"
+        },
+        {
+          "name": "pullRequestId",
+          "in": "path",
+          "required": true,
+          "description": "the pull request ID to merge"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/rest/api/1.0/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/decline",
+      "operationId": "declinePullRequest",
+      "summary": "Decline a pull request. Provide version and message as raw JSON in the body field. Requires the pullRequestId of the target PR.",
+      "parameters": [
+        {
+          "name": "projectKey",
+          "in": "path",
+          "required": true,
+          "description": "the Bitbucket project key"
+        },
+        {
+          "name": "repositorySlug",
+          "in": "path",
+          "required": true,
+          "description": "the repository slug containing the PR"
+        },
+        {
+          "name": "pullRequestId",
+          "in": "path",
+          "required": true,
+          "description": "the pull request ID to decline"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/rest/api/1.0/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/comments",
+      "operationId": "addComment",
+      "summary": "Add a comment to a pull request. Provide text (and optional parent) as raw JSON in the body field. Requires the pullRequestId of the target PR.",
+      "parameters": [
+        {
+          "name": "projectKey",
+          "in": "path",
+          "required": true,
+          "description": "the Bitbucket project key"
+        },
+        {
+          "name": "repositorySlug",
+          "in": "path",
+          "required": true,
+          "description": "the repository slug containing the PR"
+        },
+        {
+          "name": "pullRequestId",
+          "in": "path",
+          "required": true,
+          "description": "the pull request ID to comment on"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/rest/api/1.0/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/comments",
+      "operationId": "addCommentInline",
+      "summary": "Add an inline comment anchored to a diff line in a pull request. Provide text plus an anchor (path, line, lineType, diffType, fileType) as raw JSON in the body field. Requires the pullRequestId and a valid diff anchor (path, line, lineType).",
+      "parameters": [
+        {
+          "name": "projectKey",
+          "in": "path",
+          "required": true,
+          "description": "the Bitbucket project key"
+        },
+        {
+          "name": "repositorySlug",
+          "in": "path",
+          "required": true,
+          "description": "the repository slug containing the PR"
+        },
+        {
+          "name": "pullRequestId",
+          "in": "path",
+          "required": true,
+          "description": "the pull request ID to comment on"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/rest/api/1.0/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/diff",
+      "operationId": "getPullRequestDiff",
+      "summary": "Retrieve the diff for a pull request. Requires the pullRequestId of the target PR.",
+      "parameters": [
+        {
+          "name": "projectKey",
+          "in": "path",
+          "required": true,
+          "description": "the Bitbucket project key"
+        },
+        {
+          "name": "repositorySlug",
+          "in": "path",
+          "required": true,
+          "description": "the repository slug containing the PR"
+        },
+        {
+          "name": "pullRequestId",
+          "in": "path",
+          "required": true,
+          "description": "the pull request ID to get the diff for"
+        },
+        {
+          "name": "contextLines",
+          "in": "query",
+          "required": false,
+          "description": "context lines around changes (default 10)"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/rest/api/1.0/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/activities",
+      "operationId": "getReviews",
+      "summary": "Fetch the PR activity timeline; use this to inspect review/approval activity (client filters for APPROVED/REVIEWED). Requires the pullRequestId of the target PR.",
+      "parameters": [
+        {
+          "name": "projectKey",
+          "in": "path",
+          "required": true,
+          "description": "the Bitbucket project key"
+        },
+        {
+          "name": "repositorySlug",
+          "in": "path",
+          "required": true,
+          "description": "the repository slug containing the PR"
+        },
+        {
+          "name": "pullRequestId",
+          "in": "path",
+          "required": true,
+          "description": "the pull request ID to get reviews for"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/rest/api/1.0/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/activities",
+      "operationId": "getActivities",
+      "summary": "Retrieve the full activity timeline for a pull request (comments, reviews, updates). Requires the pullRequestId of the target PR.",
+      "parameters": [
+        {
+          "name": "projectKey",
+          "in": "path",
+          "required": true,
+          "description": "the Bitbucket project key"
+        },
+        {
+          "name": "repositorySlug",
+          "in": "path",
+          "required": true,
+          "description": "the repository slug containing the PR"
+        },
+        {
+          "name": "pullRequestId",
+          "in": "path",
+          "required": true,
+          "description": "the pull request ID to get activities for"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/rest/api/1.0/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/activities",
+      "operationId": "getComments",
+      "summary": "Fetch the PR activity timeline; use this to inspect comments (client filters for COMMENTED). Requires the pullRequestId of the target PR.",
+      "parameters": [
+        {
+          "name": "projectKey",
+          "in": "path",
+          "required": true,
+          "description": "the Bitbucket project key"
+        },
+        {
+          "name": "repositorySlug",
+          "in": "path",
+          "required": true,
+          "description": "the repository slug containing the PR"
+        },
+        {
+          "name": "pullRequestId",
+          "in": "path",
+          "required": true,
+          "description": "the pull request ID to get comments for"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/rest/search/latest/search",
+      "operationId": "search",
+      "summary": "Search for code or files across repositories. Provide the query and entities (code start/limit) as raw JSON in the body field. NOTE: this endpoint lives under /rest/search/latest, not /rest/api/1.0, and requires the Bitbucket code-search plugin.",
+      "parameters": []
+    },
+    {
+      "method": "GET",
+      "path": "/rest/api/1.0/projects/{projectKey}/repos/{repositorySlug}/browse/{path}",
+      "operationId": "getFileContent",
+      "summary": "Retrieve file contents with pagination. Set the branch/commit via the at query param.",
+      "parameters": [
+        {
+          "name": "projectKey",
+          "in": "path",
+          "required": true,
+          "description": "the Bitbucket project key"
+        },
+        {
+          "name": "repositorySlug",
+          "in": "path",
+          "required": true,
+          "description": "the repository slug containing the file"
+        },
+        {
+          "name": "path",
+          "in": "path",
+          "required": true,
+          "description": "the file path within the repository"
+        },
+        {
+          "name": "at",
+          "in": "query",
+          "required": false,
+          "description": "branch name or commit hash"
+        },
+        {
+          "name": "limit",
+          "in": "query",
+          "required": false,
+          "description": "lines per request (default 100, max 1000)"
+        },
+        {
+          "name": "start",
+          "in": "query",
+          "required": false,
+          "description": "starting line number (0-based, default 0)"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/rest/api/1.0/projects/{projectKey}/repos/{repositorySlug}/browse",
+      "operationId": "browseRepository",
+      "summary": "Browse files and directories at the repository root. Set the branch/commit via the at query param.",
+      "parameters": [
+        {
+          "name": "projectKey",
+          "in": "path",
+          "required": true,
+          "description": "the Bitbucket project key"
+        },
+        {
+          "name": "repositorySlug",
+          "in": "path",
+          "required": true,
+          "description": "the repository slug to browse"
+        },
+        {
+          "name": "at",
+          "in": "query",
+          "required": false,
+          "description": "branch name or commit hash"
+        },
+        {
+          "name": "limit",
+          "in": "query",
+          "required": false,
+          "description": "maximum items to return (default 50)"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/rest/api/1.0/projects/{projectKey}/repos",
+      "operationId": "createRepository",
+      "summary": "Create a new repository in a project. Provide name, scmId and options as raw JSON in the body field.",
+      "parameters": [
+        {
+          "name": "projectKey",
+          "in": "path",
+          "required": true,
+          "description": "the Bitbucket project key"
+        }
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/rest/api/1.0/projects/{projectKey}/repos/{repositorySlug}",
+      "operationId": "deleteRepository",
+      "summary": "Delete a repository from a project. This action is irreversible.",
+      "parameters": [
+        {
+          "name": "projectKey",
+          "in": "path",
+          "required": true,
+          "description": "the Bitbucket project key"
+        },
+        {
+          "name": "repositorySlug",
+          "in": "path",
+          "required": true,
+          "description": "the repository slug to delete"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/rest/api/1.0/projects/{projectKey}/repos/{repositorySlug}/branches",
+      "operationId": "listBranches",
+      "summary": "List branches in a repository.",
+      "parameters": [
+        {
+          "name": "projectKey",
+          "in": "path",
+          "required": true,
+          "description": "the Bitbucket project key"
+        },
+        {
+          "name": "repositorySlug",
+          "in": "path",
+          "required": true,
+          "description": "the repository slug"
+        },
+        {
+          "name": "filterText",
+          "in": "query",
+          "required": false,
+          "description": "filter branches by name substring"
+        },
+        {
+          "name": "limit",
+          "in": "query",
+          "required": false,
+          "description": "number of branches to return (default 25, max 1000)"
+        },
+        {
+          "name": "start",
+          "in": "query",
+          "required": false,
+          "description": "start index for pagination (default 0)"
+        }
+      ]
+    }
+  ]
+}

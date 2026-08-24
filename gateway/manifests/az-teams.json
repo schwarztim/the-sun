@@ -1,0 +1,154 @@
+{
+  "manifest": "isaac-router-manifest/v1",
+  "backend": "az-teams",
+  "capabilities": [
+    {
+      "tool": "teams_send_message",
+      "safety_class": "HUMAN_OUTBOUND",
+      "locality": "remote",
+      "tags": ["teams", "chat", "send", "outbound"],
+      "write_guard": "router_confirmation_maps_to_downstream",
+      "confirmation_maps_to_downstream": false
+    },
+    {
+      "tool": "teams_reply_to_message",
+      "safety_class": "HUMAN_OUTBOUND",
+      "locality": "remote",
+      "tags": ["teams", "chat", "reply", "outbound"],
+      "confirmation_maps_to_downstream": false
+    },
+    {
+      "tool": "teams_send_channel_message",
+      "safety_class": "HUMAN_OUTBOUND",
+      "locality": "remote",
+      "tags": ["teams", "channel", "send", "outbound"],
+      "confirmation_maps_to_downstream": false
+    },
+    {
+      "tool": "teams_reply_to_channel_message",
+      "safety_class": "HUMAN_OUTBOUND",
+      "locality": "remote",
+      "tags": ["teams", "channel", "reply", "outbound"],
+      "confirmation_maps_to_downstream": false
+    },
+    {
+      "tool": "teams_get_chat_messages",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": ["teams", "chat", "read"]
+    },
+    {
+      "tool": "teams_list_chats",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": ["teams", "chat", "list", "read"]
+    },
+    {
+      "tool": "teams_people_search",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": ["teams", "people", "directory", "read"]
+    },
+    {
+      "tool": "teams_search_people_for_chat",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": ["teams", "people", "directory", "read"]
+    },
+    {
+      "tool": "teams_get_message",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": ["teams", "chat", "read"]
+    },
+    {
+      "tool": "teams_list_channels",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": ["teams", "channel", "list", "read"]
+    },
+    {
+      "tool": "teams_get_channel_messages",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": ["teams", "channel", "read"]
+    },
+    {
+      "tool": "teams_list_teams",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": ["teams", "read"]
+    },
+    {
+      "tool": "teams_get_team",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": ["teams", "read"]
+    },
+    {
+      "tool": "mail_send_email",
+      "safety_class": "HUMAN_OUTBOUND",
+      "locality": "remote",
+      "tags": ["mail", "send", "outbound"],
+      "confirmation_maps_to_downstream": false
+    },
+    {
+      "tool": "mail_reply_to_email",
+      "safety_class": "HUMAN_OUTBOUND",
+      "locality": "remote",
+      "tags": ["mail", "reply", "outbound"],
+      "confirmation_maps_to_downstream": false
+    },
+    {
+      "tool": "mail_list_emails",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": ["mail", "read"]
+    },
+    {
+      "tool": "mail_get_email",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": ["mail", "read"]
+    },
+    {
+      "tool": "mail_search_emails",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": ["mail", "read", "search"]
+    },
+    {
+      "tool": "calendar_create_event",
+      "safety_class": "WRITE",
+      "locality": "remote",
+      "tags": ["calendar", "create", "write"],
+      "confirmation_maps_to_downstream": false
+    },
+    {
+      "tool": "calendar_update_event",
+      "safety_class": "WRITE",
+      "locality": "remote",
+      "tags": ["calendar", "update", "write"],
+      "confirmation_maps_to_downstream": false
+    },
+    {
+      "tool": "calendar_delete_event",
+      "safety_class": "WRITE",
+      "locality": "remote",
+      "tags": ["calendar", "delete", "write"],
+      "confirmation_maps_to_downstream": false
+    },
+    {
+      "tool": "calendar_list_events",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": ["calendar", "read"]
+    },
+    {
+      "tool": "calendar_get_event",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": ["calendar", "read"]
+    }
+  ]
+}

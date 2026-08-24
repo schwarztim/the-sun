@@ -1,0 +1,69 @@
+{
+  "target": "_broken",
+  "serverDir": "/workspace/thesun/test-fixtures/golden-servers/_broken",
+  "startedAt": "2026-07-03T18:31:20.692Z",
+  "finishedAt": "2026-07-03T18:31:41.942Z",
+  "passed": false,
+  "transport": null,
+  "toolCount": 0,
+  "gates": [
+    {
+      "gate": "protocol",
+      "passed": false,
+      "message": "connect -> initialize -> listTools() failed: streamable-http server at /workspace/thesun/test-fixtures/golden-servers/_broken failed to become ready (process exited early: code=1 signal=null): server did not become ready within 20000ms: fetch failed\n--- stderr tail ---\n   type_hints[name] = eval_type_backport(value, globalns, localns, type_params)\n                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/thesun/test-fixtures/spike/.venv/lib/python3.11/site-packages/pydantic/_internal/_typing_extra.py\", line 474, in eval_type_backport\n    return _eval_type_backport(value, globalns, localns, type_params)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/thesun/test-fixtures/spike/.venv/lib/python3.11/site-packages/pydantic/_internal/_typing_extra.py\", line 511, in _eval_type_backport\n    return _eval_type(value, globalns, localns, type_params)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/thesun/test-fixtures/spike/.venv/lib/python3.11/site-packages/pydantic/_internal/_typing_extra.py\", line 564, in _eval_type\n    return typing._eval_type(  # type: ignore\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/typing.py\", line 374, in _eval_type\n    return t._evaluate(globalns, localns, recursive_guard)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/typing.py\", line 889, in _evaluate\n    self.__forward_value__ = _eval_type(\n                             ^^^^^^^^^^^\n  File \"/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/typing.py\", line 374, in _eval_type\n    return t._evaluate(globalns, localns, recursive_guard)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/typing.py\", line 884, in _evaluate\n    eval(self.__forward_code__, globalns, localns),\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 1, in <module>\nNameError: name 'ItemSummary' is not defined\n"
+    },
+    {
+      "gate": "instrumentation",
+      "passed": false,
+      "skipped": true,
+      "message": "skipped: no tools available (protocol gate did not succeed)"
+    },
+    {
+      "gate": "transport",
+      "passed": false,
+      "skipped": true,
+      "message": "no transport connected at all — see the protocol gate failure"
+    },
+    {
+      "gate": "wire-fingerprint",
+      "passed": false,
+      "skipped": true,
+      "message": "skipped: no tools available"
+    },
+    {
+      "gate": "credential-scan",
+      "passed": true,
+      "message": "scanned 5 file(s), no hardcoded credentials found",
+      "detail": []
+    },
+    {
+      "gate": "callability",
+      "passed": false,
+      "skipped": true,
+      "message": "skipped: no tools available"
+    },
+    {
+      "gate": "precision",
+      "passed": false,
+      "skipped": true,
+      "message": "skipped: no tools available"
+    },
+    {
+      "gate": "coverage",
+      "passed": false,
+      "message": "no coverage.json manifest found at /workspace/thesun/test-fixtures/golden-servers/_broken/coverage.json"
+    },
+    {
+      "gate": "rate-limiter",
+      "passed": true,
+      "message": "\"_broken\" is not a KNOWN_PATTERNS rate-limited target — gate is informational-pass"
+    }
+  ],
+  "residualUnverifiedSurface": [
+    "semantic correctness of tool behavior (the Lab checks shape/protocol, not business logic)",
+    "write-path safety beyond destructiveHint/idempotentHint annotation presence",
+    "live WAF/anti-bot acceptance at the real target — the wire-fingerprint gate is necessary, not sufficient, for real-target acceptance",
+    "auth scopes / permission boundaries granted by the operator's captured session"
+  ],
+  "live_acceptance_last_verified": null
+}

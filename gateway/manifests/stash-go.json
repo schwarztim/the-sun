@@ -1,0 +1,177 @@
+{
+  "manifest": "isaac-router-manifest/v1",
+  "backend": "stash-go",
+  "capabilities": [
+    {
+      "tool": "stash_list_projects",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "stash",
+        "get"
+      ]
+    },
+    {
+      "tool": "stash_list_repositories",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "stash",
+        "get"
+      ]
+    },
+    {
+      "tool": "stash_create_pull_request",
+      "safety_class": "WRITE",
+      "locality": "remote",
+      "tags": [
+        "stash",
+        "post"
+      ]
+    },
+    {
+      "tool": "stash_get_pull_request",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "stash",
+        "get"
+      ]
+    },
+    {
+      "tool": "stash_merge_pull_request",
+      "safety_class": "WRITE",
+      "locality": "remote",
+      "tags": [
+        "stash",
+        "post"
+      ]
+    },
+    {
+      "tool": "stash_decline_pull_request",
+      "safety_class": "WRITE",
+      "locality": "remote",
+      "tags": [
+        "stash",
+        "post"
+      ]
+    },
+    {
+      "tool": "stash_add_comment",
+      "safety_class": "WRITE",
+      "locality": "remote",
+      "tags": [
+        "stash",
+        "post"
+      ]
+    },
+    {
+      "tool": "stash_add_comment_inline",
+      "safety_class": "WRITE",
+      "locality": "remote",
+      "tags": [
+        "stash",
+        "post"
+      ]
+    },
+    {
+      "tool": "stash_get_pull_request_diff",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "stash",
+        "get"
+      ]
+    },
+    {
+      "tool": "stash_get_reviews",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "stash",
+        "get"
+      ]
+    },
+    {
+      "tool": "stash_get_activities",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "stash",
+        "get"
+      ]
+    },
+    {
+      "tool": "stash_get_comments",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "stash",
+        "get"
+      ]
+    },
+    {
+      "tool": "stash_search",
+      "safety_class": "WRITE",
+      "locality": "remote",
+      "tags": [
+        "stash",
+        "post"
+      ]
+    },
+    {
+      "tool": "stash_get_file_content",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "stash",
+        "get"
+      ]
+    },
+    {
+      "tool": "stash_browse_repository",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "stash",
+        "get"
+      ]
+    },
+    {
+      "tool": "stash_create_repository",
+      "safety_class": "WRITE",
+      "locality": "remote",
+      "tags": [
+        "stash",
+        "post"
+      ]
+    },
+    {
+      "tool": "stash_delete_repository",
+      "safety_class": "WRITE",
+      "locality": "remote",
+      "tags": [
+        "stash",
+        "delete"
+      ]
+    },
+    {
+      "tool": "stash_list_branches",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": [
+        "stash",
+        "get"
+      ]
+    },
+    {
+      "tool": "stash-mcp_help",
+      "safety_class": "READ",
+      "locality": "local",
+      "tags": [
+        "stash",
+        "help"
+      ]
+    }
+  ]
+}

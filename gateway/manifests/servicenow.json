@@ -1,0 +1,114 @@
+{
+  "manifest": "isaac-router-manifest/v1",
+  "backend": "servicenow",
+  "capabilities": [
+    {
+      "tool": "create_incident",
+      "safety_class": "WRITE",
+      "locality": "remote",
+      "tags": ["servicenow", "incident", "create", "write"]
+    },
+    {
+      "tool": "update_incident",
+      "safety_class": "WRITE",
+      "locality": "remote",
+      "tags": ["servicenow", "incident", "update", "write"]
+    },
+    {
+      "tool": "resolve_incident",
+      "safety_class": "SIDE_EFFECT",
+      "locality": "remote",
+      "tags": ["servicenow", "incident", "resolve", "write"]
+    },
+    {
+      "tool": "close_incident",
+      "safety_class": "SIDE_EFFECT",
+      "locality": "remote",
+      "tags": ["servicenow", "incident", "close", "write"]
+    },
+    {
+      "tool": "create_change_request",
+      "safety_class": "WRITE",
+      "locality": "remote",
+      "tags": ["servicenow", "change", "create", "write"]
+    },
+    {
+      "tool": "update_change_request",
+      "safety_class": "WRITE",
+      "locality": "remote",
+      "tags": ["servicenow", "change", "update", "write"]
+    },
+    {
+      "tool": "create_record",
+      "safety_class": "WRITE",
+      "locality": "remote",
+      "tags": ["servicenow", "record", "create", "write"]
+    },
+    {
+      "tool": "update_record",
+      "safety_class": "WRITE",
+      "locality": "remote",
+      "tags": ["servicenow", "record", "update", "write"]
+    },
+    {
+      "tool": "delete_record",
+      "safety_class": "WRITE",
+      "locality": "remote",
+      "tags": ["servicenow", "record", "delete", "write"]
+    },
+    {
+      "tool": "add_comment",
+      "safety_class": "WRITE",
+      "locality": "remote",
+      "tags": ["servicenow", "comment", "write"]
+    },
+    {
+      "tool": "get_incident",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": ["servicenow", "incident", "read"]
+    },
+    {
+      "tool": "list_incidents",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": ["servicenow", "incident", "read", "list"]
+    },
+    {
+      "tool": "search_incidents",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": ["servicenow", "incident", "read", "search"]
+    },
+    {
+      "tool": "get_record",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": ["servicenow", "record", "read"]
+    },
+    {
+      "tool": "list_records",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": ["servicenow", "record", "read", "list"]
+    },
+    {
+      "tool": "search_records",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": ["servicenow", "record", "read", "search"]
+    },
+    {
+      "tool": "get_change_request",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": ["servicenow", "change", "read"]
+    },
+    {
+      "tool": "list_change_requests",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": ["servicenow", "change", "read", "list"]
+    }
+  ]
+}

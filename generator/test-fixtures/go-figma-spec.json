@@ -1,0 +1,13 @@
+{
+  "name": "figma",
+  "baseUrl": "https://api.figma.com",
+  "authScheme": "api_key",
+  "apiKeyHeader": "X-Figma-Token",
+  "defaultPort": "42013",
+  "endpoints": [
+    { "method": "GET", "path": "/v1/me", "operationId": "getMe", "summary": "Get the authenticated Figma user.", "parameters": [] },
+    { "method": "GET", "path": "/v1/files/{file_key}", "operationId": "getFile", "summary": "Get a Figma file by key.",
+      "parameters": [ { "name": "file_key", "in": "path", "required": true, "description": "the Figma file key" },
+                      { "name": "depth", "in": "query", "required": false, "description": "tree depth to return" } ] }
+  ]
+}

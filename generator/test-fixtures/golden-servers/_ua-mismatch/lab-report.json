@@ -1,0 +1,99 @@
+{
+  "target": "ua_mismatch_fixture",
+  "serverDir": "/workspace/thesun/test-fixtures/golden-servers/_ua-mismatch",
+  "startedAt": "2026-07-03T18:31:42.389Z",
+  "finishedAt": "2026-07-03T18:31:46.392Z",
+  "passed": false,
+  "transport": "streamable-http",
+  "toolCount": 1,
+  "gates": [
+    {
+      "gate": "protocol",
+      "passed": true,
+      "message": "connect -> initialize -> listTools() succeeded (1 tool(s))"
+    },
+    {
+      "gate": "instrumentation",
+      "passed": false,
+      "message": "list_items [annotations]: Tool \"list_items\" has no annotations; help tool: Missing ua_mismatch_fixture_help tool",
+      "detail": {
+        "subResults": [
+          {
+            "tool": "list_items",
+            "check": "description",
+            "passed": true
+          },
+          {
+            "tool": "list_items",
+            "check": "annotations",
+            "passed": false,
+            "error": "Tool \"list_items\" has no annotations"
+          }
+        ],
+        "helpToolPassed": false,
+        "helpToolError": "Missing ua_mismatch_fixture_help tool"
+      }
+    },
+    {
+      "gate": "transport",
+      "passed": true,
+      "message": "server is reachable over streamable-http"
+    },
+    {
+      "gate": "wire-fingerprint",
+      "passed": false,
+      "message": "JA4 t13d1812h1_85036bcba153_d41ae481755e does NOT match the Chrome-Linux anchors (expected prefix t13d15, cipher hash 8daaf6152771) [via tool-invocation]",
+      "detail": {
+        "mechanism": "tool-invocation",
+        "ja4": "t13d1812h1_85036bcba153_d41ae481755e"
+      }
+    },
+    {
+      "gate": "credential-scan",
+      "passed": false,
+      "message": "4 potential hardcoded credential(s) found",
+      "detail": [
+        "lab-report.json: Hardcoded domain: https://gofastmcp.com",
+        "lab-report.json: Hardcoded domain: https://gofastmcp.com",
+        "lab-report.json: Hardcoded IP address: 131.0.0.0",
+        "lab-report.json: Hardcoded IP address: 131.0.0.0"
+      ]
+    },
+    {
+      "gate": "callability",
+      "passed": true,
+      "message": "all 1 invokable tool(s) returned a well-formed JSON-RPC result or auth-error",
+      "detail": [
+        {
+          "tool": "list_items",
+          "wellFormed": true,
+          "isError": true,
+          "note": "returned isError:true (acceptable — credential-free/auth-error path)"
+        }
+      ]
+    },
+    {
+      "gate": "precision",
+      "passed": true,
+      "skipped": true,
+      "message": "no coverage.json manifest — precision gate cannot distinguish fabricated tools from real ones without an authoritative op set"
+    },
+    {
+      "gate": "coverage",
+      "passed": false,
+      "message": "no coverage.json manifest found at /workspace/thesun/test-fixtures/golden-servers/_ua-mismatch/coverage.json"
+    },
+    {
+      "gate": "rate-limiter",
+      "passed": true,
+      "message": "\"ua_mismatch_fixture\" is not a KNOWN_PATTERNS rate-limited target — gate is informational-pass"
+    }
+  ],
+  "residualUnverifiedSurface": [
+    "semantic correctness of tool behavior (the Lab checks shape/protocol, not business logic)",
+    "write-path safety beyond destructiveHint/idempotentHint annotation presence",
+    "live WAF/anti-bot acceptance at the real target — the wire-fingerprint gate is necessary, not sufficient, for real-target acceptance",
+    "auth scopes / permission boundaries granted by the operator's captured session"
+  ],
+  "live_acceptance_last_verified": null
+}

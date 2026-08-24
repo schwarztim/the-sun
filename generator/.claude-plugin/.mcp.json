@@ -1,0 +1,6 @@
+{
+  "thesun": {
+    "command": "node",
+    "args": ["/home/user/Scripts/thesun/dist/mcp-server/index.js"]
+  }
+}

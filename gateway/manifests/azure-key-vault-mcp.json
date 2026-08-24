@@ -1,0 +1,54 @@
+{
+  "manifest": "isaac-router-manifest/v1",
+  "backend": "azure-key-vault-mcp",
+  "capabilities": [
+    {
+      "tool": "get_secret",
+      "safety_class": "VAULT_VALUE",
+      "locality": "remote",
+      "tags": ["vault", "secret", "read"]
+    },
+    {
+      "tool": "list_secrets",
+      "safety_class": "VAULT_VALUE",
+      "locality": "remote",
+      "tags": ["vault", "secret", "read", "list"]
+    },
+    {
+      "tool": "set_secret",
+      "safety_class": "WRITE",
+      "locality": "remote",
+      "tags": ["vault", "secret", "write"]
+    },
+    {
+      "tool": "delete_secret",
+      "safety_class": "WRITE",
+      "locality": "remote",
+      "tags": ["vault", "secret", "delete", "write"]
+    },
+    {
+      "tool": "get_key",
+      "safety_class": "VAULT_VALUE",
+      "locality": "remote",
+      "tags": ["vault", "key", "read"]
+    },
+    {
+      "tool": "list_keys",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": ["vault", "key", "list"]
+    },
+    {
+      "tool": "get_certificate",
+      "safety_class": "VAULT_VALUE",
+      "locality": "remote",
+      "tags": ["vault", "certificate", "read"]
+    },
+    {
+      "tool": "list_certificates",
+      "safety_class": "READ",
+      "locality": "remote",
+      "tags": ["vault", "certificate", "list"]
+    }
+  ]
+}

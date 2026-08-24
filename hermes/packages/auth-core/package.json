@@ -1,0 +1,27 @@
+{
+  "name": "@hermes/auth-core",
+  "version": "0.0.1",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": { "types": "./dist/index.d.ts", "default": "./dist/index.js" }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "@hermes/vault": "workspace:*",
+    "zod": "^3.23.0"
+  },
+  "peerDependencies": {
+    "@hermes/client": "workspace:*",
+    "patchright": "^1.61.1"
+  },
+  "peerDependenciesMeta": {
+    "@hermes/client": { "optional": true },
+    "patchright": { "optional": true }
+  }
+}

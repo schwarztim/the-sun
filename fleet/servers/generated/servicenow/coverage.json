@@ -1,0 +1,351 @@
+{
+  "basis": "spec",
+  "coverage_pct": 100,
+  "ops": [
+    {
+      "path": "/api/now/table/incident",
+      "method": "GET",
+      "tool": "servicenow_list_incident"
+    },
+    {
+      "path": "/api/now/table/incident/{sysId}",
+      "method": "GET",
+      "tool": "servicenow_get_incident"
+    },
+    {
+      "path": "/api/now/table/change_request",
+      "method": "GET",
+      "tool": "servicenow_list_change_request"
+    },
+    {
+      "path": "/api/now/table/change_request/{sysId}",
+      "method": "GET",
+      "tool": "servicenow_get_change_request"
+    },
+    {
+      "path": "/api/now/table/change_task",
+      "method": "GET",
+      "tool": "servicenow_list_change_task"
+    },
+    {
+      "path": "/api/now/table/problem",
+      "method": "GET",
+      "tool": "servicenow_list_problem"
+    },
+    {
+      "path": "/api/now/table/problem/{sysId}",
+      "method": "GET",
+      "tool": "servicenow_get_problem"
+    },
+    {
+      "path": "/api/now/table/sc_request",
+      "method": "GET",
+      "tool": "servicenow_list_request"
+    },
+    {
+      "path": "/api/now/table/sc_req_item",
+      "method": "GET",
+      "tool": "servicenow_list_requested_item"
+    },
+    {
+      "path": "/api/now/table/kb_knowledge",
+      "method": "GET",
+      "tool": "servicenow_list_knowledge"
+    },
+    {
+      "path": "/api/now/table/kb_knowledge/{sysId}",
+      "method": "GET",
+      "tool": "servicenow_get_knowledge"
+    },
+    {
+      "path": "/api/now/table/sys_user",
+      "method": "GET",
+      "tool": "servicenow_list_sys_user"
+    },
+    {
+      "path": "/api/now/table/sys_user/{sysId}",
+      "method": "GET",
+      "tool": "servicenow_get_sys_user"
+    },
+    {
+      "path": "/api/now/table/sys_user_group",
+      "method": "GET",
+      "tool": "servicenow_list_group"
+    },
+    {
+      "path": "/api/now/table/{table}",
+      "method": "GET",
+      "tool": "servicenow_query_table"
+    },
+    {
+      "path": "/api/now/table/{table}/{sysId}",
+      "method": "GET",
+      "tool": "servicenow_get_record"
+    },
+    {
+      "path": "/api/now/table/incident",
+      "method": "POST",
+      "tool": "servicenow_create_incident"
+    },
+    {
+      "path": "/api/now/table/incident/{sysId}",
+      "method": "PATCH",
+      "tool": "servicenow_update_incident"
+    },
+    {
+      "path": "/api/now/table/change_request",
+      "method": "POST",
+      "tool": "servicenow_create_change_request"
+    },
+    {
+      "path": "/api/now/table/problem",
+      "method": "POST",
+      "tool": "servicenow_create_problem"
+    },
+    {
+      "path": "/api/now/table/{table}",
+      "method": "POST",
+      "tool": "servicenow_create_record"
+    },
+    {
+      "path": "/api/now/table/{table}/{sysId}",
+      "method": "PATCH",
+      "tool": "servicenow_update_record"
+    },
+    {
+      "path": "/api/now/table/{table}/{sysId}",
+      "method": "DELETE",
+      "tool": "servicenow_delete_record"
+    },
+    {
+      "path": "/api/now/table/sc_cat_item",
+      "method": "GET",
+      "tool": "servicenow_list_catalog_item"
+    },
+    {
+      "path": "/api/now/table/sc_cat_item/{sysId}",
+      "method": "GET",
+      "tool": "servicenow_get_catalog_item"
+    },
+    {
+      "path": "/api/now/table/sc_category",
+      "method": "GET",
+      "tool": "servicenow_list_catalog_category"
+    },
+    {
+      "path": "/api/now/table/item_option_new",
+      "method": "GET",
+      "tool": "servicenow_list_catalog_item_variable"
+    },
+    {
+      "path": "/api/now/table/cmdb_ci",
+      "method": "GET",
+      "tool": "servicenow_list_cmdb_ci"
+    },
+    {
+      "path": "/api/now/table/cmdb_rel_ci",
+      "method": "GET",
+      "tool": "servicenow_list_cmdb_relationship"
+    },
+    {
+      "path": "/api/now/cmdb/instance/{className}",
+      "method": "GET",
+      "tool": "servicenow_list_cmdb_instance"
+    },
+    {
+      "path": "/api/now/table/cmdb_class_info",
+      "method": "GET",
+      "tool": "servicenow_list_cmdb_class"
+    },
+    {
+      "path": "/api/now/table/sys_user_grmember",
+      "method": "GET",
+      "tool": "servicenow_list_group_member"
+    },
+    {
+      "path": "/api/now/table/sys_user_has_role",
+      "method": "GET",
+      "tool": "servicenow_list_user_role"
+    },
+    {
+      "path": "/api/now/table/sys_user_role",
+      "method": "GET",
+      "tool": "servicenow_list_role"
+    },
+    {
+      "path": "/api/now/table/sys_security_acl",
+      "method": "GET",
+      "tool": "servicenow_list_acl"
+    },
+    {
+      "path": "/api/now/table/sysapproval_approver",
+      "method": "GET",
+      "tool": "servicenow_list_approval"
+    },
+    {
+      "path": "/api/now/table/task",
+      "method": "GET",
+      "tool": "servicenow_list_task"
+    },
+    {
+      "path": "/api/now/table/contract_sla",
+      "method": "GET",
+      "tool": "servicenow_list_sla"
+    },
+    {
+      "path": "/api/now/table/task_sla",
+      "method": "GET",
+      "tool": "servicenow_list_task_sla"
+    },
+    {
+      "path": "/api/now/table/wf_workflow",
+      "method": "GET",
+      "tool": "servicenow_list_workflow"
+    },
+    {
+      "path": "/api/now/table/wf_context",
+      "method": "GET",
+      "tool": "servicenow_list_workflow_context"
+    },
+    {
+      "path": "/api/now/table/sys_email",
+      "method": "GET",
+      "tool": "servicenow_list_email"
+    },
+    {
+      "path": "/api/now/table/sysevent_email_action",
+      "method": "GET",
+      "tool": "servicenow_list_notification"
+    },
+    {
+      "path": "/api/now/table/sysevent",
+      "method": "GET",
+      "tool": "servicenow_list_event"
+    },
+    {
+      "path": "/api/now/table/sysevent",
+      "method": "POST",
+      "tool": "servicenow_create_event"
+    },
+    {
+      "path": "/api/now/table/sys_journal_field",
+      "method": "GET",
+      "tool": "servicenow_list_journal"
+    },
+    {
+      "path": "/api/now/table/sys_audit",
+      "method": "GET",
+      "tool": "servicenow_list_audit"
+    },
+    {
+      "path": "/api/now/table/sysauto_script",
+      "method": "GET",
+      "tool": "servicenow_list_scheduled_job"
+    },
+    {
+      "path": "/api/now/table/sys_update_set",
+      "method": "GET",
+      "tool": "servicenow_list_update_set"
+    },
+    {
+      "path": "/api/now/table/alm_asset",
+      "method": "GET",
+      "tool": "servicenow_list_asset"
+    },
+    {
+      "path": "/api/now/table/alm_asset/{sysId}",
+      "method": "GET",
+      "tool": "servicenow_get_asset"
+    },
+    {
+      "path": "/api/now/table/alm_license",
+      "method": "GET",
+      "tool": "servicenow_list_license"
+    },
+    {
+      "path": "/api/now/table/alm_entitlement",
+      "method": "GET",
+      "tool": "servicenow_list_license_entitlement"
+    },
+    {
+      "path": "/api/now/table/cmdb_sam_sw_install",
+      "method": "GET",
+      "tool": "servicenow_list_software"
+    },
+    {
+      "path": "/api/now/table/ast_contract",
+      "method": "GET",
+      "tool": "servicenow_list_contract"
+    },
+    {
+      "path": "/api/now/table/cmn_location",
+      "method": "GET",
+      "tool": "servicenow_list_location"
+    },
+    {
+      "path": "/api/now/table/cmn_department",
+      "method": "GET",
+      "tool": "servicenow_list_department"
+    },
+    {
+      "path": "/api/now/table/cmn_cost_center",
+      "method": "GET",
+      "tool": "servicenow_list_cost_center"
+    },
+    {
+      "path": "/api/now/table/discovery_status",
+      "method": "GET",
+      "tool": "servicenow_list_discovery_status"
+    },
+    {
+      "path": "/api/now/table/discovery_schedule",
+      "method": "GET",
+      "tool": "servicenow_list_discovery_schedule"
+    },
+    {
+      "path": "/api/now/table/sys_dictionary",
+      "method": "GET",
+      "tool": "servicenow_table_schema"
+    },
+    {
+      "path": "/api/now/table/sys_choice",
+      "method": "GET",
+      "tool": "servicenow_list_choice"
+    },
+    {
+      "path": "/api/now/attachment",
+      "method": "GET",
+      "tool": "servicenow_list_attachment"
+    },
+    {
+      "path": "/api/now/attachment/{sysId}",
+      "method": "GET",
+      "tool": "servicenow_get_attachment"
+    },
+    {
+      "path": "/api/now/attachment/{sysId}/file",
+      "method": "GET",
+      "tool": "servicenow_download_attachment"
+    },
+    {
+      "path": "/api/now/attachment/{sysId}",
+      "method": "DELETE",
+      "tool": "servicenow_delete_attachment"
+    },
+    {
+      "path": "/api/now/stats/{table}",
+      "method": "GET",
+      "tool": "servicenow_aggregate"
+    },
+    {
+      "path": "/api/now/import/{table}",
+      "method": "POST",
+      "tool": "servicenow_import_set_load"
+    },
+    {
+      "path": "/api/now/v1/batch",
+      "method": "POST",
+      "tool": "servicenow_batch_request"
+    }
+  ]
+}

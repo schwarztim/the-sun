@@ -1,0 +1,30 @@
+{
+  "basis": "observed",
+  "coverage_pct": 100,
+  "ops": [
+    {
+      "path": "/*",
+      "method": "ANY",
+      "tool": "akamai_raw_request",
+      "justification": "Universal executor. Dispatches any of the 1145 catalogued Akamai operations in the embedded registry by tool name, so a single MCP tool covers the whole surface rather than one tool per operation."
+    },
+    {
+      "path": "/registry/operations",
+      "method": "GET",
+      "tool": "akamai_list_operations",
+      "justification": "Local registry query. Discovers operation tool names for akamai_raw_request; served from the embedded registry, no outbound call."
+    },
+    {
+      "path": "/registry/stats",
+      "method": "GET",
+      "tool": "akamai_registry_stats",
+      "justification": "Local registry query. Coverage statistics from the embedded registry, no outbound call."
+    },
+    {
+      "path": "/identity-management/v3/user-admin/groups",
+      "method": "GET",
+      "tool": "akamai_account_overview",
+      "justification": "Bounded convenience composite. Fetches user profile, contracts, and groups in one call."
+    }
+  ]
+}
