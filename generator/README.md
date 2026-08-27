@@ -73,7 +73,7 @@ APIs without any formal documentation are first-class targets. thesun infers too
 - **[Hermes](https://github.com/schwarztim/hermes)** — Authentication broker. Manages OAuth2/SSO token acquisition, refresh, and serving for this MCP server.
 - **[ToolHive](https://github.com/stacklok/toolhive)** — Container runtime. Hosts this server as a Docker container with streamable HTTP transport.
 - **[MCP Gateway](http://127.0.0.1:3100/mcp)** — Aggregation layer. Provides unified tool access across all MCP backends.
-- **[node-vault-mcp](~/Projects/node-vault-mcp)** — Credential storage. AES-256-GCM encrypted file vault (replaces macOS Keychain/keytar).
+- **Vendored credential store** (`src/security/vault-store.ts`) — AES-256-GCM encrypted file vault (replaces macOS Keychain/keytar). Vendored rather than an external dependency, so the generator installs from a clean checkout.
 
 ## Architecture
 
@@ -83,7 +83,7 @@ thesun runs as a ToolHive-managed MCP backend behind MCP Gateway, and it generat
 2. **Transport** — thesun itself is exposed over streamable HTTP via ToolHive; generated servers use stdio transport by default unless you containerize them later
 3. **Authentication** — Hermes brokers authentication for thesun and generated servers integrate with Hermes-managed auth flows
 4. **Discovery** — thesun is exposed through MCP Gateway at `http://127.0.0.1:3100/mcp`
-5. **Credentials** — Generated servers use node-vault-mcp with `~/.claude/secrets.vault`, not keytar
+5. **Credentials** — Generated servers carry their own emitted `src/vault-store.ts` (AES-256-GCM), not keytar
 
 ### State Machine
 
@@ -153,7 +153,7 @@ For fixing an existing generated server:
 }
 ```
 
-Output is written to `~/Scripts/mcp-servers/{target}-mcp/`. Generated servers default to stdio transport, integrate with Hermes for authentication, and use node-vault-mcp for credential storage before optional ToolHive / MCP Gateway registration.
+Output is written to `~/Scripts/mcp-servers/{target}-mcp/`. Generated servers default to stdio transport, integrate with Hermes for authentication, and carry an emitted `src/vault-store.ts` for credential storage before optional MCP Gateway registration.
 
 ---
 

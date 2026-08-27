@@ -76,6 +76,7 @@ export {
   generateAzureAdAutomatorModule,
   generateLoggerModule,
   generateExecFileNoThrowModule,
+  generateVaultStoreModule,
   generateCredentialStoreModule,
   generateConfigManagerModule,
   generateRobustAuthModule,

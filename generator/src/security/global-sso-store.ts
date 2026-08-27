@@ -19,7 +19,7 @@
 import { existsSync, readFileSync, writeFileSync, mkdirSync } from "fs";
 import { homedir } from "os";
 import { join } from "path";
-import { VaultStore } from "node-vault-mcp";
+import { VaultStore } from "./vault-store.js";
 import {
   GlobalSsoCredential,
   GlobalSsoStore as GlobalSsoStoreType,
