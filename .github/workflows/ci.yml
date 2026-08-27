@@ -93,6 +93,17 @@ jobs:
           cache: npm
           cache-dependency-path: generator/package-lock.json
 
+      # One test compiles a generated server with a real `go build` rather than
+      # asserting on strings, so the toolchain has to be here or that test
+      # verifies nothing. setup-go also caches the module graph, which is what
+      # made the cold-cache download exceed the test's time budget.
+      # The python template tests need no packages: they strip the third-party
+      # imports and exercise pure-stdlib identity resolution.
+      - uses: actions/setup-go@v5
+        with:
+          go-version: stable
+          cache-dependency-path: fleet/fleetd/go.sum
+
       - name: install
         run: npm ci
 

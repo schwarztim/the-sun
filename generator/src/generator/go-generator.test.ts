@@ -312,8 +312,11 @@ describe("generateGoServer — cookie-session genericAuthFallback (easy auth pat
       }
     },
     // Resolving new modules (uTLS + golang.org/x/net) over the network on a
-    // cold cache can take a few seconds — well past vitest's 5s default.
-    30_000,
+    // cold cache can take a few seconds, well past vitest's 5s default. CI
+    // starts from a genuinely cold module cache and fetches the whole graph,
+    // which repeatedly exceeded 30s, so the budget is set for that case rather
+    // than for a developer machine that already has the modules.
+    120_000,
   );
 });
 

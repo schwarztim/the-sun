@@ -10,11 +10,11 @@
  * Structural assertions run directly against the source (no interpreter
  * needed). The behavioral test shells out to a real Python 3 interpreter
  * (same convention as ratelimit.test.ts / gates/wire-fingerprint.selftest.
- * test.ts) but strips the `curl_cffi` import first, since this generated
- * server's only third-party dependency (curl_cffi) is not expected to be
- * installed in this dev/CI environment -- the identity-resolution logic
- * under test (_thesun_home / _load_camouflage_config / _build_identity) is
- * pure stdlib and doesn't need curl_cffi to run.
+ * test.ts) but strips the third-party imports (`curl_cffi` and `httpx`)
+ * first, since neither is expected to be installed in this dev/CI
+ * environment -- the identity-resolution logic under test (_thesun_home /
+ * _load_camouflage_config / _build_identity) is pure stdlib and needs
+ * neither to run.
  */
 import { execFileSync } from "node:child_process";
 import * as fs from "node:fs";
@@ -60,14 +60,35 @@ describe("http_client.py — structure", () => {
 
 describe("http_client.py — camouflage override behavior (real interpreter)", () => {
   const python = "python3";
+  // Spawning an interpreter and compiling the template is slower than
+  // vitest's 5s default on a loaded machine or a cold CI runner.
+  const INTERPRETER_TIMEOUT_MS = 30_000;
 
   function runIdentityCheck(thesunHome: string): { impersonate: string; platform: string; user_agent: string } {
-    // Strip the curl_cffi import (not installed in this environment) --
-    // nothing under test touches AsyncSession -- and exec the rest, then
-    // print _build_identity() as JSON.
+    // Strip the third-party imports and exec the rest, then print
+    // _build_identity() as JSON. This test is identity-only: it never touches
+    // AsyncSession or httpx, so requiring either to be installed would only
+    // make the test fail wherever they are absent (as it did in CI) without
+    // checking anything more. Keeping it hermetic means it needs nothing but a
+    // Python interpreter.
     const patched = SOURCE.replace(
       "from curl_cffi.requests import AsyncSession",
       "AsyncSession = object  # stripped for identity-only test",
+    ).replace(
+      /^import httpx$/m,
+      // A bare `httpx = None` is not enough: the module subclasses
+      // httpx.AsyncBaseTransport at import time, so the name has to yield a
+      // usable base class. Every other httpx reference is inside a function
+      // body or an annotation (unevaluated under `from __future__ import
+      // annotations`), so returning `object` for any attribute is sufficient.
+      [
+        "class _StrippedHttpx:  # stripped for identity-only test",
+        "    def __getattr__(self, name):",
+        "        return object",
+        "",
+        "",
+        "httpx = _StrippedHttpx()",
+      ].join("\n"),
     );
     const driver = `
 import json, sys
@@ -91,7 +112,7 @@ print(json.dumps(ns["_build_identity"]()))
     } finally {
       fs.rmSync(dir, { recursive: true, force: true });
     }
-  });
+  }, INTERPRETER_TIMEOUT_MS);
 
   it("overrides impersonate + user_agent from a valid camouflage.json (Edge/Windows)", () => {
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), "thesun-camo-edge-"));
@@ -119,7 +140,7 @@ print(json.dumps(ns["_build_identity"]()))
     } finally {
       fs.rmSync(dir, { recursive: true, force: true });
     }
-  });
+  }, INTERPRETER_TIMEOUT_MS);
 
   it("falls back to the default on malformed camouflage.json instead of crashing", () => {
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), "thesun-camo-bad-"));
@@ -130,7 +151,7 @@ print(json.dumps(ns["_build_identity"]()))
     } finally {
       fs.rmSync(dir, { recursive: true, force: true });
     }
-  });
+  }, INTERPRETER_TIMEOUT_MS);
 
   it("falls back to the default when camouflage.json is missing required fields", () => {
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), "thesun-camo-incomplete-"));
@@ -141,5 +162,5 @@ print(json.dumps(ns["_build_identity"]()))
     } finally {
       fs.rmSync(dir, { recursive: true, force: true });
     }
-  });
+  }, INTERPRETER_TIMEOUT_MS);
 });
