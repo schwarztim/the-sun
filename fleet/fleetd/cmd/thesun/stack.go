@@ -387,11 +387,19 @@ func defaultManifestSourcePath() string {
 // resolveShippedPath rewrites a shipped-manifest path that starts with the
 // placeholder checkout root onto this bundle's real root; any other path
 // (e.g. a bare "node") is returned unchanged.
+//
+// The remainder is converted from slashes before joining. The placeholder root
+// and everything after it are written with forward slashes in
+// fleet/default-manifest.toml, so concatenating the remainder onto a native
+// bundle root produced a mixed-separator path on Windows
+// (C:\...\home/fleet/servers/...). filepath.Join also cleans the result, which
+// matters because TrimPrefix leaves the separator at the front of the
+// remainder.
 func resolveShippedPath(p, bundle string) string {
 	if bundle == "" || !strings.HasPrefix(p, shippedManifestPlaceholderRoot) {
 		return p
 	}
-	return bundle + strings.TrimPrefix(p, shippedManifestPlaceholderRoot)
+	return filepath.Join(bundle, filepath.FromSlash(strings.TrimPrefix(p, shippedManifestPlaceholderRoot)))
 }
 
 func resolveShippedArgs(args []string, bundle string) []string {

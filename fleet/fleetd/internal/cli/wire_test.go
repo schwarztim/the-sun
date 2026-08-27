@@ -404,6 +404,12 @@ func TestWireClients_VSCodeWorkspaceFile(t *testing.T) {
 func TestWireClients_NotDetected(t *testing.T) {
 	home := t.TempDir() // nothing seeded — no client dirs exist
 	cwd := t.TempDir()
+	// On Windows, VS Code detection resolves its user dir from %APPDATA% and
+	// ignores the home passed here, so on a runner with VS Code installed the
+	// lookup escaped this sandbox and reported the real machine's install:
+	// "not-detected" became "wired". Point APPDATA at the sandbox so the
+	// Windows branch is as isolated as the darwin and linux ones.
+	t.Setenv("APPDATA", filepath.Join(home, "AppData", "Roaming"))
 
 	results := WireClients(home, cwd, testGatewayURL)
 	for _, r := range results {

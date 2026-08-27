@@ -87,13 +87,37 @@ func codexHookTrust(configPath string) (codexTrustState, string) {
 	// would report a trusted hook as untrusted.
 	want := resolvePathForTrust(configPath)
 	for key := range state {
-		if src, _, ok := strings.Cut(key, ":"); ok {
+		if src, ok := trustKeySource(key); ok {
 			if resolvePathForTrust(src) == want {
 				return codexTrustGranted, "trusted for " + configPath
 			}
 		}
 	}
 	return codexTrustMissing, "[hooks.state] exists but carries no record for " + configPath
+}
+
+// trustKeySource returns the config-path portion of a [hooks.state] key, whose
+// shape is "<resolved config path>:<snake_case event>:<group>:<hook>".
+//
+// It strips the three trailing fields rather than cutting at the first colon.
+// Cutting at the first colon is correct on POSIX but wrong on Windows, where
+// the path opens with a drive letter: "C:\Users\...\config.toml:pre_tool_use:0:0"
+// yielded "C", which never matches the config being checked, so a genuinely
+// trusted hook was reported as untrusted on every Windows machine and the
+// operator was told to grant trust they had already granted.
+func trustKeySource(key string) (string, bool) {
+	src := key
+	for i := 0; i < 3; i++ {
+		idx := strings.LastIndex(src, ":")
+		if idx < 0 {
+			return "", false
+		}
+		src = src[:idx]
+	}
+	if src == "" {
+		return "", false
+	}
+	return src, true
 }
 
 // resolvePathForTrust resolves symlinks so two spellings of one file compare

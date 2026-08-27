@@ -7,6 +7,19 @@ import (
 	"testing"
 )
 
+// tomlBasic escapes s for use inside a TOML basic (double-quoted) string, the
+// way Codex's own TOML writer emits one.
+//
+// These fixtures embed an absolute config path in a quoted [hooks.state] key.
+// On Windows that path contains backslashes, and TOML reads a backslash in a
+// basic string as an escape, so a raw "C:\Users\..." made the whole config
+// unparseable ('\U' wants eight hex digits). The trust check then reported
+// every record as missing and the tests failed for a reason that had nothing to
+// do with trust.
+func tomlBasic(s string) string {
+	return strings.ReplaceAll(strings.ReplaceAll(s, `\`, `\\`), `"`, `\"`)
+}
+
 func writeCfg(t *testing.T, body string) string {
 	t.Helper()
 	p := filepath.Join(t.TempDir(), "config.toml")
@@ -46,7 +59,7 @@ func TestTrustedRecordIsRecognised(t *testing.T) {
 	dir := t.TempDir()
 	cfg := filepath.Join(dir, "config.toml")
 	body := "[features]\nhooks = true\n\n[[hooks.PreToolUse]]\nmatcher = \".*\"\n\n" +
-		"[hooks.state]\n[hooks.state.\"" + cfg + ":pre_tool_use:0:0\"]\n" +
+		"[hooks.state]\n[hooks.state.\"" + tomlBasic(cfg) + ":pre_tool_use:0:0\"]\n" +
 		"trusted_hash = \"sha256:0000000000000000000000000000000000000000000000000000000000000000\"\n"
 	if err := os.WriteFile(cfg, []byte(body), 0o600); err != nil {
 		t.Fatal(err)
@@ -67,7 +80,7 @@ func TestTrustedRecordIsRecognised(t *testing.T) {
 func TestTrustKeyComparesResolvedPaths(t *testing.T) {
 	dir := t.TempDir()
 	cfg := filepath.Join(dir, "config.toml")
-	real, err := filepath.EvalSymlinks(cfg[:len(cfg)-len("/config.toml")])
+	real, err := filepath.EvalSymlinks(filepath.Dir(cfg))
 	if err != nil {
 		t.Skip("cannot resolve temp dir")
 	}
@@ -75,7 +88,7 @@ func TestTrustKeyComparesResolvedPaths(t *testing.T) {
 	if resolved == cfg {
 		t.Skip("temp dir is not symlinked on this platform; nothing to prove")
 	}
-	body := "[hooks.state]\n[hooks.state.\"" + resolved + ":pre_tool_use:0:0\"]\n" +
+	body := "[hooks.state]\n[hooks.state.\"" + tomlBasic(resolved) + ":pre_tool_use:0:0\"]\n" +
 		"trusted_hash = \"sha256:00\"\n"
 	if err := os.WriteFile(cfg, []byte(body), 0o600); err != nil {
 		t.Fatal(err)

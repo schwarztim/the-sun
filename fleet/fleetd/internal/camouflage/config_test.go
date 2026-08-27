@@ -51,7 +51,12 @@ func TestLoadConfig_MissingFile(t *testing.T) {
 }
 
 func TestPath(t *testing.T) {
-	if got, want := Path("/tmp/thesun"), "/tmp/thesun/camouflage.json"; got != want {
+	// Build the expectation the same way Path does. A literal
+	// "/tmp/thesun/camouflage.json" can never match on Windows, where
+	// filepath.Join yields backslashes: that asserted the separator rather
+	// than the behaviour under test, which is that FileName lands under dir.
+	dir := filepath.Join("/tmp", "thesun")
+	if got, want := Path(dir), filepath.Join(dir, FileName); got != want {
 		t.Fatalf("Path = %q, want %q", got, want)
 	}
 }

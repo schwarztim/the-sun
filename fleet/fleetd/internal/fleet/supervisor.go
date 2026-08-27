@@ -230,6 +230,28 @@ func (s *Supervisor) Run(ctx context.Context) error {
 	}
 	s.mu.Unlock()
 	s.wg.Wait()
+
+	// Release the per-server log writers. Each is opened once per server and
+	// reused across restarts, but nothing closed them, so the handles lived
+	// until the process exited. That is invisible when fleetd IS the process and
+	// wrong as soon as a Supervisor is run in-process (tests, or anything
+	// embedding one): the handles outlive Run. On Windows it is worse than
+	// untidy, because an open file cannot be unlinked, so the log kept its own
+	// directory undeletable after shutdown.
+	//
+	// Closing after wg.Wait means no supervise loop can still be writing. A
+	// detached child may still hold its own end, which is fine and expected:
+	// this releases only fleetd's handle.
+	s.mu.Lock()
+	for _, srv := range s.servers {
+		srv.mu.Lock()
+		if srv.logw != nil {
+			_ = srv.logw.Close()
+			srv.logw = nil
+		}
+		srv.mu.Unlock()
+	}
+	s.mu.Unlock()
 	return nil
 }
 
@@ -873,12 +895,21 @@ func (srv *server) isOwned() bool {
 	return srv.owned
 }
 
-// portOwnerPIDs returns the PIDs owning 127.0.0.1:<port>. Cross-platform guarded
-// by runtime.GOOS: on unix it uses lsof (present on macOS and Linux); on Windows
-// it uses netstat (see netstatPortOwners). Both feed killTree, whose per-OS
-// build-tagged impl signals the process group (unix) or runs taskkill /F /T
-// (windows). netstat/lsof are invoked via exec only inside their matching OS
-// branch, so this one function compiles on every platform.
+// portOwnerPIDs returns the PIDs LISTENING on 127.0.0.1:<port>. Cross-platform
+// guarded by runtime.GOOS: on unix it uses lsof (present on macOS and Linux); on
+// Windows it uses netstat (see netstatPortOwners). netstat/lsof are invoked via
+// exec only inside their matching OS branch, so this one function compiles on
+// every platform.
+//
+// Both callers use the result for reporting only (a log line and the degraded
+// reason naming who holds the port); neither signals these PIDs, which is what
+// keeps a duplicate supervisor merely redundant instead of destructive.
+//
+// -sTCP:LISTEN matters even so. Without it lsof also reports every process
+// merely holding a CLIENT socket to the port, so a transient health-check
+// connection could be named as the port's "owner" and send an operator after
+// the wrong process. The Windows branch already considers LISTENING rows only,
+// so this also makes the two platforms agree with the contract above.
 func portOwnerPIDs(port int) []int {
 	if port <= 0 {
 		return nil
@@ -886,7 +917,7 @@ func portOwnerPIDs(port int) []int {
 	if runtime.GOOS == "windows" {
 		return netstatPortOwners(port)
 	}
-	out, err := exec.Command("lsof", "-ti", "tcp:"+strconv.Itoa(port)).Output()
+	out, err := exec.Command("lsof", "-ti", "tcp:"+strconv.Itoa(port), "-sTCP:LISTEN").Output()
 	if err != nil {
 		return nil // no owner (lsof exits non-zero when nothing matches) or lsof absent
 	}
