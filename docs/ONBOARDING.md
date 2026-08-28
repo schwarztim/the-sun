@@ -170,6 +170,64 @@ thesun doctor
 thesun status                  # github-mcp should show healthy
 ```
 
+## Power Automate (Microsoft Flow)
+
+**Before you start:** a Microsoft account with Power Automate access. Power Automate has no
+Microsoft Graph surface, so this is its own server (`powerautomate-go`, port 42024) with its
+own broker service rather than a surface on the Microsoft 365 server above. Coupling them
+would mean a tenant that withholds Graph consent also loses Power Automate, even though the
+Flow endpoints answer fine.
+
+**Configuration values:**
+
+| Value | What it is | Required? |
+|---|---|---|
+| `loginHint` | the address you sign in with | yes |
+| `passwordKeychainService` / `passwordKeychainAccount` | OS credential-store entry holding your sign-in password | yes |
+| `totpKeychainService` / `totpKeychainAccount` | OS credential-store entry holding your MFA seed | only if your tenant enforces TOTP |
+| `clientId` | defaults below to the Microsoft-published Azure CLI public client | no, unless your tenant requires your own Entra app |
+| `tenant` | `common`, or your tenant ID to restrict sign-in | no |
+
+**Onboarding command:**
+
+```bash
+hermes register powerautomate --provider oauth2 --scheme token --config '{
+  "loginHint": "you@example.com",
+  "tenant": "common",
+  "clientId": "04b07795-8ddb-461a-bbee-02f9e1bf7b46",
+  "scopes": ["https://service.flow.microsoft.com/.default", "offline_access"],
+  "headless": true,
+  "passwordKeychainService": "<your-sso-entry>",
+  "passwordKeychainAccount": "password",
+  "totpKeychainService": "<your-totp-entry>",
+  "totpKeychainAccount": "you@example.com",
+  "validateUrl": "https://api.flow.microsoft.com/providers/Microsoft.ProcessSimple/environments?api-version=2016-11-01"
+}'
+```
+
+Restart the broker so it picks the service up; it acquires the token on startup, so no
+separate sign-in step is normally needed. If it does not, run `hermes acquire powerautomate`.
+The server itself holds no credential: it fetches the bearer from the broker per request and
+caches it until shortly before expiry.
+
+**Verify it worked:**
+
+```bash
+thesun status                  # powerautomate-go should show healthy
+curl -X POST http://127.0.0.1:42024/mcp \
+  -H 'Content-Type: application/json' \
+  -H 'Accept: application/json, text/event-stream' \
+  -d '{"jsonrpc":"2.0","id":1,"method":"tools/call","params":{"name":"flow_list_environments","arguments":{}}}'
+```
+
+A successful response lists your Power Automate environments; each entry's `name` is the
+environment ID the other tools take as `env_id`.
+
+**Note on the write tools.** Five of the 17 are Tier-B and need out-of-band human approval
+via `thesun approve`: `flow_trigger_flow` and `flow_resubmit_run` run a flow's own actions
+for real, `flow_add_owner` and `flow_remove_owner` change who can reach a flow, and
+`flow_delete_flow` cannot be undone.
+
 ## Adding a connector this page doesn't cover
 
 Every other server thesun can generate or install (`thesun generate`, `thesun add`) follows

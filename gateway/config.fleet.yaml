@@ -247,6 +247,36 @@ backends:
     max_restarts: 3
     connect_timeout_ms: 30000
 
+  # powerautomate-go — Microsoft Power Automate (Flow) as its own Go fleet server
+  # (fleet/servers/cmd/powerautomate, static binary under fleetd on port 42024).
+  #
+  # Standalone rather than a surface on a combined Microsoft 365 server because
+  # Power Automate has NO Microsoft Graph surface: it is its own control plane at
+  # api.flow.microsoft.com/providers/Microsoft.ProcessSimple. A combined server
+  # typically falls back to Graph when its primary path errors, which couples a
+  # working Flow credential to the Graph one, so a tenant that withholds Graph
+  # consent takes Power Automate down with it. Separate server, separate Hermes
+  # service (powerautomate / token), no shared failure.
+  #
+  # Requires YOUR OWN Microsoft 365 account with Power Automate access; there is
+  # no usable default. Register the broker service as documented in
+  # docs/ONBOARDING.md, then reload the gateway with `thesun gateway reload`.
+  #
+  # Five of the 17 tools carry a write_guard in manifests/powerautomate-go.json,
+  # which makes them Tier-B (out-of-band `thesun approve`, never a model
+  # self-confirm): flow_trigger_flow and flow_resubmit_run run the flow's own
+  # actions for real with a blast radius nothing here can see, flow_add_owner
+  # and flow_remove_owner change who can reach a flow, and flow_delete_flow is
+  # irreversible. Do not grant any of the five a standing (--always) approval.
+  powerautomate-go:
+    transport: http
+    url: "http://127.0.0.1:42024/mcp"
+    namespace: "powerautomate"
+    enabled: true
+    restart_policy: "on-failure"
+    max_restarts: 3
+    connect_timeout_ms: 30000
+
 safety:
   # Flipped 2026-06-10 (G0.3): unconfirmed gated calls are denied. Expect
   # confirmed:true friction on WRITE-class and UNCLASSIFIED tools — that is

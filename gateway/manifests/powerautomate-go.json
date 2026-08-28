@@ -1,0 +1,136 @@
+{
+  "manifest": "isaac-router-manifest/v1",
+  "backend": "powerautomate-go",
+  "note": "Power Automate (Microsoft Flow) as a standalone Go fleet server on 42024, streamable-http, auth brokered by Hermes (service powerautomate, scheme token). Nine READ tools carry an explicit http_method so the WRITE_VERB_REGEX name heuristic does not mislabel them: flow_get_flow_run ends in _run and flow_export_arm_template is a POST that renders a template and changes nothing. The three plain SIDE_EFFECT tools (enable, disable, cancel) are reversible in one call. Five carry a write_guard, which makes them Tier-B (out-of-band `thesun approve`, not a model self-confirm), in three groups. flow_trigger_flow and flow_resubmit_run execute the flow's OWN actions for real, and what those actions touch is not knowable from this gateway: a flow can post to Teams, write to SharePoint, call a production API, or send mail, so the blast radius of one call is unbounded by anything here. flow_add_owner and flow_remove_owner change who can see and edit a flow, which is an access-control change and is not visible to the person losing access. flow_delete_flow is irreversible: there is no recycle bin for a cloud flow, and flow_export_arm_template is the only way back, so it must be run first. Do NOT grant any of the five a standing (--always) approval.",
+  "capabilities": [
+    {
+      "tool": "flow_list_environments",
+      "safety_class": "READ",
+      "locality": "remote",
+      "http_method": "GET",
+      "tags": ["powerautomate", "flow", "environment", "list", "read"]
+    },
+    {
+      "tool": "flow_list_flows",
+      "safety_class": "READ",
+      "locality": "remote",
+      "http_method": "GET",
+      "tags": ["powerautomate", "flow", "list", "read"]
+    },
+    {
+      "tool": "flow_get_flow",
+      "safety_class": "READ",
+      "locality": "remote",
+      "http_method": "GET",
+      "tags": ["powerautomate", "flow", "definition", "read"]
+    },
+    {
+      "tool": "flow_get_flow_runs",
+      "safety_class": "READ",
+      "locality": "remote",
+      "http_method": "GET",
+      "tags": ["powerautomate", "flow", "run", "history", "read"]
+    },
+    {
+      "tool": "flow_get_flow_run",
+      "safety_class": "READ",
+      "locality": "remote",
+      "http_method": "GET",
+      "tags": ["powerautomate", "flow", "run", "read"]
+    },
+    {
+      "tool": "flow_list_flow_triggers",
+      "safety_class": "READ",
+      "locality": "remote",
+      "http_method": "GET",
+      "tags": ["powerautomate", "flow", "trigger", "list", "read"]
+    },
+    {
+      "tool": "flow_list_connectors",
+      "safety_class": "READ",
+      "locality": "remote",
+      "http_method": "GET",
+      "tags": ["powerautomate", "flow", "connector", "list", "read"]
+    },
+    {
+      "tool": "flow_list_owners",
+      "safety_class": "READ",
+      "locality": "remote",
+      "http_method": "GET",
+      "tags": ["powerautomate", "flow", "owner", "permission", "read"]
+    },
+    {
+      "tool": "flow_export_arm_template",
+      "safety_class": "READ",
+      "locality": "remote",
+      "http_method": "POST",
+      "tags": ["powerautomate", "flow", "export", "template", "read"]
+    },
+    {
+      "tool": "flow_enable_flow",
+      "safety_class": "SIDE_EFFECT",
+      "locality": "remote",
+      "http_method": "POST",
+      "tags": ["powerautomate", "flow", "enable", "state"]
+    },
+    {
+      "tool": "flow_disable_flow",
+      "safety_class": "SIDE_EFFECT",
+      "locality": "remote",
+      "http_method": "POST",
+      "tags": ["powerautomate", "flow", "disable", "state"]
+    },
+    {
+      "tool": "flow_cancel_run",
+      "safety_class": "SIDE_EFFECT",
+      "locality": "remote",
+      "http_method": "POST",
+      "tags": ["powerautomate", "flow", "run", "cancel"]
+    },
+    {
+      "tool": "flow_trigger_flow",
+      "safety_class": "SIDE_EFFECT",
+      "locality": "remote",
+      "http_method": "POST",
+      "write_guard": "flow_execution_blast_radius_unknown",
+      "confirmation_maps_to_downstream": false,
+      "tags": ["powerautomate", "flow", "trigger", "execute"]
+    },
+    {
+      "tool": "flow_resubmit_run",
+      "safety_class": "SIDE_EFFECT",
+      "locality": "remote",
+      "http_method": "POST",
+      "write_guard": "flow_execution_blast_radius_unknown",
+      "confirmation_maps_to_downstream": false,
+      "tags": ["powerautomate", "flow", "run", "resubmit", "execute"]
+    },
+    {
+      "tool": "flow_add_owner",
+      "safety_class": "SIDE_EFFECT",
+      "locality": "remote",
+      "http_method": "POST",
+      "write_guard": "flow_permission_change",
+      "confirmation_maps_to_downstream": false,
+      "tags": ["powerautomate", "flow", "owner", "share", "permission"]
+    },
+    {
+      "tool": "flow_remove_owner",
+      "safety_class": "SIDE_EFFECT",
+      "locality": "remote",
+      "http_method": "POST",
+      "write_guard": "flow_permission_change",
+      "confirmation_maps_to_downstream": false,
+      "tags": ["powerautomate", "flow", "owner", "unshare", "permission"]
+    },
+    {
+      "tool": "flow_delete_flow",
+      "safety_class": "SIDE_EFFECT",
+      "locality": "remote",
+      "http_method": "DELETE",
+      "write_guard": "irreversible_flow_delete",
+      "confirmation_maps_to_downstream": false,
+      "tags": ["powerautomate", "flow", "delete", "irreversible"]
+    }
+  ]
+}
