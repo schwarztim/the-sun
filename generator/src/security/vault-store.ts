@@ -13,6 +13,7 @@
  */
 
 import { randomBytes, createCipheriv, createDecipheriv } from "node:crypto";
+import { existsSync } from "node:fs";
 import { chmod, mkdir, open, readFile, rename } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { homedir } from "node:os";
@@ -51,8 +52,20 @@ type VaultFile = {
   entries?: Record<string, EncryptedVaultEntry>;
 };
 
-const DEFAULT_VAULT_PATH = "~/.claude/secrets.vault";
-const DEFAULT_MASTER_KEY_PATH = "~/.claude/master.key";
+// thesun keeps its own credentials under its own home. The store previously
+// defaulted into ~/.claude, an unrelated tool's directory, which meant a fresh
+// install wrote credentials somewhere it did not own and failed on the first
+// write for anyone without ~/.claude/master.key.
+//
+// The legacy directory is still honoured when it already holds a vault, so an
+// existing install keeps reading the credentials it already has instead of
+// silently starting empty and orphaning them. Both files are chosen as a pair:
+// a vault is only readable with the key it was encrypted under, so mixing the
+// new key with the old vault would fail every decrypt.
+const DEFAULT_DIR = "~/.thesun";
+const LEGACY_DIR = "~/.claude";
+const VAULT_FILE = "secrets.vault";
+const MASTER_KEY_FILE = "master.key";
 // Windows is a supported target. Three POSIX-only operations below have to be
 // skipped there, matching how the Hermes vault handles the same write path:
 //   - chmod: no POSIX mode bits on NTFS, so 0o600 conveys nothing.
@@ -78,8 +91,9 @@ export class VaultStore implements KeyringAdapter, CredentialStore {
   private writeChain: Promise<unknown> = Promise.resolve();
 
   constructor(options: VaultStoreOptions = {}) {
-    this.vaultPath = resolvePath(options.vaultPath ?? DEFAULT_VAULT_PATH);
-    this.masterKeyPath = resolvePath(options.masterKeyPath ?? DEFAULT_MASTER_KEY_PATH);
+    const dir = defaultStoreDir();
+    this.vaultPath = resolvePath(options.vaultPath ?? join(dir, VAULT_FILE));
+    this.masterKeyPath = resolvePath(options.masterKeyPath ?? join(dir, MASTER_KEY_FILE));
   }
 
   async setPassword(service: string, account: string, password: string): Promise<void> {
@@ -278,6 +292,26 @@ export class VaultStore implements KeyringAdapter, CredentialStore {
   private toEntryKey(service: string, account: string): string {
     return `${service}::${account}`;
   }
+}
+
+/**
+ * Pick the directory the default vault and master key live in.
+ *
+ * thesun's own home wins for anything new. The legacy directory is returned
+ * only when it already holds a vault and thesun's does not, so an install that
+ * predates this change keeps reading the credentials it already wrote rather
+ * than silently starting from an empty store.
+ */
+function defaultStoreDir(): string {
+  const preferred = resolvePath(DEFAULT_DIR);
+  if (existsSync(join(preferred, VAULT_FILE))) {
+    return preferred;
+  }
+  const legacy = resolvePath(LEGACY_DIR);
+  if (existsSync(join(legacy, VAULT_FILE))) {
+    return legacy;
+  }
+  return preferred;
 }
 
 function resolvePath(pathValue: string): string {

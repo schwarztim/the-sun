@@ -35,7 +35,7 @@
     "vitest": "^3.2.6"
   },
   "overrides": {
-    "protobufjs": "7.6.3",
+    "protobufjs": "^7.6.5",
     "vitest": "^3.2.6",
     "fast-uri": ">=4.0.1",
     "express-rate-limit": ">=8.2.2",
@@ -52,7 +52,8 @@
     },
     "router": {
       "path-to-regexp": ">=8.4.0"
-    }
+    },
+    "sharp": ">=0.35.0"
   },
   "optionalDependencies": {
     "@xenova/transformers": "^2.17.2"

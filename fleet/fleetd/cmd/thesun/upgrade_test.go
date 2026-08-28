@@ -66,7 +66,7 @@ func TestCompareSemver(t *testing.T) {
 		{"v1.2.4", "v1.2.3", 1},
 		{"v1.9.0", "v1.10.0", -1}, // numeric, not lexicographic
 		{"v2.0.0", "v1.99.99", 1},
-		{"dev", "v0.0.1", -1}, // "dev" always looks older than any real tag
+		{"dev", "v0.0.1", -1},       // "dev" always looks older than any real tag
 		{"v1.2.3-rc1", "v1.2.3", 0}, // prerelease suffix ignored (KISS)
 	}
 	for _, c := range cases {
@@ -267,7 +267,7 @@ func TestExtractTarGz_RoundTrip(t *testing.T) {
 	dir := t.TempDir()
 	archivePath := filepath.Join(dir, "a.tar.gz")
 	writeTestTarGz(t, archivePath, map[string]string{
-		"bin/thesun":               "fake-binary-bytes",
+		"bin/thesun":                  "fake-binary-bytes",
 		"fleet/default-manifest.toml": "# fake manifest",
 	})
 

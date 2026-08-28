@@ -55,10 +55,10 @@ func TestHumanExpiry(t *testing.T) {
 
 func TestHermesServiceForServer(t *testing.T) {
 	cases := map[string]string{
-		"venafi-go":    "venafi",
+		"venafi-go":     "venafi",
 		"servicenow-go": "servicenow",
-		"shodan":       "shodan", // no -go suffix
-		"go":           "go",     // too short to strip
+		"shodan":        "shodan", // no -go suffix
+		"go":            "go",     // too short to strip
 	}
 	for in, want := range cases {
 		if got := hermesServiceForServer(in); got != want {
