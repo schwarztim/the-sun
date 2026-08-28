@@ -143,6 +143,13 @@ publishing signed MCP server binaries, spanning three repos: `thesun` (this tool
 `thesun-servers` (the curated Go server monorepo), and `thesun-registry` (the signed catalog
 index the CLI fetches).
 
+> **The public catalog is not published yet.** The two repos backing it are not public, so
+> `thesun search`, `thesun add`, and `thesun update` currently fail to fetch the default
+> index. Everything else here works without them: generating your own servers, running and
+> routing them, and `thesun add` against a local path. To use the store now, point it at your
+> own catalog with `--index <url|file>` or `THESUN_REGISTRY_INDEX`, which takes a `file://`
+> URL or a plain path, and publish entries into it with `thesun publish`.
+
 ```bash
 thesun search <query>            # search the catalog (trust badge: curated vs community)
 thesun add <name>[@version]      # verify (sha256 + Ed25519) then install + wire into the fleet

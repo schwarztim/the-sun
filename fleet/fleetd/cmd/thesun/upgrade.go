@@ -47,7 +47,7 @@ import (
 // defaultUpdateRepo is the GitHub "owner/repo" this build checks by default.
 // Override per-build via `-ldflags -X main.defaultUpdateRepo=...`, or at
 // runtime via THESUN_UPDATE_REPO / `thesun upgrade --repo owner/repo`.
-var defaultUpdateRepo = "synman/thesun"
+var defaultUpdateRepo = "schwarztim/the-sun"
 
 // githubAPIBase is a var (not a const) so tests can point it at an
 // httptest.Server instead of the real GitHub API.

@@ -7,8 +7,8 @@ project_name: thesun
 # release time with `--repo` or the THESUN_UPDATE_REPO env var either way.
 release:
   github:
-    owner: synman
-    name: thesun
+    owner: schwarztim
+    name: the-sun
 
 before:
   hooks:
